@@ -4,9 +4,18 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Stray.Physical;
+using System;
 
 namespace Stray.Core
 {
+    [Serializable]
+    public struct SolidBoxSolidity
+    {
+        public bool Top;
+        public bool Bottom;
+        public bool Left;
+        public bool Right;
+    }
     [DefaultExecutionOrder(1)]
     public class SolidBox : MonoBehaviour
     {
@@ -19,6 +28,14 @@ namespace Stray.Core
                 return radius.Ceil();
             }
         }
+
+        public SolidBoxSolidity AllowSolidityFrom = new SolidBoxSolidity
+        {
+            Top = true,
+            Bottom = true,
+            Left = true,
+            Right = true
+        };
 
         void Update()
         {
@@ -63,6 +80,8 @@ namespace Stray.Core
             {
                 if (PixelPlayerPos.y > PixelObjectPos.y)
                 {
+                    if (!AllowSolidityFrom.Bottom) return;
+
                     if (yDistance < 0 && Player.Cmn.Ysp < 0)
                     {
                         Player.transform.position -= new Vector3(0, yDistance.PToW());
@@ -71,6 +90,8 @@ namespace Stray.Core
                 }
                 else
                 {
+                    if (!AllowSolidityFrom.Top) return;
+
                     if (yDistance < 0 || yDistance >= 16) return;
 
                     yDistance -= 4;
@@ -80,7 +101,7 @@ namespace Stray.Core
 
                     if (Player.Cmn.Ysp < 0) return;
 
-                    Player.transform.position -= new Vector3(0, (yDistance - 1).PToW());
+                    Player.transform.position -= new Vector3(0, -yDistance.PToW());
                     Player.Cmn.IsGrounded = true;
                     Player.Set<WPStateMove>();
 
@@ -100,6 +121,8 @@ namespace Stray.Core
                     if (xDistance == 0) return;
                     if (PixelPlayerPos.x < PixelObjectPos.x)
                     {
+                        if (!AllowSolidityFrom.Left) return;
+
                         if (Player.Cmn.Xsp > 0)
                         {
                             Player.Cmn.IsPushing = true;
@@ -113,6 +136,8 @@ namespace Stray.Core
                     {
                         if (Player.Cmn.Xsp < 0)
                         {
+                            if (!AllowSolidityFrom.Right) return;
+
                             Player.Cmn.IsPushing = true;
                             Player.Cmn.Gsp = 0;
                             Player.Cmn.Xsp = 0;

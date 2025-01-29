@@ -19,7 +19,6 @@ namespace Stray.Physical
         public override void OnEnter()
         {
 	        Cmn.IsGrounded = false;
-	        Cmn.IsPushing = false;
             Col.PlayerCollisionSize = Col.SpinCollisionSize;
         }
 
@@ -31,7 +30,8 @@ namespace Stray.Physical
         public override void OnUpdate(float Delta)
         {
 	        Cmn.SurfaceAngle = 0;
-            
+            Cmn.IsPushing = false;
+
             Cmn.GrabInput();
             if (Cmn.InputDirection.x != 0) Visual.SpriteDirection = (int)Mathf.Sign(Cmn.InputDirection.x);
             ApplyGravity();
