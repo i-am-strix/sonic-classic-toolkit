@@ -29,7 +29,7 @@ namespace Stray.Physical
             Cmn.GrabInput();
             if (Cmn.InputDirection.y >= 0) Set<WPStateMove>();
             Col.WallCollision();
-            Col.FloorCollision();
+            if (!Interactions.IsStandingOnSolidBox) Col.FloorCollision();
             Cam.Follow();
         }
 

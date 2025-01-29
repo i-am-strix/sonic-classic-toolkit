@@ -11,6 +11,7 @@ namespace Stray.Physical {
         public PlayerCollision Col => Player.Col;
         public PlayerCamera Cam => Player.Cam;
         public PlayerVisual Visual => Player.Visual;
+        public PlayerWorldInteraction Interactions => Player.Interactions;
         public GameInputManager Input => Player.PlayerInput;
 
         public bool Is<T>() where T : PlayerState

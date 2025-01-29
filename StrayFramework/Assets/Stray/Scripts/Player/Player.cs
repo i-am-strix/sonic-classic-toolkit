@@ -23,6 +23,7 @@ namespace Stray.Physical
         public PlayerCollision Col;
         public PlayerCamera Cam;
         public PlayerVisual Visual;
+        public PlayerWorldInteraction Interactions;
         public GameInputManager PlayerInput;
 
         public delegate void StateChangeEvent(PlayerState state);

@@ -28,5 +28,18 @@ namespace Stray.Core
             
             Debug.DrawLine(OrgPos.Round().PToW(), TarPos.Round().PToW(), Col);
         }
+
+        public static void DrawSquare(Vector2 Origin, Vector2 Radius, Color Col)
+        {
+            Vector2 TopLeftPivot = (Origin + new Vector2(-Radius.x, Radius.y)).WToP();
+            Vector2 TopRightPivot = (Origin + new Vector2(Radius.x, Radius.y)).WToP();
+            Vector2 BottomLeftPivot = (Origin - new Vector2(Radius.x, Radius.y)).WToP();
+            Vector2 BottomRightPivot = (Origin - new Vector2(-Radius.x, Radius.y)).WToP();
+
+            Debug.DrawLine(TopLeftPivot.Round().PToW(), TopRightPivot.Round().PToW(), Col);
+            Debug.DrawLine(TopRightPivot.Round().PToW(), BottomRightPivot.Round().PToW(), Col);
+            Debug.DrawLine(BottomRightPivot.Round().PToW(), BottomLeftPivot.Round().PToW(), Col);
+            Debug.DrawLine(BottomLeftPivot.Round().PToW(), TopLeftPivot.Round().PToW(), Col);
+        }
     }
 }

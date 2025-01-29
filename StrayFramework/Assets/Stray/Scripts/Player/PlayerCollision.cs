@@ -21,7 +21,22 @@ namespace Stray.Physical
         public Vector2 SpinCollisionSize = new Vector2(15, 29);
         
         [HideInInspector] public Vector2 PlayerCollisionSize = new Vector2(19, 39);
-        
+
+        public float WidthRadius
+        {
+            get
+            {
+                return Mathf.Ceil(PlayerCollisionSize.x / 2);
+            }
+        }
+        public float HeightRadius
+        {
+            get
+            {
+                return Mathf.Ceil(PlayerCollisionSize.y / 2);
+            }
+        }
+
         public LayerMask RayMask;
 
         public RaycastHit2D FloorHit, CeilingHit, WallHit;
@@ -64,7 +79,7 @@ namespace Stray.Physical
                             out FloorHit))
                     {
                         Transform.position = new Vector3(Transform.position.x, 
-                            FloorHit.point.y + Mathf.Ceil(PlayerCollisionSize.y / 2f).PToW(), 
+                            FloorHit.point.y + HeightRadius.PToW(), 
                             Transform.position.z);
                         Player.Cmn.SurfaceAngle = CalculateAngle(FloorHit.normal);
                         return true;
@@ -80,7 +95,7 @@ namespace Stray.Physical
                             RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(), 
                             out FloorHit))
                     {
-                        Transform.position = new Vector3(FloorHit.point.x - Mathf.Floor(PlayerCollisionSize.y / 2f).PToW(), 
+                        Transform.position = new Vector3(FloorHit.point.x - HeightRadius.PToW(), 
                             Transform.position.y, 
                             Transform.position.z);
                         Player.Cmn.SurfaceAngle = CalculateAngle(FloorHit.normal);
@@ -98,7 +113,7 @@ namespace Stray.Physical
                             out FloorHit))
                     {
                         Transform.position = new Vector3(Transform.position.x, 
-                            FloorHit.point.y - Mathf.Ceil(PlayerCollisionSize.y / 2f).PToW(), 
+                            FloorHit.point.y - HeightRadius.PToW(), 
                             Transform.position.z);
                         Player.Cmn.SurfaceAngle = CalculateAngle(FloorHit.normal);
                         return true;
@@ -114,7 +129,7 @@ namespace Stray.Physical
                             RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(), 
                             out FloorHit))
                     {
-                        Transform.position = new Vector3(FloorHit.point.x + Mathf.Floor(PlayerCollisionSize.y / 2f).PToW(), 
+                        Transform.position = new Vector3(FloorHit.point.x + HeightRadius.PToW(), 
                             Transform.position.y, 
                             Transform.position.z);
                         Player.Cmn.SurfaceAngle = CalculateAngle(FloorHit.normal);
@@ -178,11 +193,11 @@ namespace Stray.Physical
 
             Vector2 Direction = Vector2.up;
             
-            LeftOrigin -= new Vector2(Mathf.Ceil(PlayerCollisionSize.x / 2f), 0).PToW();
-            RightOrigin += new Vector2(Mathf.Ceil(PlayerCollisionSize.x / 2f), 0).PToW();
+            LeftOrigin -= new Vector2(WidthRadius, 0).PToW();
+            RightOrigin += new Vector2(WidthRadius, 0).PToW();
                     
-            if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * Mathf.Ceil(PlayerCollisionSize.y / 2f).PToW(), 
-                    RightOrigin, RightOrigin + Direction * Mathf.Ceil(PlayerCollisionSize.y / 2f).PToW(), 
+            if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * HeightRadius.PToW(), 
+                    RightOrigin, RightOrigin + Direction * HeightRadius.PToW(), 
                     out CeilingHit))
             {
                 var SurfaceAngle = Mathf.Round(CalculateAngle(CeilingHit.normal));
@@ -219,11 +234,11 @@ namespace Stray.Physical
 
             Vector2 Direction = Vector2.down;
             
-            LeftOrigin -= new Vector2(Mathf.Ceil(PlayerCollisionSize.x / 2f), 0).PToW();
-            RightOrigin += new Vector2(Mathf.Ceil(PlayerCollisionSize.x / 2f), 0).PToW();
+            LeftOrigin -= new Vector2(WidthRadius, 0).PToW();
+            RightOrigin += new Vector2(WidthRadius, 0).PToW();
                     
-            if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * Mathf.Ceil(PlayerCollisionSize.y / 2f).PToW(), 
-                    RightOrigin, RightOrigin + Direction * Mathf.Ceil(PlayerCollisionSize.y / 2f).PToW(), 
+            if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * HeightRadius.PToW(), 
+                    RightOrigin, RightOrigin + Direction * HeightRadius.PToW(), 
                     out FloorHit))
             {
                 Cmn.SurfaceAngle = Mathf.Round(CalculateAngle(FloorHit.normal));

@@ -30,7 +30,7 @@ namespace Stray.Physical
             GroundMovement();
             Col.WallCollision();
             Cmn.ApplyTransformations();
-            if (!Col.FloorCollision()) Set<WPStateAir>();
+            if (!Interactions.IsStandingOnSolidBox) if (!Col.FloorCollision()) Set<WPStateAir>();
             Get<WPStateMove>().FallFromGround();
         }
 

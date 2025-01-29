@@ -34,6 +34,9 @@ namespace Stray.Core
     {
         private const float WPixelConversionFactor = 1f / 100;
 
+        public static Vector3 WToP(this Vector3 v) => Vector3.Scale(v / WPixelConversionFactor, new Vector3(1, -1, 1));
+        public static Vector3 PToW(this Vector3 v) => Vector3.Scale(v * WPixelConversionFactor, new Vector3(1, -1, 1));
+
         public static Vector2 WToP(this Vector2 v) => Vector2.Scale(v / WPixelConversionFactor, new Vector2(1, -1));
         public static Vector2 PToW(this Vector2 v) => Vector2.Scale(v * WPixelConversionFactor, new Vector2(1, -1));
 

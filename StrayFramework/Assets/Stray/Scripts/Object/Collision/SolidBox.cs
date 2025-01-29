@@ -1,18 +1,113 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class SolidBox : MonoBehaviour
+using Stray.Physical;
+
+namespace Stray.Core
 {
-    // Start is called before the first frame update
-    void Start()
+    public class SolidBox : MonoBehaviour
     {
-        
-    }
+        [Tooltip("The half-size of the collision box")]
+        public Vector2 radius;
+        public Vector2 Radius
+        {
+            get
+            {
+                return radius.Ceil();
+            }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void Update()
+        {
+            foreach (Player p in FindObjectsOfType<Player>()) Collide(p);
+        }
+
+        // This function gets called every frame for each player
+        public void Collide(Player Player)
+        {
+            WDebug.DrawSquare(transform.position, radius.PToW(), Color.red);
+            Vector2 CombinedRadius = Radius +
+                new Vector2(Player.Col.WallRadius + 1, Player.Col.HeightRadius);
+            WDebug.DrawSquare(transform.position, CombinedRadius.PToW(), Color.red);
+
+            Vector2 PixelPlayerPos = ((Vector2)(Player.transform.position)).WToP();
+            Vector2 PixelObjectPos = ((Vector2)(transform.position)).WToP();
+
+            WDebug.DrawLine(PixelObjectPos, PixelObjectPos + Vector2.down, Color.black);
+
+            var leftDifference = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
+            var topDifference = (PixelPlayerPos.y - PixelObjectPos.y) + 4 + CombinedRadius.y;
+
+            if (leftDifference < 0 || leftDifference > CombinedRadius.x * 2) return;
+            if (topDifference < 0 || topDifference > CombinedRadius.y * 2) return;
+
+            var xDistance = PixelPlayerPos.x < PixelObjectPos.x ? leftDifference : leftDifference - CombinedRadius.x * 2;
+            var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2;
+
+            Debug.Log(yDistance);
+
+            WDebug.DrawLine(transform.position, transform.position + Vector3.right * xDistance.PToW(), Color.green);
+            WDebug.DrawLine(transform.position, transform.position + Vector3.up * yDistance.PToW(), Color.green);
+
+            if (Mathf.Abs(xDistance) > Mathf.Abs(yDistance))
+            {
+                if (PixelPlayerPos.y > PixelObjectPos.y)
+                {
+                    if (yDistance < 0 && Player.Cmn.Ysp < 0)
+                    {
+                        Player.transform.position -= new Vector3(0, yDistance.PToW());
+                        Player.Cmn.Ysp = 0;
+                    }
+                }
+                else
+                {
+                    if (yDistance < 0 || yDistance >= 16) return;
+
+                    var xComparison = PixelObjectPos.x - PixelPlayerPos.x + Radius.x * 2;
+                    if (xComparison < 0 || xComparison > Radius.x * 2) return;
+
+                    if (Player.Cmn.Ysp < 0) return;
+
+                    Player.transform.position -= new Vector3(0, (yDistance - 1).PToW());
+                    Player.Interactions.IsStandingOnSolidBox = true;
+                    Player.Interactions.CurrentlyStandingSolidBox = this;
+
+                    Player.Cmn.IsGrounded = true;
+                    Player.Cmn.SurfaceAngle = 0;
+                    Player.Cmn.Gsp = Player.Cmn.Xsp;
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(yDistance) > 4)
+                {
+                    if (xDistance == 0) return;
+                    if (PixelPlayerPos.x < PixelObjectPos.x)
+                    {
+                        if (Player.Cmn.Xsp > 0)
+                        {
+                            Player.Cmn.IsPushing = true;
+                            Player.Cmn.Gsp = 0;
+                            Player.Cmn.Xsp = 0;
+
+                            Player.transform.position -= new Vector3(xDistance.PToW(), 0);
+                        }
+                    }
+                    else
+                    {
+                        if (Player.Cmn.Xsp < 0)
+                        {
+                            Player.Cmn.IsPushing = true;
+                            Player.Cmn.Gsp = 0;
+                            Player.Cmn.Xsp = 0;
+
+                            Player.transform.position -= new Vector3(xDistance.PToW(), 0);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
