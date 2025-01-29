@@ -9,8 +9,22 @@ namespace Stray.Physical
     [Serializable]
     public class PlayerWorldInteraction
     {
+        public Player Player;
+
         [Header("Solid Boxes")]
         public bool IsStandingOnSolidBox;
         public SolidBox CurrentlyStandingSolidBox;
+
+        public void InteractionUpdate()
+        {
+            if (IsStandingOnSolidBox)
+            {
+                var PixelObjectPos = CurrentlyStandingSolidBox.transform.position.WToP();
+
+                Player.transform.position = new Vector3(Player.transform.position.x,
+                    -(PixelObjectPos.y - CurrentlyStandingSolidBox.Radius.y - Player.Col.HeightRadius - 1).PToW(),
+                    Player.transform.position.z);
+            }
+        }
     }
 }

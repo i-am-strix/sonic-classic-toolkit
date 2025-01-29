@@ -55,6 +55,7 @@ namespace Stray.Physical
 	        
 	        CurrentState.OnUpdate(Time.deltaTime);
             Visual.VisualUpdate();
+            Interactions.InteractionUpdate();
             
             WDebug.DrawLine(transform.position, transform.position + new Vector3(Mathf.Sin(Cmn.SurfaceAngleRad), -Mathf.Cos(Cmn.SurfaceAngleRad)) * 0.15f, Color.magenta);
         }

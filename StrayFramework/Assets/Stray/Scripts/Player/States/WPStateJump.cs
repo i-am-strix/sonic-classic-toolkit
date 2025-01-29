@@ -17,7 +17,8 @@ namespace Stray.Physical
         {
 	        Cmn.IsGrounded = false;
 	        Cmn.IsPushing = false;
-	        
+            Interactions.IsStandingOnSolidBox = false;
+
             Cmn.Xsp -= Phys.JumpPower * Mathf.Sin(Cmn.SurfaceAngleRad);
             Cmn.Ysp -= Phys.JumpPower * Mathf.Cos(Cmn.SurfaceAngleRad);
             HoldingJump = true;

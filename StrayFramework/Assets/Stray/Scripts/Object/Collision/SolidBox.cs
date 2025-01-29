@@ -16,6 +16,15 @@ namespace Stray.Core
         public bool Left;
         public bool Right;
     }
+
+    [Serializable]
+    public class SolidBoxCollisionEvents
+    {
+        public UnityEvent<Player> Top;
+        public UnityEvent<Player> Bottom;
+        public UnityEvent<Player> Left;
+        public UnityEvent<Player> Right;
+    }
     [DefaultExecutionOrder(1)]
     public class SolidBox : MonoBehaviour
     {
@@ -36,6 +45,8 @@ namespace Stray.Core
             Left = true,
             Right = true
         };
+
+        public SolidBoxCollisionEvents SolidityEvents;
 
         void Update()
         {
@@ -99,7 +110,7 @@ namespace Stray.Core
                     var xComparison = PixelObjectPos.x - PixelPlayerPos.x + Radius.x;
                     if (xComparison < 0 || xComparison > Radius.x * 2) return;
 
-                    if (Player.Cmn.Ysp < 0) return;
+                    if (Player.Cmn.Ysp <= 0) return;
 
                     Player.transform.position -= new Vector3(0, -yDistance.PToW());
                     Player.Cam.PixelPosition.y += yDistance;
