@@ -17,7 +17,7 @@ namespace Stray.Physical
 
         public Vector2 CameraSpeedLimit = new Vector2(12, 12);
 
-        private Vector2 PixelPosition;
+        public Vector2 PixelPosition;
         private Vector2 CurrentLimit;
         private Vector2 FocalPoint;
 

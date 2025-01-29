@@ -102,6 +102,7 @@ namespace Stray.Core
                     if (Player.Cmn.Ysp < 0) return;
 
                     Player.transform.position -= new Vector3(0, -yDistance.PToW());
+                    Player.Cam.PixelPosition.y += yDistance;
                     Player.Cmn.IsGrounded = true;
                     Player.Set<WPStateMove>();
 
