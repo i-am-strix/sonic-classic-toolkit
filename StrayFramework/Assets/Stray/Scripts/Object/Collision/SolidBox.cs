@@ -7,6 +7,7 @@ using Stray.Physical;
 
 namespace Stray.Core
 {
+    [DefaultExecutionOrder(1)]
     public class SolidBox : MonoBehaviour
     {
         [Tooltip("The half-size of the collision box")]
@@ -35,7 +36,16 @@ namespace Stray.Core
             Vector2 PixelPlayerPos = ((Vector2)(Player.transform.position)).WToP();
             Vector2 PixelObjectPos = ((Vector2)(transform.position)).WToP();
 
-            WDebug.DrawLine(PixelObjectPos, PixelObjectPos + Vector2.down, Color.black);
+            if (Player.Interactions.IsStandingOnSolidBox && Player.Interactions.CurrentlyStandingSolidBox == this)
+            {
+                var xLeftDist = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
+                if (xLeftDist < 0 || xLeftDist >= CombinedRadius.x * 2)
+                {
+                    Player.Interactions.IsStandingOnSolidBox = false;
+                    Player.Set<WPStateAir>();
+                    return;
+                }
+            }
 
             var leftDifference = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
             var topDifference = (PixelPlayerPos.y - PixelObjectPos.y) + 4 + CombinedRadius.y;
@@ -45,8 +55,6 @@ namespace Stray.Core
 
             var xDistance = PixelPlayerPos.x < PixelObjectPos.x ? leftDifference : leftDifference - CombinedRadius.x * 2;
             var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2;
-
-            Debug.Log(yDistance);
 
             WDebug.DrawLine(transform.position, transform.position + Vector3.right * xDistance.PToW(), Color.green);
             WDebug.DrawLine(transform.position, transform.position + Vector3.up * yDistance.PToW(), Color.green);
@@ -65,18 +73,24 @@ namespace Stray.Core
                 {
                     if (yDistance < 0 || yDistance >= 16) return;
 
-                    var xComparison = PixelObjectPos.x - PixelPlayerPos.x + Radius.x * 2;
+                    yDistance -= 4;
+
+                    var xComparison = PixelObjectPos.x - PixelPlayerPos.x + Radius.x;
                     if (xComparison < 0 || xComparison > Radius.x * 2) return;
 
                     if (Player.Cmn.Ysp < 0) return;
 
                     Player.transform.position -= new Vector3(0, (yDistance - 1).PToW());
+                    Player.Cmn.IsGrounded = true;
+                    Player.Set<WPStateMove>();
+
                     Player.Interactions.IsStandingOnSolidBox = true;
                     Player.Interactions.CurrentlyStandingSolidBox = this;
 
-                    Player.Cmn.IsGrounded = true;
+                    Player.Cmn.Ysp = 0;
                     Player.Cmn.SurfaceAngle = 0;
                     Player.Cmn.Gsp = Player.Cmn.Xsp;
+                    return;
                 }
             }
             else
