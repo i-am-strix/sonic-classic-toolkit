@@ -9,13 +9,12 @@ namespace Stray.Core
     /// <summary>
     /// Low-level definiton for a state machine. Must be inherited from to produce anything worthwhile
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Base state type for this State Machine</typeparam>
 	public abstract class StateMachine<T> : MonoBehaviour where T : State
 	{
 		[Header("Debug")]
         public T CurrentState;
         public T PreviousState;
-
         public List<T> AvailableStates
         {
             get;
@@ -28,7 +27,6 @@ namespace Stray.Core
             else {
                 foreach(T fState in AvailableStates){
                     if (fState.GetType() == typeof(T)){
-	                    //BKLog.Print($"State of type {typeof(T).Name} already exists. Cannot add.", BKLog.LogType.Ignorable);
                         return; //failsafe
                     }
                 }

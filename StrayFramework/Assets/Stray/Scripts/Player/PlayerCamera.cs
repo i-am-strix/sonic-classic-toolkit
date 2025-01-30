@@ -1,4 +1,5 @@
 ﻿using Stray.Core;
+using Stray.World;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -30,7 +31,7 @@ namespace Stray.Physical
         
         public void Follow()
         {
-            if (Player == null) return;
+            if (!Player) return;
 
             if (FreezeTicks > 0)
             {
@@ -72,6 +73,9 @@ namespace Stray.Physical
             }
 
             PixelPosition += CurrentLimit;
+            
+            PixelPosition.x = Mathf.Clamp(PixelPosition.x, 0, Stage.Current.StageSize.x - PPCam.refResolutionX);
+            PixelPosition.y = Mathf.Clamp(PixelPosition.y, 0, Stage.Current.StageSize.y - PPCam.refResolutionY);
             
             transform.position = (Vector3)(PixelPosition + new Vector2(PPCam.refResolutionX / 2, PPCam.refResolutionY / 2)).PToW() + new Vector3(0, 0, -10);
 

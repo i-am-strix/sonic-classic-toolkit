@@ -142,6 +142,11 @@ MonoBehaviour:
     CurrentAnimation: 
     SurfaceAngleLerp: 0
     VisualAngle: 0
+    UseGenesisSpriteRotation: 0
+  Interactions:
+    Player: {fileID: 1972134609743217592}
+    IsStandingOnSolidBox: 0
+    CurrentlyStandingSolidBox: {fileID: 0}
   PlayerInput: {fileID: 1972134610309899813}
 --- !u!1 &1972134610131051452
 GameObject:
@@ -320,19 +325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainInput: {fileID: 1972134610309899812}
-  LatestInputDevice: 
-  LatestInputDeviceFull: 
-  LatestDeviceType: 0
-  Buttons: []
-  Axis2D: []
-  BlacklistedInputs: []
-  BlacklistedMaps: []
-  BlockInput: 0
   CurrentMap: 
   CurrentMapOnInput: 
-  KBDAsset: {fileID: 0}
-  DualsenseAsset: {fileID: 0}
-  XboxAsset: {fileID: 0}
 --- !u!1 &1972134611042770182
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +556,7 @@ MonoBehaviour:
   Player: {fileID: 1972134609743217592}
   CameraBorders: {x: 144, y: 160, z: 64, w: 128}
   CameraSpeedLimit: {x: 12, y: 12}
+  PixelPosition: {x: 0, y: 0}
 --- !u!1 &3401405468155753920
 GameObject:
   m_ObjectHideFlags: 0

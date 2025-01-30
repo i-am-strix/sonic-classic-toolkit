@@ -18,6 +18,10 @@ namespace Stray.Physical
 	    public float SurfaceAngleLerp;
 	    public float VisualAngle;
 
+	    [Header("Flags")] 
+	    [Tooltip("Use the old 8-rotation system that the Genesis games used instead of the smoother Mania rotation system")]
+		public bool UseGenesisSpriteRotation;
+
         public void VisualUpdate()
         {
 	        PlayerSprite.GetComponent<SpriteRenderer>().flipX = SpriteDirection < 0;
@@ -25,7 +29,7 @@ namespace Stray.Physical
 
         public void VisualLateUpdate()
 	    {
-		    SurfaceAngleLerp = Mathf.Lerp(SurfaceAngleLerp, (Player.Cmn.SurfaceAngle >= 35.16f && Player.Cmn.SurfaceAngle <= 360 - 35.16f) ? 1 : 0, 7 * Time.deltaTime);
+		    SurfaceAngleLerp = Mathf.Lerp(SurfaceAngleLerp, (Player.Cmn.SurfaceAngle >= 35.16f && Player.Cmn.SurfaceAngle <= 360 - 35.16f) ? 1 : 0, 10 * Time.deltaTime);
         	
             PlayerSprite.transform.position = Player.transform.position;
 		    if (CurrentAnimation != "Spin"){
@@ -34,7 +38,8 @@ namespace Stray.Physical
 		    }
 		    else VisualAngle = 0;
 		    
-		    PlayerSprite.transform.eulerAngles = new Vector3(0, 0, VisualAngle);
+		    PlayerSprite.transform.eulerAngles = new Vector3(0, 0, UseGenesisSpriteRotation ? 
+			    Mathf.Round(VisualAngle / 45f) * 45f : VisualAngle);
         }
 
         public void Play(string Name)

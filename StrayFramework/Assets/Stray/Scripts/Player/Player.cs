@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Stray.Core;
+using Stray.World;
 
 namespace Stray.Physical
 {
@@ -39,6 +40,19 @@ namespace Stray.Physical
             Add(CrouchState);
             Add(SpindashState);
             Initialize<WPStateMove>();
+
+            if (!Stage.Current)
+            {
+                WDebug.Log("There is no Stage instance in this scene. This can lead to undefined behaviour, so be careful. Playback paused", WDebug.LogType.Important);
+                Debug.Break();
+            }
+            
+            Stage.ConnectedPlayers.Add(this);
+        }
+
+        void OnDestroy()
+        {
+            Stage.ConnectedPlayers.Remove(this);
         }
         
         // ------------------- //

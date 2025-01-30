@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Stray.Core;
 using UnityEngine;
 
 namespace Stray.Physical
@@ -81,6 +82,7 @@ namespace Stray.Physical
 
         public void CheckForJump()
         {
+            if (Interactions.IsSTunnelMode) return;
             if (Input.GetButtonDown("Jump"))
             {
                 Set<WPStateJump>();
@@ -100,6 +102,7 @@ namespace Stray.Physical
             if (Cmn.InputDirection.y < 0)
             {
                 Set<WPStateRoll>();
+                WAudio.Play("Spin");
             }
         }
         

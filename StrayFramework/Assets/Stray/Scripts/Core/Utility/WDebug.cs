@@ -18,7 +18,7 @@ namespace Stray.Core
                 case LogType.Ignorable: color = Color.gray; break;
                 default: color = new Color(1, 1, 1, .5f); break;
             };
-            Debug.Log (string.Format("<color=#{0:X2}{1:X2}{2:X2}>{3}</color>", (byte)(color.r * 255f), (byte)(color.g * 255f), (byte)(color.b * 255f), $"StrixTools Log - {message}"));
+            Debug.Log (string.Format("<color=#{0:X2}{1:X2}{2:X2}>{3}</color>", (byte)(color.r * 255f), (byte)(color.g * 255f), (byte)(color.b * 255f), $"{Constants.ContextName} Log - {message}"));
         }
 
         public static void DrawLine(Vector2 Origin, Vector2 Target, Color Col)

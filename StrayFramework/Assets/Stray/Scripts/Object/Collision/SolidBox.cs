@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 using Stray.Physical;
 using System;
+using Stray.World;
 
 namespace Stray.Core
 {
@@ -30,6 +31,9 @@ namespace Stray.Core
     {
         [Tooltip("The half-size of the collision box")]
         public Vector2 radius;
+        
+        [Tooltip("Offset of the collision box position (in pixels)")]
+        public Vector2 boxOffset;
         public Vector2 Radius
         {
             get
@@ -50,19 +54,20 @@ namespace Stray.Core
 
         void Update()
         {
-            foreach (Player p in FindObjectsOfType<Player>()) Collide(p);
+            foreach (Player p in Stage.ConnectedPlayers) Collide(p);
         }
 
         // This function gets called every frame for each player
         public void Collide(Player Player)
         {
-            WDebug.DrawSquare(transform.position, radius.PToW(), Color.red);
+            Vector2 PixelPlayerPos = ((Vector2)(Player.transform.position)).WToP();
+            Vector2 PixelObjectPos = ((Vector2)(transform.position)).WToP() + boxOffset;
+            
+            WDebug.DrawSquare(PixelObjectPos.PToW(), radius.PToW(), Color.red);
             Vector2 CombinedRadius = Radius +
                 new Vector2(Player.Col.WallRadius + 1, Player.Col.HeightRadius);
-            WDebug.DrawSquare(transform.position, CombinedRadius.PToW(), Color.red);
-
-            Vector2 PixelPlayerPos = ((Vector2)(Player.transform.position)).WToP();
-            Vector2 PixelObjectPos = ((Vector2)(transform.position)).WToP();
+            WDebug.DrawSquare(PixelObjectPos.PToW(), CombinedRadius.PToW(), Color.red);
+            
 
             if (Player.Interactions.IsStandingOnSolidBox && Player.Interactions.CurrentlyStandingSolidBox == this)
             {
@@ -83,10 +88,7 @@ namespace Stray.Core
 
             var xDistance = PixelPlayerPos.x < PixelObjectPos.x ? leftDifference : leftDifference - CombinedRadius.x * 2;
             var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2;
-
-            WDebug.DrawLine(transform.position, transform.position + Vector3.right * xDistance.PToW(), Color.green);
-            WDebug.DrawLine(transform.position, transform.position + Vector3.up * yDistance.PToW(), Color.green);
-
+            
             if (Mathf.Abs(xDistance) > Mathf.Abs(yDistance))
             {
                 if (PixelPlayerPos.y > PixelObjectPos.y)
@@ -159,6 +161,13 @@ namespace Stray.Core
                     }
                 }
             }
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.color = Constants.ColorConstants.SolidBoxColor;
+            Gizmos.DrawCube(transform.position + (Vector3)boxOffset.PToW(), Radius.PToW() * 2);
+            Gizmos.DrawWireCube(transform.position + (Vector3)boxOffset.PToW(), Radius.PToW() * 2);
         }
     }
 }

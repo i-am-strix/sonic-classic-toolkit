@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Low-level definition of a state. States are used to define logic for any object using a StateMachine. You can extend from this class
-    /// to create specialized states, like a <b>BKPlayerState</b>
+    /// to create specialized states, like a <b>PlayerState</b>
     /// </summary>
     public abstract class State
 	{

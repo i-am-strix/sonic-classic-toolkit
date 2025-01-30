@@ -31,7 +31,7 @@ namespace Stray.Physical
             Col.WallCollision();
             Cmn.ApplyTransformations();
             if (!Interactions.IsStandingOnSolidBox) if (!Col.FloorCollision()) Set<WPStateAir>();
-            Get<WPStateMove>().FallFromGround();
+            if (!Interactions.IsSTunnelMode) Get<WPStateMove>().FallFromGround();
         }
 
         public override void OnLateUpdate(float Delta)
@@ -49,6 +49,8 @@ namespace Stray.Physical
         public void GroundMovement()
         {
             var inputDir = Cmn.InputDirection;
+
+            Cmn.Gsp -= Mathf.Min(Mathf.Abs(Cmn.Gsp), Phys.RollFriction) * Mathf.Sign(Cmn.Gsp);
 
             if (inputDir.x < 0)
             {
@@ -74,9 +76,12 @@ namespace Stray.Physical
                     Visual.SpriteDirection = 1;
                 }
             }
-            Cmn.Gsp -= Mathf.Min(Mathf.Abs(Cmn.Gsp), Phys.RollFriction) * Mathf.Sign(Cmn.Gsp);
 
-            if (Cmn.Gsp == 0) Set<WPStateMove>();
+            if (!Interactions.IsSTunnelMode)
+            {
+                if (Cmn.Gsp == 0) Set<WPStateMove>();
+            }
+            else if (Cmn.Gsp == 0) Cmn.Gsp = 2 * Visual.SpriteDirection;
             
             Cmn.Xsp = Cmn.Gsp * Mathf.Cos(Cmn.SurfaceAngleRad);
             Cmn.Ysp = Cmn.Gsp * -Mathf.Sin(Cmn.SurfaceAngleRad);
@@ -84,11 +89,8 @@ namespace Stray.Physical
 
         public void SlopeRepel()
         {
-            if (Cmn.Gsp != 0)
-            {
-                Cmn.Gsp -= Mathf.Sin(Cmn.SurfaceAngleRad) * 
-                           (Mathf.Sign(Cmn.Gsp) == Mathf.Sign(Mathf.Sin(Cmn.SurfaceAngleRad)) ? Phys.RollSlopeRepelUp : Phys.RollSlopeRepelDown);
-            }
+            Cmn.Gsp -= Mathf.Sin(Cmn.SurfaceAngleRad) * 
+                (Mathf.Sign(Cmn.Gsp) == Mathf.Sign(Mathf.Sin(Cmn.SurfaceAngleRad)) ? Phys.RollSlopeRepelUp : Phys.RollSlopeRepelDown);
         }
     }
 

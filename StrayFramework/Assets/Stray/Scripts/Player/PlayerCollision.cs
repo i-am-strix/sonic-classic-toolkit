@@ -233,14 +233,19 @@ namespace Stray.Physical
             Vector2 LeftOrigin = Transform.position, RightOrigin = Transform.position;
 
             Vector2 Direction = Vector2.down;
+
+            float SensorDistance = HeightRadius;
+            bool LandCondition = (VelocityDirection != 0b01 && VelocityDirection != 0b11) || Cmn.Ysp > 0; 
             
             LeftOrigin -= new Vector2(WidthRadius, 0).PToW();
             RightOrigin += new Vector2(WidthRadius, 0).PToW();
                     
-            if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * HeightRadius.PToW(), 
-                    RightOrigin, RightOrigin + Direction * HeightRadius.PToW(), 
+            if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * SensorDistance.PToW(), 
+                    RightOrigin, RightOrigin + Direction * SensorDistance.PToW(), 
                     out FloorHit))
             {
+                if (!LandCondition) return false;
+                
                 Cmn.SurfaceAngle = Mathf.Round(CalculateAngle(FloorHit.normal));
 
                 if ((Cmn.SurfaceAngle >= 0 && Cmn.SurfaceAngle <= 23) || (Cmn.SurfaceAngle <= 360 && Cmn.SurfaceAngle >= 339))
@@ -285,7 +290,6 @@ namespace Stray.Physical
                     {
                         Transform.position = new Vector3(WallHit.point.x + WallRadius.PToW(), Transform.position.y, Transform.position.z);
                         Cmn.Xsp = 0;
-                        Cmn.Gsp = 0;
                     }
                 
                 if (Cmn.Xsp > 0)
@@ -293,7 +297,6 @@ namespace Stray.Physical
                     {
                         Transform.position = new Vector3(WallHit.point.x - WallRadius.PToW(), Transform.position.y, Transform.position.z);
                         Cmn.Xsp = 0;
-                        Cmn.Gsp = 0;
                     }
 
                 return true;

@@ -10,6 +10,10 @@ namespace Stray.Physical
     public class PlayerWorldInteraction
     {
         public Player Player;
+        public PlayerCommon Cmn => Player.Cmn;
+
+        [Header("Common Flags")] 
+        public bool IsSTunnelMode;
 
         [Header("Solid Boxes")]
         public bool IsStandingOnSolidBox;
@@ -24,6 +28,19 @@ namespace Stray.Physical
                 Player.transform.position = new Vector3(Player.transform.position.x,
                     -(PixelObjectPos.y - CurrentlyStandingSolidBox.Radius.y - Player.Col.HeightRadius - 1).PToW(),
                     Player.transform.position.z);
+            }
+            
+            if (IsSTunnelMode)
+            {
+                if (!Cmn.IsGrounded) return;
+                if (!Player.Is<WPStateRoll>())
+                {
+                    if (Player.Set<WPStateRoll>())
+                    {
+                        WAudio.Play("Spin");
+                        Player.Cam.Follow();
+                    }
+                }
             }
         }
     }
