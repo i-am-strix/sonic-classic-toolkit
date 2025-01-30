@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{feb462cf-42d6-43e6-8910-406edb06aca0}">
+		<property name="assetPath">
+			<value>Sound Effects/S3K_A6.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.2634920634920635</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{b0408542-f81b-4786-9cf7-54c3bb8a0f67}</destination>
+		</relationship>
+	</object>
+</objects>

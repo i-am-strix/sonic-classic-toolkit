@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Stray.Core;
 
 namespace Stray.Physical
 {
@@ -25,6 +26,8 @@ namespace Stray.Physical
             
 	        Col.PlayerCollisionSize = Col.SpinCollisionSize;
             Visual.Play("Spin");
+
+            WAudio.PlayOneShot("Jump");
         }
 
         public override void OnExit()

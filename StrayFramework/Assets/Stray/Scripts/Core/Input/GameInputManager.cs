@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Stray.Core {
 	public static class WInput{
+
 		public static float GetAxis(string axisName) => GameInputManager.Instance.GetAxis(axisName);
 		public static Vector2 GetAxis2D(string axisName) => GameInputManager.Instance.GetAxis2D(axisName);
 
@@ -15,15 +16,7 @@ namespace Stray.Core {
 		public static bool GetButtonDown(string buttonName) => GameInputManager.Instance.GetButtonDown(buttonName);
 		public static bool GetButtonUp(string buttonName) => GameInputManager.Instance.GetButtonUp(buttonName);
 
-		//--------Functions prefixed with F = force functions, bypasses BoltInput.BlockInput--------//
-		public static float FGetAxis(string axisName) => GameInputManager.Instance.FGetAxis(axisName);
-		public static Vector2 FGetAxis2D(string axisName) => GameInputManager.Instance.FGetAxis2D(axisName);
-
-		public static bool FGetButton(string buttonName) => GameInputManager.Instance.FGetButton(buttonName);
-		public static bool FGetButtonDown(string buttonName) => GameInputManager.Instance.FGetButtonDown(buttonName);
-		public static bool FGetButtonUp(string buttonName) => GameInputManager.Instance.FGetButtonUp(buttonName);
-	
-		//Local Functions
+		// Local Functions
 
 		public static float GetAxis(this GameInputManager Input, string axisName) => Input.GetAxis(axisName);
 		public static Vector2 GetAxis2D(this GameInputManager Input,string axisName) => Input.GetAxis2D(axisName);
@@ -31,32 +24,7 @@ namespace Stray.Core {
 		public static bool GetButton(this GameInputManager Input,string buttonName) => Input.GetButton(buttonName);
 		public static bool GetButtonDown(this GameInputManager Input,string buttonName) => Input.GetButtonDown(buttonName);
 		public static bool GetButtonUp(this GameInputManager Input,string buttonName) => Input.GetButtonUp(buttonName);
-
-		//--------Functions prefixed with F = force functions, bypasses BoltInput.BlockInput--------//
-		public static float FGetAxis(this GameInputManager Input,string axisName) => Input.FGetAxis(axisName);
-		public static Vector2 FGetAxis2D(this GameInputManager Input,string axisName) => Input.FGetAxis2D(axisName);
-
-		public static bool FGetButton(this GameInputManager Input,string buttonName) => Input.FGetButton(buttonName);
-		public static bool FGetButtonDown(this GameInputManager Input,string buttonName) => Input.FGetButtonDown(buttonName);
-		public static bool FGetButtonUp(this GameInputManager Input,string buttonName) => Input.FGetButtonUp(buttonName);
-
-		//-----------------------------------------------------------------------------------------//
-		public static void BlockInput() => GameInputManager.Instance.BlockInput = true;
-		public static void UnblockInput() => GameInputManager.Instance.BlockInput = false;
-	
-		public static void BlacklistInput(params string[] names){
-			foreach(string s in names){
-				if (GameInputManager.Instance.BlacklistedInputs.Contains(s)) continue;
-				else GameInputManager.Instance.BlacklistedInputs.Add(s);
-			}
-		}
-		
-		public static void RemoveBlacklistInput(params string[] names){
-			foreach(string s in names){
-				if (GameInputManager.Instance.BlacklistedInputs.Contains(s)) GameInputManager.Instance.BlacklistedInputs.Remove(s);
-			}
-		}
-		
+			
 		public static PlayerInput InputObject;
 	}
 
@@ -72,22 +40,16 @@ namespace Stray.Core {
 		
 		public PlayerInput MainInput;
 	
-		public string LatestInputDevice;
-		public string LatestInputDeviceFull;
+		private string LatestInputDevice;
 		private InputDeviceType previousDeviceType;
-		public InputDeviceType LatestDeviceType;
+		private InputDeviceType LatestDeviceType;
 	
-		public List<UButton> Buttons;
-		public List<UAxis1D> Axis1D;
-		public List<UAxis2D> Axis2D;
-	
-		public List<string> BlacklistedInputs = new List<string>();
-		public List<string> BlacklistedMaps = new List<string>();
+		private List<WIButton> Buttons;
+		private List<WIAxis> Axis1D;
+		private List<WIAxis2D> Axis2D;
 	
 		public static GameInputManager Instance;
 	
-		public bool BlockInput;
-		
 		public string CurrentMap;
 		public string CurrentMapOnInput;
 	
@@ -95,12 +57,7 @@ namespace Stray.Core {
 			MainInput.SwitchCurrentActionMap(MapNameOrID);
 			CurrentMap = MapNameOrID;
 		}
-		
-		[Header("Input Display stuff")]
-		public TMPro.TMP_SpriteAsset KBDAsset;
-		public TMPro.TMP_SpriteAsset DualsenseAsset;
-		public TMPro.TMP_SpriteAsset XboxAsset;
-		
+				
 		void Awake()
 		{
 			//Create static bindings
@@ -108,12 +65,12 @@ namespace Stray.Core {
 			MainInput.onActionTriggered += OnActionTriggered;
 
 			CurrentMap = MainInput.defaultActionMap;
-			Buttons = new List<UButton>(); Axis1D = new List<UAxis1D>(); Axis2D = new List<UAxis2D>();
+			Buttons = new List<WIButton>(); Axis1D = new List<WIAxis>(); Axis2D = new List<WIAxis2D>();
 			foreach(InputActionMap a in MainInput.actions.actionMaps){
 				foreach(InputAction s in a.actions){
 					switch(s.type){
 					case InputActionType.Button:
-						UButton button = new UButton();
+						WIButton button = new WIButton();
 						button.button = s;
 						button.Name = s.name;
 						button.MapName = a.name;
@@ -123,13 +80,13 @@ namespace Stray.Core {
 					case InputActionType.Value:
 						switch(s.expectedControlType){
 						case "Axis":
-							UAxis1D axis1 = new UAxis1D();
+							WIAxis axis1 = new WIAxis();
 							axis1.Name = s.name;
 							axis1.MapName = a.name;
 							Axis1D.Add(axis1);
 							break;
 						case "Vector2":
-							UAxis2D axis2 = new UAxis2D();
+							WIAxis2D axis2 = new WIAxis2D();
 							axis2.Name = s.name;
 							axis2.MapName = a.name;
 							Axis2D.Add(axis2);
@@ -144,11 +101,11 @@ namespace Stray.Core {
 		void Start(){
 		}
     
-		internal UButton UBGet(string name) => Buttons.Find(s=>s.Name == name);
+		internal WIButton WBGet(string name) => Buttons.Find(s=>s.Name == name);
 		internal string UBGetMap(string name) => Buttons.Find(s=>s.Name == name).MapName;
-		internal UAxis1D UA1Get(string name) => Axis1D.Find(s=>s.Name == name);
+		internal WIAxis WA1Get(string name) => Axis1D.Find(s=>s.Name == name);
 		internal string UA1GetMap(string name) => Axis1D.Find(s=>s.Name == name).MapName;
-		internal UAxis2D UA2Get(string name) => Axis2D.Find(s=>s.Name == name);
+		internal WIAxis2D WA2Get(string name) => Axis2D.Find(s=>s.Name == name);
 		internal string UA2GetMap(string name) => Axis2D.Find(s=>s.Name == name).MapName;
 		
 		void Update(){
@@ -158,7 +115,6 @@ namespace Stray.Core {
 		void OnActionTriggered(InputAction.CallbackContext callbackContext)
 		{ 
 			LatestInputDevice = callbackContext.action.activeControl.device.displayName.Split(' ')[0];
-			LatestInputDeviceFull = callbackContext.action.activeControl.device.displayName;
 			
 			switch(LatestInputDevice){
 			case "Mouse":
@@ -200,54 +156,54 @@ namespace Stray.Core {
 			{
 			case InputActionType.Button:
 				if (CurrentMap == UBGetMap(callbackContext.action.name)){
-						UBGet(callbackContext.action.name).hold = callbackContext.ReadValueAsButton();
+						WBGet(callbackContext.action.name).hold = callbackContext.ReadValueAsButton();
 					}
 					break;
 				case InputActionType.Value:
 					switch(callbackContext.action.expectedControlType){
 					case "Axis":
 						if (CurrentMap == UA1GetMap(callbackContext.action.name)){
-							UA1Get(callbackContext.action.name).Value = callbackContext.ReadValue<float>();
+							WA1Get(callbackContext.action.name).Value = callbackContext.ReadValue<float>();
 						}
 						break;
 					case "Vector2":
 						if (CurrentMap == UA2GetMap(callbackContext.action.name)){
-							UA2Get(callbackContext.action.name).Value = callbackContext.ReadValue<Vector2>();
+							WA2Get(callbackContext.action.name).Value = callbackContext.ReadValue<Vector2>();
 						}
 						break;
 					}
 					break;
 			}
 		}
-		public bool GetButtonDown(string name) { if (!BlacklistedInputs.Contains(name) && !BlockInput) return UBGet(name).pressed; else return false;}
-		public bool GetButtonUp(string name) { if (!BlacklistedInputs.Contains(name) && !BlockInput) return UBGet(name).released; else return false;}
-		public bool GetButton(string name) { if (!BlacklistedInputs.Contains(name) && !BlockInput) return UBGet(name).hold; else return false;}
+		public bool GetButtonDown(string name) { return WBGet(name).pressed; }
+		public bool GetButtonUp(string name) { return WBGet(name).released; }
+		public bool GetButton(string name) { return WBGet(name).hold; }
 	
-		public float GetAxis(string name) {if (!BlacklistedInputs.Contains(name) && !BlockInput) return UA1Get(name).Value; else return 0;}
-		public Vector2 GetAxis2D(string name) {if (!BlacklistedInputs.Contains(name) && !BlockInput) return UA2Get(name).Value; else return Vector2.zero;}
+		public float GetAxis(string name) { return WA1Get(name).Value; }
+		public Vector2 GetAxis2D(string name) { return WA2Get(name).Value; }
 	
 		//Force functions always return the value even if its name or parent map are blacklisted
-		public bool FGetButtonDown(string name) => UBGet(name).pressed;
-		public bool FGetButtonUp(string name) => UBGet(name).released;
-		public bool FGetButton(string name) => UBGet(name).hold;
+		public bool FGetButtonDown(string name) => WBGet(name).pressed;
+		public bool FGetButtonUp(string name) => WBGet(name).released;
+		public bool FGetButton(string name) => WBGet(name).hold;
 	
-		public float FGetAxis(string name) => UA1Get(name).Value;
-		public Vector2 FGetAxis2D(string name) => UA2Get(name).Value;
+		public float FGetAxis(string name) => WA1Get(name).Value;
+		public Vector2 FGetAxis2D(string name) => WA2Get(name).Value;
 	}
 
-	public class UAxis1D{
+	public class WIAxis{
 		public string Name;
 		public string MapName;
 		public float Value;
 	}
 	[System.Serializable]
-	public class UAxis2D{
+	public class WIAxis2D{
 		public string Name;
 		public string MapName;
 		public Vector2 Value;
 	}
 	[System.Serializable]
-	public class UButton
+	public class WIButton
 	{
 		public string Name; public string MapName; //Define a public name that we can index later with helper functions
 		public InputAction button;
