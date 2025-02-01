@@ -26,6 +26,31 @@ namespace Stray.World
         [Header("Debug")]
         public bool ShowStageBorders = true;
 
+        public static Player GetClosestPlayer(Vector2 position)
+        {
+            Player Closest = null;
+            var ClosestDistance = float.MaxValue;
+
+            if (ConnectedPlayers.Count == 1)
+            {
+                Closest = ConnectedPlayers[0];
+                return Closest;
+            }
+            
+            for(int i = 0; i < ConnectedPlayers.Count; i++)
+            {
+                var Dist = Vector2.Distance((Vector2)ConnectedPlayers[i].transform.position, position);
+                if (Dist < ClosestDistance)
+                {
+                    ClosestDistance = Dist;
+                    Closest = ConnectedPlayers[i];
+
+                }
+            }
+
+            return Closest;
+        }
+
         private void Awake()
         {
             // Set this as the current main stage

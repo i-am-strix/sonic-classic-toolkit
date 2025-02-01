@@ -25,6 +25,7 @@ namespace Stray.Gameplay
             Destroy(gameObject);
             WAudio.PlayOneShot("Ring");
             Stage.Current.RingsCollected++;
+            GameVFXReferences.SpawnVFX("Ring Sparkle", transform.position);
         }
     }
 }

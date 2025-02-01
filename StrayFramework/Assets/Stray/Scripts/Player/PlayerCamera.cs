@@ -28,7 +28,12 @@ namespace Stray.Physical
         {
             FreezeTicks = TickCount;
         }
-        
+
+        public void Start()
+        {
+            PixelPosition = Player.transform.position.WToP();
+        }
+
         public void Follow()
         {
             if (!Player) return;
