@@ -12,6 +12,8 @@ namespace Stray.Physical
         public Player Player;
         public PlayerCommon Cmn => Player.Cmn;
 
+        public int IgnoreObjectsDuration;
+
         [Header("Common Flags")] 
         public bool IsSTunnelMode;
 
@@ -21,6 +23,10 @@ namespace Stray.Physical
 
         public void InteractionUpdate()
         {
+            IgnoreObjectsDuration = Mathf.Max(IgnoreObjectsDuration - 1, 0);
+
+            if (Player.Is<WPStateDead>()) return;
+
             if (IsStandingOnSolidBox)
             {
                 var PixelObjectPos = CurrentlyStandingSolidBox.transform.position.WToP();

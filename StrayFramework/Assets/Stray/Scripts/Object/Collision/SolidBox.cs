@@ -9,6 +9,11 @@ using Stray.World;
 
 namespace Stray.Core
 {
+    public enum SolidBoxCollisionDirection
+    {
+        Up, Down, Left, Right
+    };
+
     [Serializable]
     public struct SolidBoxSolidity
     {
@@ -18,14 +23,6 @@ namespace Stray.Core
         public bool Right;
     }
 
-    [Serializable]
-    public class SolidBoxCollisionEvents
-    {
-        public UnityEvent<Player> Top;
-        public UnityEvent<Player> Bottom;
-        public UnityEvent<Player> Left;
-        public UnityEvent<Player> Right;
-    }
     [DefaultExecutionOrder(1)]
     public class SolidBox : MonoBehaviour
     {
@@ -50,16 +47,19 @@ namespace Stray.Core
             Right = true
         };
 
-        public SolidBoxCollisionEvents SolidityEvents;
+        public delegate void SolidBoxCollisionEvent(Player Player, SolidBoxCollisionDirection Direction);
+        public event SolidBoxCollisionEvent OnCollision;
 
-        void Update()
+        public virtual void Update()
         {
             foreach (Player p in Stage.ConnectedPlayers) Collide(p);
         }
 
         // This function gets called every frame for each player
-        public void Collide(Player Player)
+        public virtual void Collide(Player Player)
         {
+            if (Player.CurrentState is WPStateDead) return;
+
             Vector2 PixelPlayerPos = ((Vector2)(Player.transform.position)).WToP();
             Vector2 PixelObjectPos = ((Vector2)(transform.position)).WToP() + boxOffset;
             
@@ -71,6 +71,10 @@ namespace Stray.Core
 
             if (Player.Interactions.IsStandingOnSolidBox && Player.Interactions.CurrentlyStandingSolidBox == this)
             {
+                OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Up);
+
+                if (Player.Cmn.Ysp < 0) return;
+
                 var xLeftDist = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
                 if (xLeftDist < 0 || xLeftDist >= CombinedRadius.x * 2)
                 {
@@ -78,6 +82,8 @@ namespace Stray.Core
                     Player.Set<WPStateAir>();
                     return;
                 }
+
+                OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Up);
             }
 
             var leftDifference = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
@@ -97,6 +103,9 @@ namespace Stray.Core
 
                     if (yDistance < 0 && Player.Cmn.Ysp < 0)
                     {
+                        OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Down);
+                        if (Player.Cmn.Ysp > 0) return;
+
                         Player.transform.position -= new Vector3(0, yDistance.PToW());
                         Player.Cmn.Ysp = 0;
                     }
@@ -111,6 +120,8 @@ namespace Stray.Core
 
                     var xComparison = PixelObjectPos.x - PixelPlayerPos.x + Radius.x;
                     if (xComparison < 0 || xComparison > Radius.x * 2) return;
+
+                    OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Up);
 
                     if (Player.Cmn.Ysp <= 0) return;
 
@@ -142,19 +153,21 @@ namespace Stray.Core
                             Player.Cmn.IsPushing = true;
                             Player.Cmn.Gsp = 0;
                             Player.Cmn.Xsp = 0;
+                            OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Left);
 
                             Player.transform.position -= new Vector3(xDistance.PToW(), 0);
                         }
                     }
                     else
                     {
+                        if (!AllowSolidityFrom.Right) return;
+
                         if (Player.Cmn.Xsp < 0)
                         {
-                            if (!AllowSolidityFrom.Right) return;
-
                             Player.Cmn.IsPushing = true;
                             Player.Cmn.Gsp = 0;
                             Player.Cmn.Xsp = 0;
+                            OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Right);
 
                             Player.transform.position -= new Vector3(xDistance.PToW(), 0);
                         }
@@ -163,7 +176,7 @@ namespace Stray.Core
             }
         }
 
-        public void OnDrawGizmos()
+        public virtual void OnDrawGizmos()
         {
             Gizmos.color = Constants.ColorConstants.SolidBoxColor;
             Gizmos.DrawCube(transform.position + (Vector3)boxOffset.PToW(), Radius.PToW() * 2);

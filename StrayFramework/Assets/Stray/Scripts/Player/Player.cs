@@ -18,7 +18,9 @@ namespace Stray.Physical
         public WPStateRoll RollState = new WPStateRoll();
         public WPStateCrouch CrouchState = new WPStateCrouch();
         public WPStateSpindash SpindashState = new WPStateSpindash();
-        
+        public WPStateHurt HurtState = new WPStateHurt();
+        public WPStateDead DeadState = new WPStateDead();
+
         public PlayerCommon Cmn;
         public PlayerPhysics Phys;
         public PlayerCollision Col;
@@ -27,7 +29,7 @@ namespace Stray.Physical
         public PlayerWorldInteraction Interactions;
         public GameInputManager PlayerInput;
 
-        public delegate void StateChangeEvent(PlayerState state);
+        public delegate void StateChangeEvent(PlayerState PreviousState, PlayerState NewState);
         public event StateChangeEvent OnStateChanged;
         
         void Start()
@@ -39,6 +41,8 @@ namespace Stray.Physical
             Add(RollState);
             Add(CrouchState);
             Add(SpindashState);
+            Add(HurtState);
+            Add(DeadState);
             Initialize<WPStateMove>();
 
             if (!Stage.Current)
@@ -61,6 +65,8 @@ namespace Stray.Physical
 
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.R)) Cmn.TakeDamage();
+
             currentState = CurrentState.GetType().Name;
             transform.eulerAngles = Cmn.IsGrounded ? new Vector3(0, 0, (float)Col.AngleMode * 90f) : Vector3.zero;
             transform.localScale = new Vector3(Col.PlayerCollisionSize.x.PToW(), Col.PlayerCollisionSize.y.PToW(), 1);
@@ -68,6 +74,7 @@ namespace Stray.Physical
 	        Cmn.Gsp = Mathf.Clamp(Cmn.Gsp, -Phys.MaxSpeed, Phys.MaxSpeed);
 	        
 	        CurrentState.OnUpdate(Time.deltaTime);
+            Cmn.CommonUpdate();
             Visual.VisualUpdate();
             Interactions.InteractionUpdate();
             
@@ -97,9 +104,11 @@ namespace Stray.Physical
         
         public override bool Set<T>()
         {
+            var PreviousState = CurrentState; 
             if (base.Set<T>())
             {
-                OnStateChanged?.Invoke(AvailableStates.Find(s => s.GetType() == typeof(T)));
+                OnStateChanged?.Invoke(PreviousState, 
+                    AvailableStates.Find(s => s.GetType() == typeof(T)));
                 return true;
             }
             else return false;

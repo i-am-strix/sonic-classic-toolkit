@@ -122,7 +122,7 @@ namespace Stray.Gameplay
         public void DestroyItemBox()
         {
             if (solidBox.enabled) return;
-            GameVFXReferences.SpawnVFX("Explosion", transform.position);
+            ObjectReferenceContainer.Spawn("Explosion", transform.position);
             MonitorIcon.transform.SetParent(null);
             IsMonitorInactive = true;
 

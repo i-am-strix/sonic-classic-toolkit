@@ -8,7 +8,7 @@ namespace Stray.Physical
     public class PlayerVisual
     {
         public Player Player;
-        public Transform PlayerSprite;
+        public SpriteRenderer PlayerSprite;
 
         public Animator Anim;
         public int SpriteDirection = 1;
@@ -24,7 +24,11 @@ namespace Stray.Physical
 
         public void VisualUpdate()
         {
-	        PlayerSprite.GetComponent<SpriteRenderer>().flipX = SpriteDirection < 0;
+	        PlayerSprite.flipX = SpriteDirection < 0;
+
+            if (Player.Cmn.InvulnerabilityTimer != 0)
+                PlayerSprite.enabled = (Player.Cmn.InvulnerabilityTimer / 4) % 2 == 0;
+
         }
 
         public void VisualLateUpdate()
@@ -48,6 +52,7 @@ namespace Stray.Physical
             CurrentAnimation = Name;
         }
         
-        public void SetSpeedMultip(float Value) => Anim.SetFloat("Animation Speed Multiplier", Value != 0 ? (1f / Value) : 1f); 
+        public void SetSpeedMultip(float Value) => 
+            Anim.SetFloat("Animation Speed Multiplier", Value != 0 ? (1f / Value) : 1f); 
     }
 }

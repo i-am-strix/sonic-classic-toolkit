@@ -46,10 +46,46 @@ namespace Stray.Core
 
     public static class WUtility
     {
-        public static void Split(this Vector3 v, Vector3 normal, out Vector3 lat, out Vector3 ver)
+        public static float FDurToSpeed(float Value)
         {
-            lat = Vector3.ProjectOnPlane(v, normal);
-            ver = v - lat;
+            return Value != 0 ? (1f / Value) : 1f;
+        }
+
+        public static void SpawnRings(Vector3 Position, int Amount)
+        {
+            var RingCounter = 0;
+            var StartAngle = 101.25f;
+            var CurrentAngle = StartAngle;
+
+            var ShouldFlip = false;
+            var Velocity = 4;
+
+            while(RingCounter < Mathf.Min(Amount, 32))
+            {
+                var RadAngle = CurrentAngle * Mathf.Deg2Rad;
+
+                Gameplay.Ring Ring = ObjectReferenceContainer.Spawn("Ring", Position).GetComponent<Gameplay.Ring>();
+                Ring.IsBouncingRing = true;
+
+                Ring.Xsp = Mathf.Cos(RadAngle) * Velocity;
+                Ring.Ysp = -Mathf.Sin(RadAngle) * Velocity;
+
+                if (ShouldFlip)
+                {
+                    Ring.Xsp *= -1;
+                    CurrentAngle += 22.5f;
+                }
+
+                ShouldFlip = !ShouldFlip;
+
+                RingCounter++;
+
+                if (RingCounter == 16)
+                {
+                    Velocity = 2;
+                    CurrentAngle = StartAngle;
+                }
+            }
         }
     }
 }

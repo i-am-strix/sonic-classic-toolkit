@@ -86,8 +86,6 @@ namespace Stray.Physical
 
             if (Input.GetButtonDown("Jump"))
             {
-                if (Col.CeilingCollision()) return;
-
                 Set<WPStateJump>();
             }
         }

@@ -208,12 +208,6 @@ namespace Stray.Physical
                     RightOrigin, RightOrigin + Direction * HeightRadius.PToW(), 
                     out CeilingHit))
             {
-                // This is for when we attempt to jump
-                if (Cmn.IsGrounded)
-                {
-                    return true;
-                }
-
                 Player.transform.position = new Vector3(Player.transform.position.x,
                     CeilingHit.point.y - Player.Col.HeightRadius.PToW(), Player.transform.position.z);
 

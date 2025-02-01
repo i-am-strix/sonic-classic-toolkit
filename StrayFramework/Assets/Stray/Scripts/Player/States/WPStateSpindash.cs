@@ -37,7 +37,7 @@ namespace Stray.Physical
             if (Cmn.InputDirection.y >= 0)
             {
                 Set<WPStateRoll>();
-                Cam.FreezeCamera(32 - (int)SpinRev);
+                Cam.FreezeCamera(16 - (int)SpinRev);
                 Cmn.Gsp = Visual.SpriteDirection * (8 + Mathf.Floor(SpinRev) / 2f);
             }
         }

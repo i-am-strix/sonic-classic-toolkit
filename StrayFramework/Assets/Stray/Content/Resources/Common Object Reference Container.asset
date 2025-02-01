@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 008bd3296849d8b42b670ae2e06b0bfc, type: 3}
-  m_Name: VFX Container
+  m_Name: Common Object Reference Container
   m_EditorClassIdentifier: 
-  AvailableVFX:
+  References:
+  - ID: Ring
+    VFX: {fileID: 3656775194718093860, guid: 1bda922a200cb41499ff3a75ba00df6d, type: 3}
   - ID: Explosion
     VFX: {fileID: 3143616309867539698, guid: fed76bc4b62a615498a99ac5b09dd198, type: 3}
   - ID: Ring Sparkle

@@ -8,6 +8,7 @@ namespace Stray.Core
 {
     public class HitBox : MonoBehaviour
     {
+        [Header("Hitbox Properties")]
         [Tooltip("The half-size of the hitbox")]
         public Vector2 radius;
         
@@ -34,6 +35,8 @@ namespace Stray.Core
         // that's dumb so I'm not doing it #lol
         public virtual void Overlap(Player Player)
         {
+            if (Player.CurrentState is WPStateDead) return;
+
             var PixelPlayerPos = ((Vector2)Player.transform.position).WToP();
             var PixelObjectPos = ((Vector2)transform.position).WToP() + boxOffset;
 
