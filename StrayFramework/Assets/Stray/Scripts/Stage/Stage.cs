@@ -8,10 +8,23 @@ namespace Stray.World
 {
     public sealed class Stage : MonoBehaviour
     {
+        /// <summary>
+        /// Contains all of the current active players in the stage
+        /// </summary>
         public static List<Player> ConnectedPlayers = new List<Player>();
         public static Stage Current;
 
-        [Header("Room Data")] public Vector2 StageSize = new Vector2Int(1000, 800);
+        [Header("Gameplay")]
+        public float StageTime = 0;
+        public bool CanUpdateStageTime = true;
+
+        public int RingsCollected;
+
+        [Header("Room Data")] 
+        public Vector2 StageSize = new Vector2Int(1000, 800);
+
+        [Header("Debug")]
+        public bool ShowStageBorders = true;
 
         private void Awake()
         {
@@ -22,8 +35,14 @@ namespace Stray.World
             ConnectedPlayers = new List<Player>();
         }
 
+        private void Update()
+        {
+            if (CanUpdateStageTime) StageTime += Time.deltaTime;
+        }
+
         private void OnDrawGizmos()
         {
+            if (!ShowStageBorders) return;
             Gizmos.color = Color.black;
             Gizmos.DrawCube(new Vector3(-100, StageSize.PToW().y / 2), new Vector3(200, StageSize.PToW().y + 1000));
             Gizmos.DrawCube(new Vector3(StageSize.PToW().x + 100, StageSize.PToW().y / 2), new Vector3(200, StageSize.PToW().y + 1000));

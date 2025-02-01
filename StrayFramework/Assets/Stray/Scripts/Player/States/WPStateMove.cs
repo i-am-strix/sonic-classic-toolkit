@@ -83,8 +83,11 @@ namespace Stray.Physical
         public void CheckForJump()
         {
             if (Interactions.IsSTunnelMode) return;
+
             if (Input.GetButtonDown("Jump"))
             {
+                if (Col.CeilingCollision()) return;
+
                 Set<WPStateJump>();
             }
         }

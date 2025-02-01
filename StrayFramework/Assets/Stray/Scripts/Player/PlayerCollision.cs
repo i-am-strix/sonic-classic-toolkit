@@ -17,10 +17,18 @@ namespace Stray.Physical
             }
         }
 
-        [Header("Common")] public Vector2 DefaultCollisionSize = new Vector2(19, 39);
+        [Header("Common")]
+        public Vector2 DefaultCollisionSize = new Vector2(19, 39);
         public Vector2 SpinCollisionSize = new Vector2(15, 29);
-        
+
         [HideInInspector] public Vector2 PlayerCollisionSize = new Vector2(19, 39);
+        [HideInInspector] public Vector2 HitboxRadius
+        {
+            get
+            {
+                return new Vector2(WidthRadius - 1, HeightRadius - 3);
+            }
+        }
 
         public float WidthRadius
         {
@@ -200,6 +208,15 @@ namespace Stray.Physical
                     RightOrigin, RightOrigin + Direction * HeightRadius.PToW(), 
                     out CeilingHit))
             {
+                // This is for when we attempt to jump
+                if (Cmn.IsGrounded)
+                {
+                    return true;
+                }
+
+                Player.transform.position = new Vector3(Player.transform.position.x,
+                    CeilingHit.point.y - Player.Col.HeightRadius.PToW(), Player.transform.position.z);
+
                 var SurfaceAngle = Mathf.Round(CalculateAngle(CeilingHit.normal));
 
                 if (SurfaceAngle >= 91 && SurfaceAngle <= 225)

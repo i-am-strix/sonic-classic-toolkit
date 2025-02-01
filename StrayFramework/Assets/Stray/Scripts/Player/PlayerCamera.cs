@@ -77,35 +77,6 @@ namespace Stray.Physical
             PixelPosition.x = Mathf.Clamp(PixelPosition.x, 0, Stage.Current.StageSize.x - PPCam.refResolutionX);
             PixelPosition.y = Mathf.Clamp(PixelPosition.y, 0, Stage.Current.StageSize.y - PPCam.refResolutionY);
             
-            transform.position = (Vector3)(PixelPosition + new Vector2(PPCam.refResolutionX / 2, PPCam.refResolutionY / 2)).PToW() + new Vector3(0, 0, -10);
-
-            /*
-            if (freezeTimer > 0)
-            {
-                currentLimit.x = 0;
-                freezeTimer--;
-            }
-            if (player.grounded)
-            {
-                if (Mathf.Abs(player.gsp) >= 8) speedLimit.y = 16;
-                else speedLimit.y = 6;
-
-                currentLimit.y = Mathf.Clamp(focalPoint.y - (ppc.refResolutionY / 2), -speedLimit.y, speedLimit.y);
-            }
-            else
-            {
-                speedLimit.y = 16;
-                if (focalPoint.y <= (ppc.refResolutionY / 2 - 16)) currentLimit.y = Mathf.Clamp(focalPoint.y - (ppc.refResolutionY / 2 - 16), -speedLimit.y, 0);
-                else if (focalPoint.y > -(ppc.refResolutionY / 2 + 48)) currentLimit.y = Mathf.Clamp(focalPoint.y - (ppc.refResolutionY / 2 + 48), 0, speedLimit.y);
-                else currentLimit.y = 0;
-            }
-
-            pos += currentLimit;
-
-            pos.x = Mathf.Clamp(pos.x, 0, StrayGame.ActiveLoop.roomSize.x - ppc.refResolutionX);
-            if (StrayGame.ActiveLoop.activeSignPost != null) pos.x = Mathf.Clamp(pos.x, 0, StrayGame.ActiveLoop.activeSignPost.transform.position.WTP().x - ppc.refResolutionX / 2);
-            pos.y = Mathf.Clamp(pos.y, 0, StrayGame.ActiveLoop.roomSize.y - ppc.refResolutionY);
-            transform.position = (Vector3)(pos + new Vector2(ppc.refResolutionX/2, ppc.refResolutionY/2)).PTW() + new Vector3(0,0,zOffset);*/
-        }
+            transform.position = (Vector3)(PixelPosition + new Vector2(PPCam.refResolutionX / 2, PPCam.refResolutionY / 2)).PToW() + new Vector3(0, 0, -10);}
     }
 }
