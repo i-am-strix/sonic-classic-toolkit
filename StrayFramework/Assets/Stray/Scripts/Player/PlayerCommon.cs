@@ -40,6 +40,7 @@ namespace Stray.Physical
         public void CommonUpdate()
         {
             InvulnerabilityTimer = Mathf.Max(0, InvulnerabilityTimer - 1);
+            CheckPlayerBounds();
         }
 
         public void ApplyTransformations()
@@ -47,10 +48,23 @@ namespace Stray.Physical
             Player.transform.position += (Vector3)(new Vector2(Xsp, Ysp).PToW());
         }
 
-        [NaughtyAttributes.Button]
+        public void CheckPlayerBounds()
+        {
+            if (Player.transform.position.WToP().x - Player.Col.WidthRadius < 0)
+            {
+                Gsp = 0;
+                Xsp = 0;
+                Player.transform.position = new Vector3(Player.Col.WidthRadius.PToW(), 
+                    Player.transform.position.y, 
+                    Player.transform.position.z);
+            }
+
+            if (Player.transform.position.WToP().y + Player.Col.HeightRadius > Stage.Current.StageSize.y) KillPlayer();
+        }
+
         public void TakeDamage(GameObject Input = null)
         {
-            if (Player.Is<WPStateHurt>()) return;
+            if (Player.Is<WPStateHurt>() || Player.Is<WPStateDead>()) return;
             if (InvulnerabilityTimer != 0) return;
 
             if (Stage.Current.RingsCollected == 0)
@@ -71,6 +85,16 @@ namespace Stray.Physical
             WAudio.Play("Lose Rings");
 
             Stage.Current.RingsCollected = 0;
+        }
+
+        public void KillPlayer()
+        {
+            if (Player.Is<WPStateDead>()) return;
+
+            InvulnerabilityTimer = 0;
+
+            Player.Set<WPStateDead>();
+            WAudio.Play("Die");
         }
     }
 }

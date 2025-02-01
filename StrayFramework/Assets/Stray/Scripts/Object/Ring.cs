@@ -42,7 +42,7 @@ namespace Stray.Gameplay
 
                 if (frameCounter == 0)
                 {
-                    if (Physics2D.Raycast(transform.position, Vector2.down, Radius.y.PToW()))
+                    if (Physics2D.Raycast(transform.position, Vector2.down, Radius.y.PToW()) && Ysp > 0)
                     {
                         Ysp *= -.75f;
                     }
