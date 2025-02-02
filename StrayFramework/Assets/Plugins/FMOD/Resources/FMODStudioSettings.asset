@@ -332,6 +332,7 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
+  - Stray_AudioBank_BGM
   - Stray_AudioBank_SFX
   BanksToLoad: []
   LiveUpdatePort: 9264

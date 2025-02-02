@@ -27,10 +27,26 @@ namespace Stray.Gameplay
                     if (Direction != SolidBoxCollisionDirection.Up) return;
 
                     Player.Set<Physical.WPStateAir>();
+                    WAudio.Play("Spring");
+
                     Player.transform.position += new Vector3(0, 0.08f, 0);
                     Player.Cmn.Ysp = -Strength;
                     Player.Visual.Play("Spring");
                     Player.Visual.SetSpeedMultip(0);
+                    break;
+                
+                case SpringDirection.Left:
+                    if (Direction != SolidBoxCollisionDirection.Left) return;
+                    WAudio.Play("Spring");
+
+                    Player.Cmn.Gsp = -Strength;
+                    break;
+                
+                case SpringDirection.Right:
+                    if (Direction != SolidBoxCollisionDirection.Right) return;
+                    WAudio.Play("Spring");
+
+                    Player.Cmn.Gsp = Strength;
                     break;
             }
         }

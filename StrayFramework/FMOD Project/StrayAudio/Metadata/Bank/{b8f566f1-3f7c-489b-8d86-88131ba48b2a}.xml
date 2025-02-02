@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="Bank" id="{b8f566f1-3f7c-489b-8d86-88131ba48b2a}">
+		<property name="name">
+			<value>Stray_AudioBank_BGM</value>
+		</property>
+		<relationship name="folder">
+			<destination>{378ba098-e4e0-4c77-a994-c199fa2fb2bc}</destination>
+		</relationship>
+	</object>
+</objects>

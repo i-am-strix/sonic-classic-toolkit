@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using FMODUnity;
+using FMOD.Studio;
 using Stray.Core;
 using Stray.Physical;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Stray.World
 {
@@ -22,6 +25,8 @@ namespace Stray.World
 
         [Header("Room Data")] 
         public Vector2 StageSize = new Vector2Int(1000, 800);
+        public static EventInstance StageBGM;
+        public static StageConfiguration.StageData StageData;
 
         [Header("Debug")]
         public bool ShowStageBorders = true;
@@ -58,6 +63,21 @@ namespace Stray.World
             
             // Flush any previously connected player, in the case of a stage reset or start
             ConnectedPlayers = new List<Player>();
+        }
+
+        private void Start()
+        {
+            StageData = StageConfiguration.Instance.FindFromScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            );
+            if (StageBGM.isValid())
+            {
+                StageBGM.stop(STOP_MODE.IMMEDIATE);
+                StageBGM.release();
+            }
+            
+            StageBGM = RuntimeManager.CreateInstance(StageData.StageBGM);
+            StageBGM.start();
         }
 
         private void Update()
