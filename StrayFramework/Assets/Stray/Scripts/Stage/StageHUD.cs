@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageHUD : MonoBehaviour
+namespace Stray.Gameplay
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StageHUD : MonoBehaviour
     {
-        
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

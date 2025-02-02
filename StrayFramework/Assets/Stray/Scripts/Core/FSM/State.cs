@@ -6,6 +6,12 @@
     /// </summary>
     public abstract class State
 	{
+        /// <summary>
+        /// If a state is disabled, it cannot be transitioned to and from, but it can still be accessed
+        /// by other states for utility methods and such
+        /// </summary>
+        public bool IsDisabled = false;
+
 		public abstract void OnInitialize();
         public abstract void OnEnter();
         public abstract void OnExit();

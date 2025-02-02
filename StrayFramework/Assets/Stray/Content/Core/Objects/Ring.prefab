@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 8656459465663749112, guid: e1b54af54bee4f842807b51d89636a87,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -117,3 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: {x: 6.5, y: 6.5}
   boxOffset: {x: 0.5, y: 0.5}
+  IsBouncingRing: 0
+  Xsp: 0
+  Ysp: 0

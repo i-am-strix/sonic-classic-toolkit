@@ -9,6 +9,8 @@ namespace Stray.Physical
     [Serializable]
     public sealed class WPStateMove : PlayerState
     {
+        public bool IsSkidding;
+
         public override void OnInitialize()
         {
         }
@@ -28,12 +30,15 @@ namespace Stray.Physical
             SlopeRepel();
             Cmn.GrabInput();
             CheckForJump();
-            if (!Cmn.IsGrounded) return;
+            if (!Cmn.IsGrounded) 
+                return;
             GroundMovement();
             Col.WallCollision();
             CheckForRoll();
             Cmn.ApplyTransformations();
-            if (!Interactions.IsStandingOnSolidBox) if (!Col.FloorCollision()) Set<WPStateAir>();
+            if (!Interactions.IsStandingOnSolidBox) 
+                if (!Col.FloorCollision()) 
+                    Set<WPStateAir>();
             FallFromGround();
         }
 
@@ -45,6 +50,28 @@ namespace Stray.Physical
 	        {
 		        Cmn.IsPushing = false;
 	        }
+
+            if (Cmn.InputDirection.x != 0)
+            {
+                if (Cmn.InputDirection.x != Mathf.Sign(Cmn.Gsp))
+                {
+                    if (Mathf.Abs(Cmn.Gsp) > 4 && Col.AngleMode == 0b00)
+                    {
+                        if (!IsSkidding) WAudio.Play("Skid");
+                        IsSkidding = true;
+                       
+                    }
+                }
+                else IsSkidding = false;
+            }
+            else IsSkidding = false;
+
+            if (IsSkidding)
+            {
+                Visual.Play("Skid");
+                Visual.SetSpeedMultip(8);
+                return;
+            }
 
 	        if (!Cmn.IsPushing){
 	            if (Mathf.Abs(Cmn.Gsp) == 0)

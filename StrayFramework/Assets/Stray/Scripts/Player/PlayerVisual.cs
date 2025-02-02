@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Stray.Physical
 {
+    /// <summary>
+    /// Contains visual info about the player, such as sprite direction, animation state etc
+    /// </summary>
     [Serializable]
     public class PlayerVisual
     {
@@ -36,7 +39,7 @@ namespace Stray.Physical
 		    SurfaceAngleLerp = Mathf.Lerp(SurfaceAngleLerp, (Player.Cmn.SurfaceAngle >= 35.16f && Player.Cmn.SurfaceAngle <= 360 - 35.16f) ? 1 : 0, 10 * Time.deltaTime);
         	
             PlayerSprite.transform.position = Player.transform.position;
-		    if (CurrentAnimation != "Spin"){
+		    if (CurrentAnimation != "Spin" && ((Player.Is<WPStateMove>() && Player.Cmn.Gsp != 0) || Player.Is<WPStateAir>())){
 			    if (Player.Cmn.IsGrounded) VisualAngle = Mathf.LerpAngle(0, Player.Cmn.SurfaceAngle, SurfaceAngleLerp);
 			    else VisualAngle = Mathf.MoveTowardsAngle(VisualAngle, 0, 2.8125f);
 		    }

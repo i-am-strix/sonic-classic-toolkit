@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Stray.Physical
 {
+    /// <summary>
+    /// Contains common functions and variables used by all <b>PlayerStates</b>
+    /// </summary>
     [Serializable]
     public class PlayerCommon
     {

@@ -48,8 +48,11 @@ namespace Stray.Core
         public virtual bool Set<T>() where T : State
         {
             var NewState = AvailableStates.Find(s => s.GetType() == typeof(T));
+
             if (NewState != null)
             {
+                if (NewState.IsDisabled) return false;
+
                 CurrentState.OnExit();
                 PreviousState = CurrentState;
                 CurrentState = NewState;
@@ -59,9 +62,6 @@ namespace Stray.Core
             }
             else
             {
-                WDebug.Log($"{gameObject.name}: The {typeof(T).Name} state either hasn't been added to this object or it doesn't exist. You cannot transition into it.", 
-                    WDebug.LogType.Important);
-
                 return false;
             }
         }

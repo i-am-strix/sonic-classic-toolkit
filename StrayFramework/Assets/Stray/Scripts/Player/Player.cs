@@ -6,6 +6,10 @@ using Stray.World;
 
 namespace Stray.Physical
 {
+    /// <summary>
+    /// Contains the main parts of a Player's behaviour. You can extend this class and add your own custom 
+    /// states for different characters, or disable pre-existing states from executing
+    /// </summary>
     [AddComponentMenu(Constants.ContextName + "/Players/Player Core", 0)]
     public class Player : StateMachine<PlayerState>
     {
@@ -20,21 +24,27 @@ namespace Stray.Physical
         public WPStateSpindash SpindashState = new WPStateSpindash();
         public WPStateHurt HurtState = new WPStateHurt();
         public WPStateDead DeadState = new WPStateDead();
-
-        public PlayerCommon Cmn;
+        
+        [Space]
+        [Header("References")]
         public PlayerPhysics Phys;
-        public PlayerCollision Col;
         public PlayerCamera Cam;
+        public GameInputManager PlayerInput;
+
+        [Space]
+        [Header("Utilities")]
+        public PlayerCommon Cmn;
+        public PlayerCollision Col;
         public PlayerVisual Visual;
         public PlayerWorldInteraction Interactions;
-        public GameInputManager PlayerInput;
 
         public delegate void StateChangeEvent(PlayerState PreviousState, PlayerState NewState);
         public event StateChangeEvent OnStateChanged;
         
-        void Start()
+        public void Start()
         {
             Application.targetFrameRate = 60;
+
             Add(MoveState);
             Add(AirState);
             Add(JumpState);
@@ -43,7 +53,10 @@ namespace Stray.Physical
             Add(SpindashState);
             Add(HurtState);
             Add(DeadState);
+
             Initialize<WPStateMove>();
+
+            Cmn.Player = Col.Player = Visual.Player = Interactions.Player = this;
 
             if (!Stage.Current)
             {
@@ -52,42 +65,47 @@ namespace Stray.Physical
             }
             
             Stage.ConnectedPlayers.Add(this);
+            PlayerStart();
         }
 
-        void OnDestroy()
+        public virtual void PlayerStart()
+        {
+
+        }
+
+        public virtual void OnDestroy()
         {
             Stage.ConnectedPlayers.Remove(this);
         }
-        
+
         // ------------------- //
         // ------ EVENTS ----- //
         // ------------------- //
 
-        void Update()
+        public virtual void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R)) Cmn.TakeDamage();
-
             currentState = CurrentState.GetType().Name;
+
             transform.eulerAngles = Cmn.IsGrounded ? new Vector3(0, 0, (float)Col.AngleMode * 90f) : Vector3.zero;
             transform.localScale = new Vector3(Col.PlayerCollisionSize.x.PToW(), Col.PlayerCollisionSize.y.PToW(), 1);
             
-	        Cmn.Gsp = Mathf.Clamp(Cmn.Gsp, -Phys.MaxSpeed, Phys.MaxSpeed);
-	        
 	        CurrentState.OnUpdate(Time.deltaTime);
             Cmn.CommonUpdate();
+            Cmn.Gsp = Mathf.Clamp(Cmn.Gsp, -Phys.MaxSpeed, Phys.MaxSpeed);
+
             Visual.VisualUpdate();
             Interactions.InteractionUpdate();
             
             WDebug.DrawLine(transform.position, transform.position + new Vector3(Mathf.Sin(Cmn.SurfaceAngleRad), -Mathf.Cos(Cmn.SurfaceAngleRad)) * 0.15f, Color.magenta);
         }
         
-        void LateUpdate()
+        public virtual void LateUpdate()
         {
             CurrentState.OnLateUpdate(Time.deltaTime);
             Visual.VisualLateUpdate();
         }
         
-        void FixedUpdate()
+        public virtual void FixedUpdate()
         {
             CurrentState.OnFixedUpdate(Time.deltaTime);
         }

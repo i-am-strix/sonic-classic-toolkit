@@ -6,6 +6,10 @@ using Stray.Core;
 
 namespace Stray.Physical
 {
+    /// <summary>
+    /// Contains info about interactivity with other objects aswell as functions to process incoming info and constraints
+    /// from stuff like <b>Solid Boxes</b>
+    /// </summary>
     [Serializable]
     public class PlayerWorldInteraction
     {

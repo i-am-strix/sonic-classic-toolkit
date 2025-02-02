@@ -26,12 +26,18 @@ namespace Stray.Physical
             Cmn.GrabInput();
             SlopeRepel();
             Get<WPStateMove>().CheckForJump();
-            if (!Cmn.IsGrounded) return;
+            if (!Cmn.IsGrounded) 
+                return;
+
             GroundMovement();
             Col.WallCollision();
             Cmn.ApplyTransformations();
-            if (!Interactions.IsStandingOnSolidBox) if (!Col.FloorCollision()) Set<WPStateAir>();
-            if (!Interactions.IsSTunnelMode) Get<WPStateMove>().FallFromGround();
+            if (!Interactions.IsStandingOnSolidBox) 
+                if (!Col.FloorCollision()) 
+                    Set<WPStateAir>();
+
+            if (!Interactions.IsSTunnelMode) 
+                Get<WPStateMove>().FallFromGround();
         }
 
         public override void OnLateUpdate(float Delta)

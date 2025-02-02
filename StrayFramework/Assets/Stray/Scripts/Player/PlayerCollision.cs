@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Stray.Physical
 {
+    /// <summary>
+    /// Stores collision information aswell as functions commonly used across <b>PlayerStates</b>
+    /// </summary>
     [Serializable]
     public class PlayerCollision
     {
@@ -47,6 +50,14 @@ namespace Stray.Physical
 
         public LayerMask RayMask;
 
+        private LayerMask RayMask_NoJumpThru
+        {
+            get
+            {
+                return RayMask & ~(1 << LayerMask.NameToLayer("JumpThru"));
+            }
+        }
+
         public RaycastHit2D FloorHit, CeilingHit, WallHit;
 
         public byte AngleMode = 0b10; // 0b00 = floor, 0b01 = right, 0b11 = left, 0b10 = ceiling
@@ -84,7 +95,7 @@ namespace Stray.Physical
                     
                     if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * FloorRayLength.PToW(), 
                             RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(), 
-                            out FloorHit))
+                            RayMask, out FloorHit))
                     {
                         Transform.position = new Vector3(Transform.position.x, 
                             FloorHit.point.y + HeightRadius.PToW(), 
@@ -101,7 +112,7 @@ namespace Stray.Physical
                     
                     if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * FloorRayLength.PToW(), 
                             RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(), 
-                            out FloorHit))
+                            RayMask, out FloorHit))
                     {
                         Transform.position = new Vector3(FloorHit.point.x - HeightRadius.PToW(), 
                             Transform.position.y, 
@@ -118,7 +129,7 @@ namespace Stray.Physical
                     
                     if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * FloorRayLength.PToW(), 
                             RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(), 
-                            out FloorHit))
+                            RayMask, out FloorHit))
                     {
                         Transform.position = new Vector3(Transform.position.x, 
                             FloorHit.point.y - HeightRadius.PToW(), 
@@ -134,8 +145,8 @@ namespace Stray.Physical
                     Direction = Vector2.left;
                     
                     if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * FloorRayLength.PToW(), 
-                            RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(), 
-                            out FloorHit))
+                            RightOrigin, RightOrigin + Direction * FloorRayLength.PToW(),
+                            RayMask, out FloorHit))
                     {
                         Transform.position = new Vector3(FloorHit.point.x + HeightRadius.PToW(), 
                             Transform.position.y, 
@@ -164,7 +175,8 @@ namespace Stray.Physical
             {
                 case 0b00:
                     if (FindWinnerRay(LeftOrigin + new Vector2(0, VerticalOffset).PToW(), LeftOrigin - new Vector2(WallRadius, -VerticalOffset).PToW(),
-                            RightOrigin + new Vector2(0, VerticalOffset).PToW(), RightOrigin + new Vector2(WallRadius, VerticalOffset).PToW(), out WallHit))
+                            RightOrigin + new Vector2(0, VerticalOffset).PToW(), RightOrigin + new Vector2(WallRadius, VerticalOffset).PToW(), 
+                            RayMask, out WallHit))
                     {
                         Vector2 WallNormal = WallHit.normal;
                         if (Cmn.Gsp < 0)
@@ -203,10 +215,10 @@ namespace Stray.Physical
             
             LeftOrigin -= new Vector2(WidthRadius, 0).PToW();
             RightOrigin += new Vector2(WidthRadius, 0).PToW();
-                    
+            
             if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * HeightRadius.PToW(), 
-                    RightOrigin, RightOrigin + Direction * HeightRadius.PToW(), 
-                    out CeilingHit))
+                    RightOrigin, RightOrigin + Direction * HeightRadius.PToW(),
+                    RayMask_NoJumpThru, out CeilingHit))
             {
                 Player.transform.position = new Vector3(Player.transform.position.x,
                     CeilingHit.point.y - Player.Col.HeightRadius.PToW(), Player.transform.position.z);
@@ -253,7 +265,7 @@ namespace Stray.Physical
                     
             if (FindWinnerRay(LeftOrigin, LeftOrigin + Direction * SensorDistance.PToW(), 
                     RightOrigin, RightOrigin + Direction * SensorDistance.PToW(), 
-                    out FloorHit))
+                    RayMask, out FloorHit))
             {
                 if (!LandCondition) return false;
                 
@@ -293,7 +305,7 @@ namespace Stray.Physical
             Vector2 LeftOrigin = Transform.position, RightOrigin = Transform.position;
             
             if (FindWinnerRay(LeftOrigin, LeftOrigin - new Vector2(WallRadius, 0).PToW(),
-                    RightOrigin , RightOrigin + new Vector2(WallRadius, 0).PToW(), out WallHit))
+                    RightOrigin , RightOrigin + new Vector2(WallRadius, 0).PToW(), RayMask_NoJumpThru, out WallHit))
             {
                 Vector2 WallNormal = WallHit.normal;
                 if (Cmn.Xsp < 0)
@@ -320,7 +332,7 @@ namespace Stray.Physical
         // ------------------- //
         
         public bool FindWinnerRay(Vector2 OriginLeft, Vector2 TargetLeft,
-            Vector2 OriginRight, Vector2 TargetRight, out RaycastHit2D Winner)
+            Vector2 OriginRight, Vector2 TargetRight, LayerMask RayMask, out RaycastHit2D Winner)
         {
             WDebug.DrawLine(OriginLeft, TargetLeft, Color.red);
             WDebug.DrawLine(OriginRight, TargetRight, Color.red);
