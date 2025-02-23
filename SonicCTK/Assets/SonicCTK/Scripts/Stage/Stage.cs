@@ -1,0 +1,103 @@
+﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
+using FMODUnity;
+using FMOD.Studio;
+using SonicCTK.Core;
+using SonicCTK.Physical;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
+
+namespace SonicCTK.World
+{
+    public sealed class Stage : MonoBehaviour
+    {
+        /// <summary>
+        /// Contains all of the current active players in the stage
+        /// </summary>
+        public static List<Player> ConnectedPlayers = new List<Player>();
+        public static Stage Current;
+
+        [Header("Gameplay")]
+        public float StageTime = 0;
+        public bool CanUpdateStageTime = true;
+
+        public int RingsCollected;
+
+        [Header("Room Data")] 
+        public Vector2 StageSize = new Vector2Int(1000, 800);
+        public static EventInstance StageBGM;
+        public static StageConfiguration.StageData StageData;
+
+        [Header("Debug")]
+        public bool ShowStageBorders = true;
+
+        public static Player GetClosestPlayer(Vector2 position)
+        {
+            Player Closest = null;
+            var ClosestDistance = float.MaxValue;
+
+            if (ConnectedPlayers.Count == 1)
+            {
+                Closest = ConnectedPlayers[0];
+                return Closest;
+            }
+            
+            for(int i = 0; i < ConnectedPlayers.Count; i++)
+            {
+                var Dist = Vector2.Distance((Vector2)ConnectedPlayers[i].transform.position, position);
+                if (Dist < ClosestDistance)
+                {
+                    ClosestDistance = Dist;
+                    Closest = ConnectedPlayers[i];
+
+                }
+            }
+
+            return Closest;
+        }
+
+        private void Awake()
+        {
+            // Set this as the current main stage
+            Stage.Current = this;
+            
+            // Flush any previously connected player, in the case of a stage reset or start
+            ConnectedPlayers = new List<Player>();
+        }
+
+        private void Start()
+        {
+            StageData = StageConfiguration.Instance.FindFromScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            );
+            if (StageBGM.isValid())
+            {
+                StageBGM.stop(STOP_MODE.IMMEDIATE);
+                StageBGM.release();
+            }
+            
+            StageBGM = RuntimeManager.CreateInstance(StageData.StageBGM);
+            StageBGM.start();
+        }
+
+        private void Update()
+        {
+            if (CanUpdateStageTime) StageTime += Time.deltaTime;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!ShowStageBorders) return;
+            Gizmos.color = Color.black;
+            Gizmos.DrawCube(new Vector3(-100, StageSize.PToW().y / 2), new Vector3(200, StageSize.PToW().y + 1000));
+            Gizmos.DrawCube(new Vector3(StageSize.PToW().x + 100, StageSize.PToW().y / 2), new Vector3(200, StageSize.PToW().y + 1000));
+            Gizmos.DrawCube(new Vector3(StageSize.PToW().x / 2, 100), new Vector3(StageSize.PToW().x, 200));
+            Gizmos.DrawCube(new Vector3(StageSize.PToW().x / 2, StageSize.PToW().y - 100), new Vector3(StageSize.PToW().x, 200));
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(new Vector3(0, 0), new Vector3(0, StageSize.PToW().y));
+            Gizmos.DrawLine(new Vector3(StageSize.PToW().x, 0), new Vector3(StageSize.PToW().x, StageSize.PToW().y));
+            Gizmos.DrawLine(new Vector3(0, 0), new Vector3(StageSize.PToW().x, 0));
+            Gizmos.DrawLine(new Vector3(0, StageSize.PToW().y), new Vector3(StageSize.PToW().x, StageSize.PToW().y));
+        }
+    }
+}
