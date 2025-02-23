@@ -307,8 +307,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: FMOD Project/StrayAudio/StrayAudio.fspro
-  sourceBankPath: FMOD Project/StrayAudio/Build
+  sourceProjectPath: FMOD Project/SonicAudio/SonicAudio.fspro
+  sourceBankPath: FMOD Project/SonicAudio/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 1
   ShowBankRefreshWindow: 1
@@ -332,8 +332,8 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
-  - Stray_AudioBank_BGM
-  - Stray_AudioBank_SFX
+  - Sonic_AudioBank_BGM
+  - Sonic_AudioBank_SFX
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
