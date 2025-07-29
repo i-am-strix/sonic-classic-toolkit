@@ -19,3 +19,5 @@ MonoBehaviour:
     VFX: {fileID: 3143616309867539698, guid: fed76bc4b62a615498a99ac5b09dd198, type: 3}
   - ID: Ring Sparkle
     VFX: {fileID: 2453018881279753675, guid: 9b120b7466ec36f4d8bdf1e887947d87, type: 3}
+  - ID: Normal Shield
+    VFX: {fileID: 828083622085495577, guid: 21ea27a00f86ec142b44519e5440db20, type: 3}

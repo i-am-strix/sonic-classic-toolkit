@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: FMODStudioSettings
   m_EditorClassIdentifier: 
   switchSettingsMigration: 1
-  HasSourceProject: 1
+  HasSourceProject: 0
   HasPlatforms: 1
   sourceProjectPath: FMOD Project/SonicAudio/SonicAudio.fspro
   sourceBankPath: FMOD Project/SonicAudio/Build
@@ -345,7 +345,7 @@ MonoBehaviour:
   EnableErrorCallback: 0
   SharedLibraryUpdateStage: 0
   SharedLibraryTimeSinceStart: 0
-  CurrentVersion: 131622
+  CurrentVersion: 131848
   HideSetupWizard: 1
   LastEventReferenceScanVersion: 131622
   Platforms:

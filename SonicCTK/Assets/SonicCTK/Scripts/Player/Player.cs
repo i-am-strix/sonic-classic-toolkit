@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SonicCTK.Core;
@@ -16,14 +17,15 @@ namespace SonicCTK.Physical
         public string CurrentStateName;
         
         [Header("States")] 
-        public PStateMove MoveState = new PStateMove();
-        public PStateAir AirState = new PStateAir();
-        public PStateJump JumpState = new PStateJump();
-        public PStateRoll RollState = new PStateRoll();
-        public PStateCrouch CrouchState = new PStateCrouch();
-        public PStateSpindash SpindashState = new PStateSpindash();
-        public PStateHurt HurtState = new PStateHurt();
-        public PStateDead DeadState = new PStateDead();
+        public PStateMove MoveState = new();
+        public PStateAir AirState = new();
+        public PStateJump JumpState = new();
+        public PStateRoll RollState = new();
+        public PStateCrouch CrouchState = new();
+        public PStateLookUp LookUpState = new();
+        public PStateSpindash SpindashState = new();
+        public PStateHurt HurtState = new();
+        public PStateDead DeadState = new();
         
         [Space]
         [Header("References")]
@@ -37,23 +39,19 @@ namespace SonicCTK.Physical
         public PlayerCollision Collision;
         public PlayerVisual Visual;
         public PlayerWorldInteraction Interactions;
-
-        public delegate void StateChangeEvent(PlayerState PreviousState, PlayerState NewState);
-        public event StateChangeEvent OnStateChanged;
         
-        public void Start()
+        public delegate void StateChangeEvent(PlayerState PreviousState, PlayerState NewState);
+        public delegate void PlayerUpdateEvent(Player This);
+        
+        public event StateChangeEvent OnStateChanged;
+        public event PlayerUpdateEvent OnBeforeUpdate;
+        
+        public virtual void Start()
         {
             Application.targetFrameRate = 60;
 
-            Add(MoveState);
-            Add(AirState);
-            Add(JumpState);
-            Add(RollState);
-            Add(CrouchState);
-            Add(SpindashState);
-            Add(HurtState);
-            Add(DeadState);
-
+            AddStates();
+            
             Initialize<PStateMove>();
 
             Common.Player = Collision.Player = Visual.Player = Interactions.Player = this;
@@ -66,7 +64,21 @@ namespace SonicCTK.Physical
             }
             
             Stage.ConnectedPlayers.Add(this);
+            Common.CommonStart();
             PlayerStart();
+        }
+
+        public virtual void AddStates()
+        {
+            Add(MoveState);
+            Add(AirState);
+            Add(JumpState);
+            Add(RollState);
+            Add(CrouchState);
+            Add(LookUpState);
+            Add(SpindashState);
+            Add(HurtState);
+            Add(DeadState);
         }
 
         public virtual void PlayerStart()
@@ -85,6 +97,8 @@ namespace SonicCTK.Physical
 
         public virtual void Update()
         {
+            OnBeforeUpdate?.Invoke(this);
+            
             CurrentStateName = CurrentState.GetType().Name;
 
             transform.eulerAngles = Common.IsGrounded ? new Vector3(0, 0, (float)Collision.AngleMode * 90f) : Vector3.zero;
@@ -136,6 +150,11 @@ namespace SonicCTK.Physical
         public bool Is<T>() where T : PlayerState
         {
             return CurrentState.GetType() == typeof(T);
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(((Vector2)transform.position).WToP().Round().PToW(), 0.01f);
         }
     }
 }

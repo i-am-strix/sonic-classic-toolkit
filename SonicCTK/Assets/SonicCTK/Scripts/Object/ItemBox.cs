@@ -62,7 +62,7 @@ namespace SonicCTK.Gameplay
             }
             else
             {
-                if (p.Common.Ysp >= 0) solidBox.enabled = p.Visual.CurrentAnimation != "Spin";
+                if (p.Common.Ysp >= 0) solidBox.enabled = !p.Common.IsCurledIntoBall;
                 else solidBox.enabled = true;
             }
 
@@ -103,12 +103,15 @@ namespace SonicCTK.Gameplay
                 yield return null;
             }
 
-            // TODO: Apply monitor effect to interactedPlayer here
+            // TODO: Apply monitor effect to interacted Player here
             switch(BoxType)
             {
                 case ItemBoxType.Ring:
                     Stage.Current.RingsCollected += 10;
                     CAudio.Play("Ring");
+                    break;
+                case ItemBoxType.Shield:
+                    interactedPlayer.Interactions.SetShield(PlayerShieldType.Normal);
                     break;
             }
             

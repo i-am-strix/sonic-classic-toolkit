@@ -2,6 +2,10 @@ using UnityEngine;
 using SonicCTK.Core;
 
 namespace SonicCTK.Physical {
+    /// <summary>
+    /// A player state is an extension of the <b>State</b> type, which is equipped with various references to core components of the player
+    /// that this state is attached to
+    /// </summary>
     public abstract class PlayerState : State
     {
         public Player Player;

@@ -16,18 +16,24 @@ namespace SonicCTK.Gameplay
 
         private int ringLifeSpan = 256;
         private Animator ringAnimator;
-
+        private SpriteRenderer ringSprite;
+        
         private const float RING_GRAVITY = 0.09375f;
 
         private void Reset()
         {
             Radius = Vector2.one * 6.5f;
             BoxOffset = Vector2.one * 0.5f;
+
+            ringSprite = GetComponent<SpriteRenderer>();
+            ringAnimator = GetComponent<Animator>();
         }
 
         void Start()
         {
+            ringSprite = GetComponent<SpriteRenderer>();
             ringAnimator = GetComponent<Animator>();
+            
             OnOverlap += OnCollect;
 
             ringAnimator.SetFloat("Speed", 1f / 8);
@@ -61,6 +67,8 @@ namespace SonicCTK.Gameplay
                 ringLifeSpan--;
 
                 ringAnimator.SetFloat("Speed", CUtility.FDurToSpeed(256f * 2 / ringLifeSpan));
+
+                if (ringLifeSpan < 64) ringSprite.enabled = ringLifeSpan / 4 % 2 == 0;
                 
                 if (!wasBouncing)
                 {

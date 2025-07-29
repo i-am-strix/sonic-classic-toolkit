@@ -36,6 +36,8 @@ namespace SonicCTK.Physical
             if (Hazard) Cmn.Xsp *= Mathf.Sign(Player.transform.position.x - Hazard.transform.position.x);
 
             Cmn.Ysp = YHurtSpeed;
+            
+            Cmn.IsCurledIntoBall = false;
 
             Visual.Play("Hurt");
         }

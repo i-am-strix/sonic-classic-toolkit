@@ -153,7 +153,7 @@ TextureImporter:
       213: 5058863902622998963
     second: Sprite Sheet 2_3
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -173,6 +173,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -204,10 +206,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1332,6 +1338,57 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Down: 2165151032917842225
+      Drop1: 5537069771554637043
+      Drop2: -7529331596032879408
+      Drop3: -360895956539378398
+      Drop4: -4587829889000758760
+      Drop5: -5184156685306862795
+      Drop6: 580132668208479909
+      Drop7: 9209814833872279130
+      Drop8: 7066206354520651102
+      Idle2: -8878924802812445402
+      Idle3: -7954658308581492485
+      Idle4: -3511164465282743847
+      LookUp: -5884244050300180877
+      Push1: 4522446751727173990
+      Push2: 6009927872356495120
+      Roll1: 4069337554113740183
+      Roll2: -8787246220317110723
+      Roll3: 8445961870221962311
+      Roll4: -8279000094784577236
+      Roll5: -3248557238963085855
+      Run1: -8156286951318497499
+      Skid1: -598074032489721324
+      Skid2: -188723924155854332
+      Spin1: 6177976602071403436
+      Spin2: -8850067798136526029
+      Spin3: -332661014414710779
+      Spin5: 2312337393431253452
+      Spin6: 7615334064386180098
+      Spindash4: 4204346479326554023
+      Spring: 3971864761289494046
+      Sprite Sheet 2_0: -6051987087921615269
+      Sprite Sheet 2_1: 5984088327521821442
+      Sprite Sheet 2_2: -7549112732989689583
+      Sprite Sheet 2_3: 5058863902622998963
+      Sprite Sheet_0: 6076045283706875241
+      Sprite Sheet_10: -4538432373073829682
+      Sprite Sheet_18: -7629348539654638890
+      Sprite Sheet_19: 5842068794305977228
+      Sprite Sheet_20: -6449990986828157779
+      Sprite Sheet_28: 220846537233768282
+      Sprite Sheet_29: 6082886526938183446
+      Sprite Sheet_42: 8058157875784028387
+      Sprite Sheet_43: -5448150217475850556
+      Sprite Sheet_44: -2351605150452215322
+      Sprite Sheet_45: 2016900003038056232
+      Walk1: 8664507672882963953
+      Walk2: -8783674610116729583
+      Walk3: -5473188441428621714
+      Walk4: -57799744575800749
+      Walk5: -2583955778842732011
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

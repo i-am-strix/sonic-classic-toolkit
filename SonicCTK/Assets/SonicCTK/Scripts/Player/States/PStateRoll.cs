@@ -14,6 +14,7 @@ namespace SonicCTK.Physical
         public override void OnEnter()
         {
             Col.PlayerCollisionSize = Col.SpinCollisionSize;
+            Cmn.IsCurledIntoBall = true;
         }
 
         public override void OnExit()
@@ -36,8 +37,7 @@ namespace SonicCTK.Physical
                 if (!Col.FloorCollision()) 
                     Set<PStateAir>();
 
-            if (!Interactions.IsSTunnelMode) 
-                Get<PStateMove>().FallFromGround();
+            FallFromGround();
         }
 
         public override void OnLateUpdate(float Delta)
@@ -58,28 +58,31 @@ namespace SonicCTK.Physical
 
             Cmn.Gsp -= Mathf.Min(Mathf.Abs(Cmn.Gsp), Phys.RollFriction) * Mathf.Sign(Cmn.Gsp);
 
-            if (inputDir.x < 0)
+            if (Cmn.ControlLock == 0)
             {
-                if (Cmn.Gsp > 0)
+                if (inputDir.x < 0)
                 {
-                    Cmn.Gsp -= Phys.RollDeceleration;
-                    if (Cmn.Gsp <= 0) Cmn.Gsp = -0.5f;
+                    if (Cmn.Gsp > 0)
+                    {
+                        Cmn.Gsp -= Phys.RollDeceleration;
+                        if (Cmn.Gsp <= 0) Cmn.Gsp = -0.5f;
+                    }
+                    else
+                    {
+                        Visual.SpriteDirection = -1;
+                    }
                 }
-                else
+                else if (inputDir.x > 0)
                 {
-                    Visual.SpriteDirection = -1;
-                }
-            }
-            else if (inputDir.x > 0)
-            {
-                if (Cmn.Gsp < 0)
-                {
-                    Cmn.Gsp += Phys.RollDeceleration;
-                    if (Cmn.Gsp >= 0) Cmn.Gsp = 0.5f;
-                }
-                else
-                {
-                    Visual.SpriteDirection = 1;
+                    if (Cmn.Gsp < 0)
+                    {
+                        Cmn.Gsp += Phys.RollDeceleration;
+                        if (Cmn.Gsp >= 0) Cmn.Gsp = 0.5f;
+                    }
+                    else
+                    {
+                        Visual.SpriteDirection = 1;
+                    }
                 }
             }
 
@@ -87,7 +90,7 @@ namespace SonicCTK.Physical
             {
                 if (Cmn.Gsp == 0) Set<PStateMove>();
             }
-            else if (Cmn.Gsp == 0) Cmn.Gsp = 2 * Visual.SpriteDirection;
+            else if (Mathf.Approximately(Cmn.Gsp, 0)) Cmn.Gsp = 2 * Visual.SpriteDirection;
             
             Cmn.Xsp = Cmn.Gsp * Mathf.Cos(Cmn.SurfaceAngleRad);
             Cmn.Ysp = Cmn.Gsp * -Mathf.Sin(Cmn.SurfaceAngleRad);
@@ -96,7 +99,27 @@ namespace SonicCTK.Physical
         public void SlopeRepel()
         {
             Cmn.Gsp -= Mathf.Sin(Cmn.SurfaceAngleRad) * 
-                (Mathf.Sign(Cmn.Gsp) == Mathf.Sign(Mathf.Sin(Cmn.SurfaceAngleRad)) ? Phys.RollSlopeRepelUp : Phys.RollSlopeRepelDown);
+                (Mathf.Approximately(Mathf.Sign(Cmn.Gsp), Mathf.Sign(Mathf.Sin(Cmn.SurfaceAngleRad))) ? Phys.RollSlopeRepelUp : Phys.RollSlopeRepelDown);
+        }
+        
+        public void FallFromGround()
+        {
+            if (Cmn.ControlLock == 0)
+            {
+                if (Mathf.Abs(Cmn.Gsp) < 2.5f && (Cmn.SurfaceAngle >= 46 && Cmn.SurfaceAngle <= 315))
+                {
+                    if (!Interactions.IsSTunnelMode)
+                    {
+                        Set<PStateAir>();
+                        Cmn.Gsp = 0;
+                    }
+                    Cmn.ControlLock = 30;
+                }
+            }
+            else
+            {
+                Cmn.ControlLock = Mathf.Max(Cmn.ControlLock - 1, 0);
+            }
         }
     }
 

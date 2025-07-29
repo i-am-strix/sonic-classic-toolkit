@@ -231,7 +231,14 @@ namespace SonicCTK.Core
 
 		public void Play(string id)
 		{
-			m_eventBindings.Find(b => b.id == id).Inst.start();
+			try
+			{
+				m_eventBindings.Find(b => b.id == id).Inst.start();
+			}
+			catch
+			{
+				// well duh of course it doesn't work because the AUDIO BANKS ARE BROKEN
+			}
 		}
         
 		public void Stop(string id, FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE)

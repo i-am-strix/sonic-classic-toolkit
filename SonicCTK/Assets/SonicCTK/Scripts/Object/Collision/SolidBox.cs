@@ -23,9 +23,15 @@ namespace SonicCTK.Core
         public bool Right;
     }
 
+    /// <summary>
+    /// A solid box is a type of collision box that acts solid when any player interacts with it. When that happens, it also
+    /// fires corresponding events, giving information on which side of the box the player hit it from, the corresponding player etc.
+    /// </summary>
     [DefaultExecutionOrder(1)]
     public class SolidBox : MonoBehaviour
     {
+        public delegate void SolidBoxCollisionEvent(Player Player, SolidBoxCollisionDirection Direction);
+        
         [Tooltip("The half-size of the collision box")]
         public Vector2 radius;
         
@@ -46,9 +52,10 @@ namespace SonicCTK.Core
             Left = true,
             Right = true
         };
-
-        public delegate void SolidBoxCollisionEvent(Player Player, SolidBoxCollisionDirection Direction);
-
+        
+        /// <summary>
+        /// This event gets fired whenever any player comes in the radius of this SolidBox
+        /// </summary>
         public event SolidBoxCollisionEvent OnCollision;
 
         public virtual void Update()
@@ -151,7 +158,7 @@ namespace SonicCTK.Core
 
                         if (Player.Common.Xsp > 0)
                         {
-                            Player.Common.IsPushing = true;
+                            if (Player.Common.InputDirection.x > 0) Player.Common.IsPushing = true;
                             Player.Common.Gsp = 0;
                             Player.Common.Xsp = 0;
                             OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Left);
@@ -165,7 +172,7 @@ namespace SonicCTK.Core
 
                         if (Player.Common.Xsp < 0)
                         {
-                            Player.Common.IsPushing = true;
+                            if (Player.Common.InputDirection.x < 0) Player.Common.IsPushing = true;
                             Player.Common.Gsp = 0;
                             Player.Common.Xsp = 0;
                             OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Right);

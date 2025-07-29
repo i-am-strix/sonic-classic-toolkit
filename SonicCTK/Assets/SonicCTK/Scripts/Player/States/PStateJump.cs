@@ -10,6 +10,11 @@ namespace SonicCTK.Physical
     public class PStateJump : PlayerState
     {
         public bool HoldingJump;
+
+        private bool canDropdash;
+        private const int DROPDASH_CHARGE_DURATION = 20;
+        private int dropdashChargeTime = 0;
+        
         public override void OnInitialize()
         {
         }
@@ -26,12 +31,16 @@ namespace SonicCTK.Physical
             
 	        Col.PlayerCollisionSize = Col.SpinCollisionSize;
             Visual.Play("Spin");
+            Cmn.IsCurledIntoBall = true;
 
             CAudio.PlayOneShot("Jump");
+
+            dropdashChargeTime = 0;
         }
 
         public override void OnExit()
         {
+            
         }
 
         public override void OnUpdate(float Delta)
@@ -42,6 +51,8 @@ namespace SonicCTK.Physical
                 HoldingJump = false;
                 if (Cmn.Ysp <= -4f) Cmn.Ysp = -4f;
             }
+
+            CheckForDropdash(Delta);
         }
 
         public override void OnLateUpdate(float Delta)
@@ -55,6 +66,25 @@ namespace SonicCTK.Physical
         {
 
         }
-    }
+        
+        #region Sonic
 
+        public void CheckForDropdash(float Delta)
+        {
+            // Prevent this block of code from working if the current character is not Sonic
+            if (Player is not Sonic) return;
+
+            if (!HoldingJump)
+            {
+                if (Input.GetButton("Jump"))
+                {
+                    dropdashChargeTime += 1;
+                    if (dropdashChargeTime >= DROPDASH_CHARGE_DURATION) Set<PStateDropdash>();
+                }
+                else dropdashChargeTime = 0;
+            }
+        }
+
+        #endregion
+    }
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using FMODUnity;
 using FMOD.Studio;
 using SonicCTK.Core;
@@ -14,7 +16,7 @@ namespace SonicCTK.World
         /// <summary>
         /// Contains all of the current active players in the stage
         /// </summary>
-        public static List<Player> ConnectedPlayers = new List<Player>();
+        public static ObservableCollection<Player> ConnectedPlayers = new();
         public static Stage Current;
 
         [Header("Gameplay")]
@@ -31,6 +33,12 @@ namespace SonicCTK.World
         [Header("Debug")]
         public bool ShowStageBorders = true;
 
+        // Events
+        public delegate void PlayerSignalEvent(Player Player);
+
+        public static event PlayerSignalEvent OnPlayerConnected;
+        public static event PlayerSignalEvent OnPlayerDisconnected;
+        
         public static Player GetClosestPlayer(Vector2 position)
         {
             Player Closest = null;
@@ -62,7 +70,19 @@ namespace SonicCTK.World
             Stage.Current = this;
             
             // Flush any previously connected player, in the case of a stage reset or start
-            ConnectedPlayers = new List<Player>();
+            ConnectedPlayers = new();
+            ConnectedPlayers.CollectionChanged += ConnectedPlayersOnCollectionChanged;
+        }
+
+        private void ConnectedPlayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    CDebug.Log("New Player Connected");
+                    OnPlayerConnected?.Invoke(e.NewItems[0] as Player);
+                    break;
+            }
         }
 
         private void Start()

@@ -25,6 +25,8 @@ namespace SonicCTK.Physical
 
             CAudio.GSetValueParam("SpindashRev", 0);
             CAudio.Play("Spindash");
+
+            Cmn.IsCurledIntoBall = true;
         }
 
         public override void OnExit()
@@ -36,6 +38,9 @@ namespace SonicCTK.Physical
         {
             Cmn.GrabInput();
 
+            Col.WallCollision();
+            if (!Interactions.IsStandingOnSolidBox) Col.FloorCollision();
+            
             if (Input.GetButtonDown("Jump"))
             {
                 SpinRev += 2;

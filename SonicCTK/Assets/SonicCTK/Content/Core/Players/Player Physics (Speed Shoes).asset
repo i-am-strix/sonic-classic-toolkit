@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066d0c0424094afaba39a96a50628dde, type: 3}
+  m_Name: Player Physics (Speed Shoes)
+  m_EditorClassIdentifier: 
+  Acceleration: 0.09375
+  Deceleration: 0.5
+  Friction: 0.09375
+  TopSpeed: 12
+  MaxSpeed: 16
+  SlopeRepel: 0.125
+  RollSlopeRepelUp: 0.078125
+  RollSlopeRepelDown: 0.3125
+  RollFriction: 0.046875
+  RollDeceleration: 0.125
+  Gravity: 0.21875
+  AirControl: 0.1875
+  JumpPower: 6.5

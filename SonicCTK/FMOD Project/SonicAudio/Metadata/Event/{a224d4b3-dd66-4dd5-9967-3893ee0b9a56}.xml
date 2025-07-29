@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{a224d4b3-dd66-4dd5-9967-3893ee0b9a56}">
 		<property name="name">
-			<value>Default Stage</value>
+			<value>Default Stagew</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>

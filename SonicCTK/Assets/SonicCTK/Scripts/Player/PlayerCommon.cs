@@ -36,14 +36,35 @@ namespace SonicCTK.Physical
         [Header("Flags")] 
 	    public bool IsGrounded;
 	    public bool IsPushing;
+        public bool IsCurledIntoBall;
 
         public int ControlLock;
+
+        [Header("Camera Offsets")] public float LookUpCameraOffset = 104;
+        public float CrouchCameraOffset = 88;
+
+        private int cameraVerticalOffsetTicks;
+        private float cameraVerticalOffsetSpeed = 2;
+        
         public void GrabInput() => InputDirection = Player.PlayerInput.GetAxis2D("Move").Round();
 
+        public void CommonStart()
+        {
+            Player.OnStateChanged += (state, newState) =>
+            {
+                if (newState is PStateLookUp or PStateCrouch)
+                {
+                    cameraVerticalOffsetTicks = 120;
+                }
+                else cameraVerticalOffsetTicks = 0;
+            };
+        }
+        
         public void CommonUpdate()
         {
             InvulnerabilityTimer = Mathf.Max(0, InvulnerabilityTimer - 1);
             CheckPlayerBounds();
+            HandleCameraOffset();
         }
 
         public void ApplyTransformations()
@@ -81,14 +102,30 @@ namespace SonicCTK.Physical
             Player.Interactions.IgnoreObjectsDuration = 64;
             Player.Interactions.IsStandingOnSolidBox = false;
 
-            CUtility.SpawnRings(Player.transform.position, Stage.Current.RingsCollected);
+            if (Player.Interactions.ShieldType == PlayerShieldType.None)
+            {
+                CUtility.SpawnRings(Player.transform.position, Stage.Current.RingsCollected);
+                Stage.Current.RingsCollected = 0;
+                CAudio.Play("Lose Rings");
+            }
+            else Player.Interactions.SetShield(PlayerShieldType.None);
             
             Player.Get<PStateHurt>().Hazard = objectDealingDamage;
             Player.Set<PStateHurt>();
+        }
 
-            CAudio.Play("Lose Rings");
-
-            Stage.Current.RingsCollected = 0;
+        public void HandleCameraOffset()
+        {
+            if (cameraVerticalOffsetTicks != 0) cameraVerticalOffsetTicks--;
+            else
+            {
+                if (Player.CurrentState is PStateCrouch)
+                    Player.Cam.CameraOffset.y = Mathf.MoveTowards(Player.Cam.CameraOffset.y, CrouchCameraOffset, cameraVerticalOffsetSpeed);
+                else if (Player.CurrentState is PStateLookUp) 
+                    Player.Cam.CameraOffset.y = Mathf.MoveTowards(Player.Cam.CameraOffset.y, -LookUpCameraOffset, cameraVerticalOffsetSpeed);
+                else 
+                    Player.Cam.CameraOffset.y = Mathf.MoveTowards(Player.Cam.CameraOffset.y, 0, cameraVerticalOffsetSpeed);;
+            }
         }
 
         public void KillPlayer()

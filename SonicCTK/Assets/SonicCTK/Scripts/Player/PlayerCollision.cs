@@ -5,20 +5,14 @@ using UnityEngine;
 namespace SonicCTK.Physical
 {
     /// <summary>
-    /// Stores collision information aswell as functions commonly used across <b>PlayerStates</b>
+    /// Stores collision information as well as functions commonly used across <b>PlayerStates</b>
     /// </summary>
     [Serializable]
     public class PlayerCollision
     {
         public Player Player;
 
-        public PlayerCommon Cmn
-        {
-            get
-            {
-                return Player.Common;
-            }
-        }
+        public PlayerCommon Cmn => Player.Common;
 
         [Header("Common")]
         public Vector2 DefaultCollisionSize = new Vector2(19, 39);
@@ -31,8 +25,7 @@ namespace SonicCTK.Physical
         public float HeightRadius => Mathf.Ceil(PlayerCollisionSize.y / 2);
 
         public LayerMask RayMask;
-
-        private LayerMask RayMask_NoJumpThru => RayMask & ~(1 << LayerMask.NameToLayer("JumpThru"));
+        private LayerMask rayMaskNoJumpThru => RayMask & ~(1 << LayerMask.NameToLayer("JumpThru"));
 
         public RaycastHit2D FloorHit, CeilingHit, WallHit;
 
@@ -156,18 +149,19 @@ namespace SonicCTK.Physical
             switch (AngleMode)
             {
                 case 0b00:
-                    if (FindWinnerRay(leftOrigin + new Vector2(0, verticalOffset).PToW(), leftOrigin - new Vector2(WallRadius, -verticalOffset).PToW(),
+                    if (FindWinnerRay(leftOrigin + new Vector2(0, verticalOffset).PToW(), leftOrigin - new Vector2(WallRadius + 1, -verticalOffset).PToW(),
                             rightOrigin + new Vector2(0, verticalOffset).PToW(), rightOrigin + new Vector2(WallRadius, verticalOffset).PToW(), 
                             RayMask, out WallHit))
                     {
+
                         Vector2 WallNormal = WallHit.normal;
                         if (Cmn.Gsp < 0)
                             if (WallNormal.x > 0)
                             {
-                                transform.position = new Vector3(WallHit.point.x + WallRadius.PToW(), transform.position.y, transform.position.z);
+                                transform.position = new Vector3(WallHit.point.x + (WallRadius + 1).PToW(), transform.position.y, transform.position.z);
                                 Cmn.Xsp = 0;
 	                            Cmn.Gsp = 0;
-	                            if (Cmn.InputDirection.x != 0) Cmn.IsPushing = true;
+	                            if (Cmn.InputDirection.x < 0) Cmn.IsPushing = true;
                             }
                         
                         if (Cmn.Gsp > 0)
@@ -176,7 +170,7 @@ namespace SonicCTK.Physical
                                 transform.position = new Vector3(WallHit.point.x - WallRadius.PToW(), transform.position.y, transform.position.z);
                                 Cmn.Xsp = 0;
 	                            Cmn.Gsp = 0;
-	                            if (Cmn.InputDirection.x != 0) Cmn.IsPushing = true;
+	                            if (Cmn.InputDirection.x > 0) Cmn.IsPushing = true;
                             }
 
                         return true;
@@ -200,12 +194,14 @@ namespace SonicCTK.Physical
             
             if (FindWinnerRay(leftOrigin, leftOrigin + direction * HeightRadius.PToW(), 
                     rightOrigin, rightOrigin + direction * HeightRadius.PToW(),
-                    RayMask_NoJumpThru, out CeilingHit))
+                    rayMaskNoJumpThru, out CeilingHit))
             {
                 Player.transform.position = new Vector3(Player.transform.position.x,
                     CeilingHit.point.y - Player.Collision.HeightRadius.PToW(), Player.transform.position.z);
 
                 var surfaceAngle = Mathf.Round(CalculateAngle(CeilingHit.normal));
+                
+                CDebug.Log(surfaceAngle.ToString());
 
                 if (surfaceAngle >= 91 && surfaceAngle <= 225)
                 {
@@ -287,7 +283,7 @@ namespace SonicCTK.Physical
             Vector2 leftOrigin = transform.position, RightOrigin = transform.position;
             
             if (FindWinnerRay(leftOrigin, leftOrigin - new Vector2(WallRadius, 0).PToW(),
-                    RightOrigin , RightOrigin + new Vector2(WallRadius, 0).PToW(), RayMask_NoJumpThru, out WallHit))
+                    RightOrigin , RightOrigin + new Vector2(WallRadius, 0).PToW(), rayMaskNoJumpThru, out WallHit))
             {
                 Vector2 wallNormal = WallHit.normal;
                 if (Cmn.Xsp < 0)
@@ -321,7 +317,7 @@ namespace SonicCTK.Physical
             
             var leftHit = Physics2D.Linecast(originLeft, targetLeft,  rayMask);
             var rightHit = Physics2D.Linecast(originRight, targetRight,  rayMask);
-
+            
             if (leftHit.collider != null && rightHit.collider != null)
             {
                 CDebug.DrawLine(originLeft, targetLeft, Color.green);

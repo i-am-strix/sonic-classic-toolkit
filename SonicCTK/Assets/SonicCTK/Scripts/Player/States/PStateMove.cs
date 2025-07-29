@@ -18,6 +18,7 @@ namespace SonicCTK.Physical
         public override void OnEnter()
         {
             Col.PlayerCollisionSize = Col.DefaultCollisionSize;
+            Cmn.IsCurledIntoBall = false;
         }
 
         public override void OnExit()
@@ -27,21 +28,24 @@ namespace SonicCTK.Physical
 
         public override void OnUpdate(float delta)
         {
+            CheckForLookUp();
             SlopeRepel();
             Cmn.GrabInput();
             CheckForJump();
+            
             if (!Cmn.IsGrounded) 
                 return;
+            
             GroundMovement();
             Col.WallCollision();
             CheckForRoll();
             Cmn.ApplyTransformations();
+            
             if (!Interactions.IsStandingOnSolidBox) 
                 if (!Col.FloorCollision()) 
                     Set<PStateAir>();
+            
             FallFromGround();
-
-            Debug.Log("Uhhhh");
         }
 
         public override void OnLateUpdate(float delta)
@@ -121,6 +125,12 @@ namespace SonicCTK.Physical
 
         public void CheckForRoll()
         {
+            if (Interactions.IsSTunnelMode)
+            {
+                Set<PStateRoll>();
+                CAudio.Play("Spin");
+            }
+            
             if (Mathf.Abs(Cmn.Gsp) < 0.5f)
             {
                 if (Cmn.InputDirection.y < 0)
@@ -133,6 +143,18 @@ namespace SonicCTK.Physical
             {
                 Set<PStateRoll>();
                 CAudio.Play("Spin");
+            }
+        }
+        
+        public void CheckForLookUp()
+        {
+            if (Mathf.Abs(Cmn.Gsp) < 0.5f)
+            {
+                if (Cmn.InputDirection.y > 0)
+                {
+                    Set<PStateLookUp>();
+                }
+                return;
             }
         }
         

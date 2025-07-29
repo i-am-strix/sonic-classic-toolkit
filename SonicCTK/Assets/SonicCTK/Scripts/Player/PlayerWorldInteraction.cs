@@ -20,10 +20,17 @@ namespace SonicCTK.Physical
 
         [Header("Common Flags")] 
         public bool IsSTunnelMode;
-
+        
+        [Header("Shields")]
+        public PlayerShieldType ShieldType;
+        public GameObject CurrentShieldInstance;
+        
         [Header("Solid Boxes")]
         public bool IsStandingOnSolidBox;
         public SolidBox CurrentlyStandingSolidBox;
+
+        [Header("Collision")] 
+        public CLayerMode CurrentPlayerLayer;
 
         public void InteractionUpdate()
         {
@@ -50,6 +57,29 @@ namespace SonicCTK.Physical
                         CAudio.Play("Spin");
                         Player.Cam.Follow();
                     }
+                }
+            }
+
+            if (CurrentShieldInstance)
+                CurrentShieldInstance.transform.position = ((Vector2)Player.transform.position).WToP().Round().PToW();
+        }
+
+        public void SetShield(PlayerShieldType NewShieldType)
+        {
+            if (NewShieldType != ShieldType)
+            {
+                if (CurrentShieldInstance) GameObject.Destroy(CurrentShieldInstance);
+                switch (NewShieldType)
+                {
+                    case PlayerShieldType.None:
+                        ShieldType = PlayerShieldType.None;
+                        break;
+                    
+                    case PlayerShieldType.Normal:
+                        CurrentShieldInstance =
+                            ObjectReferenceContainer.Spawn("Normal Shield", Player.transform.position);
+                        ShieldType = NewShieldType;
+                        break;
                 }
             }
         }

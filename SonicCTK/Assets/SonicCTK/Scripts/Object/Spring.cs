@@ -45,6 +45,7 @@ namespace SonicCTK.Gameplay
                     _animator.Play("Hit", 0, 0);
 
                     Player.Common.Gsp = -Strength;
+                    Player.Common.IsPushing = false;
                     break;
                 
                 case SpringDirection.Right:
@@ -53,6 +54,7 @@ namespace SonicCTK.Gameplay
                     _animator.Play("Hit", 0, 0);
 
                     Player.Common.Gsp = Strength;
+                    Player.Common.IsPushing = false;
                     break;
             }
         }

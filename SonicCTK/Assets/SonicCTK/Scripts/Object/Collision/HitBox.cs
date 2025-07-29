@@ -7,6 +7,10 @@ using static SonicCTK.CCommon;
 
 namespace SonicCTK.Core
 {
+    /// <summary>
+    /// A hit box is a type of collision box that doesn't have any solidity, but fires corresponding events whenever a
+    /// player enters its bounds (using similar calculations to how a solid box determines its radius)
+    /// </summary>
     public class HitBox : MonoBehaviour
     {
         [Header("Hitbox Properties")]
@@ -22,7 +26,7 @@ namespace SonicCTK.Core
 
         public virtual void Update()
         {
-            foreach(Player p in Stage.ConnectedPlayers) Overlap(p);
+            foreach(Player player in Stage.ConnectedPlayers) Overlap(player);
         }
 
         // Note to self: The guide says hitbox collision happens on the Player end, but I think
