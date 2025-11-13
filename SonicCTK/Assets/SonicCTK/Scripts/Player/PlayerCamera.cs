@@ -2,7 +2,7 @@
 using SonicCTK.World;
 using UnityEngine;
 
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 namespace SonicCTK.Physical
 {
@@ -10,7 +10,7 @@ namespace SonicCTK.Physical
     {
         public Player Player;
 
-        public PixelPerfectCamera PPCam => GetComponent<PixelPerfectCamera>();
+        public UnityEngine.Rendering.Universal.PixelPerfectCamera PPCam => GetComponent<UnityEngine.Rendering.Universal.PixelPerfectCamera>();
         
         public Vector4 CameraBorders = new Vector4(
             144, 160, // Horizontal
