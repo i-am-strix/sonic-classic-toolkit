@@ -2,8 +2,14 @@
 
 namespace SonicCTK
 {
+    /// <summary>
+    /// Constants used across the framework
+    /// </summary>
     public static class Constants
     {
+        /// <summary>
+        /// The context name (in editor)
+        /// </summary>
         public const string ContextName = "Sonic Classic Toolkit";
 
         public static class ColorConstants

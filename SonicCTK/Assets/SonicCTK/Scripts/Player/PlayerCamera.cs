@@ -3,7 +3,6 @@ using SonicCTK.World;
 using UnityEngine;
 
 
-
 namespace SonicCTK.Physical
 {
     public class PlayerCamera : MonoBehaviour

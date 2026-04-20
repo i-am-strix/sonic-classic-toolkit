@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CTK_TestStage_Content
+  m_EditorClassIdentifier: 
+  m_GroupName: CTK_TestStage_Content
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ced2057f1422e3d41b9f167fd055f6ae
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4c366fa869bcd9f4ab4ee6a63ee50d9b, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 285e6e93f8166114f84d59bb10104de1, type: 2}
+    - {fileID: 11400000, guid: b7c2c255b73f93f438e818d57d3516e3, type: 2}

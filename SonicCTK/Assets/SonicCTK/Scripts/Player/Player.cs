@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SonicCTK.Core;
 using SonicCTK.World;
+using UnityEngine;
 
 namespace SonicCTK.Physical
 {
@@ -31,7 +31,7 @@ namespace SonicCTK.Physical
         [Header("References")]
         public PlayerPhysics Physics;
         public PlayerCamera Cam;
-        public GameInputManager PlayerInput;
+        public InputHandler PlayerInput;
 
         [Space]
         [Header("Utilities")]

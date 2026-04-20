@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 using TMPro;
 using System;
 using SonicCTK.Physical;
+using UnityEngine;
 
 namespace SonicCTK.Core
 {

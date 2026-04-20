@@ -47,88 +47,92 @@ namespace SonicCTK.Physical
         
         public bool FloorCollision()
         {
-            FigureOutAngleMode();
-            
-            Transform transform = Player.transform;
-            Vector2 leftOrigin = transform.position, rightOrigin = transform.position;
-
-            Vector2 direction = Vector2.down;
-
-            float sensorSpacing = Mathf.Floor(PlayerCollisionSize.x / 2);
-
-            switch (AngleMode)
+            for (int i = 0; i < 16; i++)
             {
-                case 0b00: // Floor Mode
-                    leftOrigin -= new Vector2(sensorSpacing, 0).PToW();
-                    rightOrigin += new Vector2(sensorSpacing, 0).PToW();
-                    
-                    if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
-                            rightOrigin, rightOrigin + direction * FloorRayLength.PToW(), 
-                            RayMask, out FloorHit))
-                    {
-                        transform.position = new Vector3(transform.position.x, 
-                            FloorHit.point.y + HeightRadius.PToW(), 
-                            transform.position.z);
-                        Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
-                        return true;
-                    }
-                    break;
+                FigureOutAngleMode();
+            
+                Transform transform = Player.transform;
+                Vector2 leftOrigin = transform.position, rightOrigin = transform.position;
 
-                case 0b01: // Right Wall Mode
-                    leftOrigin -= new Vector2(0, sensorSpacing).PToW();
-                    rightOrigin += new Vector2(0, sensorSpacing).PToW();
+                Vector2 direction = Vector2.down;
 
-                    direction = Vector2.right;
-                    
-                    if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
-                            rightOrigin, rightOrigin + direction * FloorRayLength.PToW(), 
-                            RayMask, out FloorHit))
-                    {
-                        transform.position = new Vector3(FloorHit.point.x - HeightRadius.PToW(), 
-                            transform.position.y, 
-                            transform.position.z);
-                        Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
-                        return true;
-                    }
-                    break;
+                float sensorSpacing = Mathf.Floor(PlayerCollisionSize.x / 2);
 
-                case 0b10: // Ceiling Mode
-                    leftOrigin += new Vector2(sensorSpacing, 0).PToW();
-                    rightOrigin -= new Vector2(sensorSpacing, 0).PToW();
+                switch (AngleMode)
+                {
+                    case 0b00: // Floor Mode
+                        leftOrigin -= new Vector2(sensorSpacing, 0).PToW();
+                        rightOrigin += new Vector2(sensorSpacing, 0).PToW();
+                        
+                        if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
+                                rightOrigin, rightOrigin + direction * FloorRayLength.PToW(), 
+                                RayMask, out FloorHit))
+                        {
+                            transform.position = new Vector3(transform.position.x, 
+                                FloorHit.point.y + HeightRadius.PToW(), 
+                                transform.position.z);
+                            Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
+                            return true;
+                        }
+                        break;
 
-                    direction = Vector2.up;
-                    
-                    if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
-                            rightOrigin, rightOrigin + direction * FloorRayLength.PToW(), 
-                            RayMask, out FloorHit))
-                    {
-                        transform.position = new Vector3(transform.position.x, 
-                            FloorHit.point.y - HeightRadius.PToW(), 
-                            transform.position.z);
-                        Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
-                        return true;
-                    }
-                    break;
+                    case 0b01: // Right Wall Mode
+                        leftOrigin -= new Vector2(0, sensorSpacing).PToW();
+                        rightOrigin += new Vector2(0, sensorSpacing).PToW();
 
-                case 0b11: // Left Wall Mode
-                    leftOrigin += new Vector2(0, sensorSpacing).PToW();
-                    rightOrigin -= new Vector2(0, sensorSpacing).PToW();
+                        direction = Vector2.right;
+                        
+                        if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
+                                rightOrigin, rightOrigin + direction * FloorRayLength.PToW(), 
+                                RayMask, out FloorHit))
+                        {
+                            transform.position = new Vector3(FloorHit.point.x - HeightRadius.PToW(), 
+                                transform.position.y, 
+                                transform.position.z);
+                            Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
+                            return true;
+                        }
+                        break;
 
-                    direction = Vector2.left;
-                    
-                    if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
-                            rightOrigin, rightOrigin + direction * FloorRayLength.PToW(),
-                            RayMask, out FloorHit))
-                    {
-                        transform.position = new Vector3(FloorHit.point.x + HeightRadius.PToW(), 
-                            transform.position.y, 
-                            transform.position.z);
-                        Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
-                        return true;
-                    }
-                    break;
+                    case 0b10: // Ceiling Mode
+                        leftOrigin += new Vector2(sensorSpacing, 0).PToW();
+                        rightOrigin -= new Vector2(sensorSpacing, 0).PToW();
+
+                        direction = Vector2.up;
+                        
+                        if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
+                                rightOrigin, rightOrigin + direction * FloorRayLength.PToW(), 
+                                RayMask, out FloorHit))
+                        {
+                            transform.position = new Vector3(transform.position.x, 
+                                FloorHit.point.y - HeightRadius.PToW(), 
+                                transform.position.z);
+                            Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
+                            return true;
+                        }
+                        break;
+
+                    case 0b11: // Left Wall Mode
+                        leftOrigin += new Vector2(0, sensorSpacing).PToW();
+                        rightOrigin -= new Vector2(0, sensorSpacing).PToW();
+
+                        direction = Vector2.left;
+                        
+                        if (FindWinnerRay(leftOrigin, leftOrigin + direction * FloorRayLength.PToW(), 
+                                rightOrigin, rightOrigin + direction * FloorRayLength.PToW(),
+                                RayMask, out FloorHit))
+                        {
+                            transform.position = new Vector3(FloorHit.point.x + HeightRadius.PToW(), 
+                                transform.position.y, 
+                                transform.position.z);
+                            Player.Common.SurfaceAngle = CalculateAngle(FloorHit.normal);
+                            return true;
+                        }
+                        break;
+                }
+
+                return false;
             }
-
             return false;
         }
 
@@ -203,7 +207,7 @@ namespace SonicCTK.Physical
                 
                 CDebug.Log(surfaceAngle.ToString());
 
-                if (surfaceAngle >= 91 && surfaceAngle <= 225)
+                if (surfaceAngle >= 135 && surfaceAngle <= 225)
                 {
                     Cmn.Ysp = 0;
                     transform.position += (Vector3)(new Vector2(0, 1).PToW());

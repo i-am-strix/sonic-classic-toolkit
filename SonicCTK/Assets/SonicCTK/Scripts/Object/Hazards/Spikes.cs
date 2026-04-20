@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SonicCTK.Core;
 using SonicCTK.Physical;
+using UnityEngine;
 
 namespace SonicCTK.Gameplay
 {

@@ -1,9 +1,9 @@
-using UnityEngine;
 using System;
 using UnityEngine.Events;
 using SonicCTK.Physical;
 using SonicCTK.World;
 using static SonicCTK.CCommon;
+using UnityEngine;
 
 namespace SonicCTK.Core
 {

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
 
 using TMPro;
 using SonicCTK.World;
+
+using UnityEngine;
 
 namespace SonicCTK.Gameplay
 {

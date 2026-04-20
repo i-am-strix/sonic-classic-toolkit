@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CTK_Common
+  m_EditorClassIdentifier: 
+  m_GroupName: CTK_Common
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 11796c77be36a6a42b3755ccca3c9921
+  m_SerializeEntries:
+  - m_GUID: e2bd9188ad716654aafde9b918771fb3
+    m_Address: /Core/Animations
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 715886d29c4b23e4da44d5be2ee7f697
+    m_Address: /Core/Objects
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 411e44f9909e56848abda49e2d1709a7
+    m_Address: /Core/Players
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ae9ab31320df8e4b9dbd4c3fcc17dec
+    m_Address: /Core/Shaders
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 028cbc14ae652bd40bca014682c9f0f2
+    m_Address: /Core/Sprites/Common
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc4e5dbcb23f7564fa6263d8cf8a28b3
+    m_Address: /Core/Sprites/FX
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 575b83112ce26d445ad42088d644cc44
+    m_Address: /Core/Sprites/Gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 076339b2698ac9748a8af103902e45be
+    m_Address: /Core/Sprites/Characters
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2914f4ad131d7e4eb5d8eae9aee9724
+    m_Address: /Rendering
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 983fff8f62aa7ce4e9697e88196a8e96
+    m_Address: /Resources
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69868571d16097a43ae95c7661d7b3fa
+    m_Address: /- Player Instance.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69be3f60ce155d7409f62d60ac23f532
+    m_Address: Player HUD.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b120b7466ec36f4d8bdf1e887947d87
+    m_Address: S_FX_RingSparkle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fed76bc4b62a615498a99ac5b09dd198
+    m_Address: S_FX_Explosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21ea27a00f86ec142b44519e5440db20
+    m_Address: Normal Shield.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4c366fa869bcd9f4ab4ee6a63ee50d9b, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 048d7d71c662f9447be0ba770143f5b1, type: 2}
+    - {fileID: 11400000, guid: 32d71c1ed4825054e89ccd3cf5fa11b2, type: 2}

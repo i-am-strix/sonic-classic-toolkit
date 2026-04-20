@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -8,6 +7,7 @@ using FMOD.Studio;
 using SonicCTK.Core;
 using SonicCTK.Physical;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
+using UnityEngine;
 
 namespace SonicCTK.World
 {

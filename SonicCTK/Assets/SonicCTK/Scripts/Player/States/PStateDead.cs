@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using SonicCTK.Core;
+using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace SonicCTK.Physical
 {
@@ -26,6 +28,13 @@ namespace SonicCTK.Physical
         {
             Cmn.Ysp += Phys.Gravity;
             Cmn.ApplyTransformations();
+
+            if (Cmn.Ysp > 20)
+            {
+                ProcFadeHandler.RequestFade(0.5f, 0, 0.5f, () =>
+                {
+                });
+            }
         }
 
         public override void OnLateUpdate(float Delta)

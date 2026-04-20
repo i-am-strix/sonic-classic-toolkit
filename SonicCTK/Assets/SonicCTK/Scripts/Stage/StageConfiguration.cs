@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
 using FMODUnity;
 using NaughtyAttributes;
+using UnityEngine;
 
 namespace SonicCTK.Core{
 	[CreateAssetMenu(fileName = "New Stage Configuration Container", menuName = Constants.ContextName + "/Stage/Stage Configurations")]

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SonicCTK.Core;
 using SonicCTK.Physical;
 using SonicCTK.World;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Gameplay
 {
@@ -91,7 +92,7 @@ namespace SonicCTK.Gameplay
             Destroy(gameObject);
             CAudio.PlayOneShot("Ring");
             Stage.Current.RingsCollected++;
-            ObjectReferenceContainer.Spawn("Ring Sparkle", transform.position);
+            Addressables.InstantiateAsync("S_FX_RingSparkle.prefab", transform.position, Quaternion.identity);
         }
     }
 }

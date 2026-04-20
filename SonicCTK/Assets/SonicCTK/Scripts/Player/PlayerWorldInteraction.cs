@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SonicCTK.Core;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Physical
 {
@@ -77,7 +78,7 @@ namespace SonicCTK.Physical
                     
                     case PlayerShieldType.Normal:
                         CurrentShieldInstance =
-                            ObjectReferenceContainer.Spawn("Normal Shield", Player.transform.position);
+                            Addressables.InstantiateAsync("Normal Shield.prefab", Player.transform.position, Quaternion.identity).WaitForCompletion();
                         ShieldType = NewShieldType;
                         break;
                 }

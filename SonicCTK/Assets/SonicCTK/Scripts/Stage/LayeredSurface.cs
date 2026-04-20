@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using SonicCTK.Core;
 using SonicCTK.World;
-using UnityEngine;
 using Object = SonicCTK.Gameplay.Object;
+using UnityEngine;
 
 namespace SonicCTK.Physical
 {

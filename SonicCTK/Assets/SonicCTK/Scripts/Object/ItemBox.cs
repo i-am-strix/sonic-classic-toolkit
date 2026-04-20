@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SonicCTK.Core;
 using SonicCTK.Physical;
 using SonicCTK.World;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Gameplay
 {
@@ -125,7 +126,7 @@ namespace SonicCTK.Gameplay
         public void DestroyItemBox()
         {
             if (solidBox.enabled) return;
-            ObjectReferenceContainer.Spawn("Explosion", transform.position);
+            Addressables.InstantiateAsync("S_FX_Explosion.prefab", transform.position, Quaternion.identity);
             MonitorIcon.transform.SetParent(null);
             IsMonitorInactive = true;
 

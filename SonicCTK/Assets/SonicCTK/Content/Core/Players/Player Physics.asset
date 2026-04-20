@@ -16,7 +16,7 @@ MonoBehaviour:
   Deceleration: 0.5
   Friction: 0.046875
   TopSpeed: 6
-  MaxSpeed: 16
+  MaxSpeed: 100
   SlopeRepel: 0.125
   RollSlopeRepelUp: 0.078125
   RollSlopeRepelDown: 0.3125

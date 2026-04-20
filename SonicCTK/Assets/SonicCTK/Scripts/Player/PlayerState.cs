@@ -1,4 +1,3 @@
-using UnityEngine;
 using SonicCTK.Core;
 
 namespace SonicCTK.Physical {
@@ -10,13 +9,13 @@ namespace SonicCTK.Physical {
     {
         public Player Player;
 
-        public PlayerCommon Cmn => Player.Common;
-        public PlayerPhysics Phys => Player.Physics;
-        public PlayerCollision Col => Player.Collision;
-        public PlayerCamera Cam => Player.Cam;
-        public PlayerVisual Visual => Player.Visual;
-        public PlayerWorldInteraction Interactions => Player.Interactions;
-        public GameInputManager Input => Player.PlayerInput;
+        protected PlayerCommon Cmn => Player.Common;
+        protected PlayerPhysics Phys => Player.Physics;
+        protected PlayerCollision Col => Player.Collision;
+        protected PlayerCamera Cam => Player.Cam;
+        protected PlayerVisual Visual => Player.Visual;
+        protected PlayerWorldInteraction Interactions => Player.Interactions;
+        protected InputHandler Input => Player.PlayerInput;
 
         public bool Is<T>() where T : PlayerState
         {

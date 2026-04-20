@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Core
 {
@@ -69,7 +70,8 @@ namespace SonicCTK.Core
             {
                 var RadAngle = CurrentAngle * Mathf.Deg2Rad;
 
-                Gameplay.Ring Ring = ObjectReferenceContainer.Spawn("Ring", Position).GetComponent<Gameplay.Ring>();
+                Gameplay.Ring Ring = Addressables.InstantiateAsync("/Core/Objects/Ring.prefab", Position, Quaternion.identity).WaitForCompletion().
+                    GetComponent<Gameplay.Ring>();
                 Ring.IsBouncingRing = true;
 
                 Ring.Xsp = Mathf.Cos(RadAngle) * Velocity;
