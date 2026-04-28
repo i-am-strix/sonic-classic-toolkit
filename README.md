@@ -8,7 +8,7 @@ I don't expect a lot of people to bother with this as it does some things in a r
 
 To use the framework, you'll need:
 - Unity 2023.2.22f1 or newer
-- A compatible code editor, such as **Visual Studio 2019**
+- A compatible code editor, such as **Visual Studio 2019** (I use Jetbrains Rider for those curious)
 - [FMOD Studio](https://www.fmod.com/download) to modify the audio
 
 ### Big thanks to the [Sonic Physics Guide](https://info.sonicretro.org/Sonic_Physics_Guide) for providing the research material used to implement the gameplay in Unity!!! It's a really good resource that I recommend you keep close by if you want to delve deeper into Classic Sonic gameplay
