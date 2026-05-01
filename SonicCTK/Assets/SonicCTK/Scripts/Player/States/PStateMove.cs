@@ -161,7 +161,10 @@ namespace SonicCTK.Physical
         public void GroundMovement()
         {
             var inputDir = Cmn.InputDirection;
-
+            
+            // This can be condensed into a single chain instead of having it separated for left (< 0) and right (> 0), but
+            // I figured I'd do this for clarity
+            
             if (inputDir.x < 0)
             {
                 if (Cmn.ControlLock == 0)
@@ -179,6 +182,10 @@ namespace SonicCTK.Physical
 	                    }
                         Cmn.Gsp = Mathf.Max(Cmn.Gsp - Phys.Acceleration, -Phys.TopSpeed);
                     }
+
+                    if (GameConfiguration.Instance.ApplySonic1SpeedCap && Cmn.Gsp < -Phys.TopSpeed &&
+                        Cmn.ControlLock == 0)
+                        Cmn.Gsp = -Phys.TopSpeed;
                 }
             }
             else if (inputDir.x > 0)
@@ -198,6 +205,10 @@ namespace SonicCTK.Physical
 	                    }                        
 	                    Cmn.Gsp = Mathf.Min(Cmn.Gsp + Phys.Acceleration, Phys.TopSpeed);
                     }
+                    
+                    if (GameConfiguration.Instance.ApplySonic1SpeedCap && Cmn.Gsp > Phys.TopSpeed &&
+                        Cmn.ControlLock == 0)
+                        Cmn.Gsp = Phys.TopSpeed;
                 }
             }
             else Cmn.Gsp -= Mathf.Min(Mathf.Abs(Cmn.Gsp), Phys.Friction) * Mathf.Sign(Cmn.Gsp);

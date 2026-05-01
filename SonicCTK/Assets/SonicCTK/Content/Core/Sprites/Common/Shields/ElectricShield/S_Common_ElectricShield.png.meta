@@ -1,0 +1,414 @@
+fileFormatVersion: 2
+guid: a69b4600e723c17409808901402de6b0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9061612531464713064
+    second: S_Common_ElectricShield_0
+  - first:
+      213: -3680614601967002816
+    second: S_Common_ElectricShield_1
+  - first:
+      213: -5886048003755576409
+    second: S_Common_ElectricShield_2
+  - first:
+      213: 8382993431156856026
+    second: S_Common_ElectricShield_3
+  - first:
+      213: -746817617160905531
+    second: S_Common_ElectricShield_4
+  - first:
+      213: -8297480154800459743
+    second: S_Common_ElectricShield_5
+  - first:
+      213: -7848206075677455087
+    second: S_Common_ElectricShield_6
+  - first:
+      213: 4710522852127030413
+    second: S_Common_ElectricShield_7
+  - first:
+      213: -8792718019940899448
+    second: S_Common_ElectricShield_8
+  - first:
+      213: 408159691791863316
+    second: S_Common_ElectricShield_9
+  - first:
+      213: -3462186814486475683
+    second: S_Common_ElectricShield_10
+  - first:
+      213: -1691290402767435856
+    second: S_Common_ElectricShield_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 168
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89c41d1c96fae3280800000000000000
+      internalID: -9061612531464713064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_1
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 168
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04b14ae2584dbecc0800000000000000
+      internalID: -3680614601967002816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_2
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 168
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a37045b68e805ea0800000000000000
+      internalID: -5886048003755576409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 112
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad499825c10665470800000000000000
+      internalID: 8382993431156856026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_4
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 112
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ccde118555c2a5f0800000000000000
+      internalID: -746817617160905531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_5
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 112
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 120f34ad2cd69dc80800000000000000
+      internalID: -8297480154800459743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 56
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11dce2fd722951390800000000000000
+      internalID: -7848206075677455087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_7
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 56
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8c346b93932f5140800000000000000
+      internalID: 4710522852127030413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_8
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 56
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8852f33fb8df9f580800000000000000
+      internalID: -8792718019940899448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41e03e0c3131aa500800000000000000
+      internalID: 408159691791863316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_10
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5c0e788f67d3ffc0800000000000000
+      internalID: -3462186814486475683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_Common_ElectricShield_11
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b7050be6545788e0800000000000000
+      internalID: -1691290402767435856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: a50d8443aa998a745a03c03e061df74d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      S_Common_ElectricShield_0: -9061612531464713064
+      S_Common_ElectricShield_1: -3680614601967002816
+      S_Common_ElectricShield_10: -3462186814486475683
+      S_Common_ElectricShield_11: -1691290402767435856
+      S_Common_ElectricShield_2: -5886048003755576409
+      S_Common_ElectricShield_3: 8382993431156856026
+      S_Common_ElectricShield_4: -746817617160905531
+      S_Common_ElectricShield_5: -8297480154800459743
+      S_Common_ElectricShield_6: -7848206075677455087
+      S_Common_ElectricShield_7: 4710522852127030413
+      S_Common_ElectricShield_8: -8792718019940899448
+      S_Common_ElectricShield_9: 408159691791863316
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

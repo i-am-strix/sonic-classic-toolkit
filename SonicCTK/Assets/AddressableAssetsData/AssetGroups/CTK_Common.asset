@@ -92,6 +92,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f9ef64c689612742bd4b2276912a9a4
+    m_Address: Electric Shield.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4c366fa869bcd9f4ab4ee6a63ee50d9b, type: 2}
   m_SchemaSet:

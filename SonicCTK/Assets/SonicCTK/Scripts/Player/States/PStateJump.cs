@@ -51,6 +51,9 @@ namespace SonicCTK.Physical
                 HoldingJump = false;
                 if (Cmn.Ysp <= -4f) Cmn.Ysp = -4f;
             }
+            
+            if (Input.GetButtonDown("Jump"))
+                Interactions.CurrentShieldScript?.OnPlayerShieldTriggerAbility(Player, this);
 
             CheckForDropdash(Delta);
         }

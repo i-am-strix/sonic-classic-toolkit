@@ -34,7 +34,6 @@ namespace SonicCTK.Physical
 
         private void UpdateCollider(Player player)
         {
-			CDebug.Log("is this even updating");
             thisCollider.enabled = player.Interactions.CurrentPlayerLayer == LayerMode;
         }
     }

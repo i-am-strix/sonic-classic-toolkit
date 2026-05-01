@@ -24,14 +24,16 @@ namespace SonicCTK.Physical
         private Vector2 focalPoint;
         private int freezeTicks;
 
-        public void FreezeCamera(int TickCount)
+        public void FreezeCamera(int frameCount)
         {
-            freezeTicks = TickCount;
+            freezeTicks = frameCount;
         }
 
         public void Start()
         {
             PixelPosition = Player.transform.position.WToP();
+            PPCam.refResolutionX = GameConfiguration.Instance.GameReferenceResolution.x;
+            PPCam.refResolutionY = GameConfiguration.Instance.GameReferenceResolution.y;
         }
 
         public void Follow()
@@ -47,7 +49,7 @@ namespace SonicCTK.Physical
             var pixelPlayerPosition = ((Vector2)Player.transform.position).WToP() -
                                       new Vector2(0, (Player.Collision.DefaultCollisionSize.y - Player.Collision.PlayerCollisionSize.y) / 2);
 
-            focalPoint = (pixelPlayerPosition + new Vector2(0, 16)) - PixelPosition;
+            focalPoint = pixelPlayerPosition + new Vector2(0, 16) - PixelPosition;
             currentLimit = new Vector2(0, 0);
             
             if (focalPoint.x <= PPCam.refResolutionX / 2 - 16) 
@@ -83,7 +85,7 @@ namespace SonicCTK.Physical
             targetCameraPoint.x = Mathf.Clamp(targetCameraPoint.x, 0, Stage.Current.StageSize.x - PPCam.refResolutionX);
             targetCameraPoint.y = Mathf.Clamp(targetCameraPoint.y, 0, Stage.Current.StageSize.y - PPCam.refResolutionY);
             
-            transform.position = (Vector3)(targetCameraPoint + new Vector2(PPCam.refResolutionX / 2, PPCam.refResolutionY / 2)).PToW() + new Vector3(0, 0, -10);
+            transform.position = (Vector3)(targetCameraPoint + new Vector2(PPCam.refResolutionX / 2, PPCam.refResolutionY / 2)).PToW() + new Vector3(0, 0, transform.position.z);
 
             PixelPosition = targetCameraPoint - CameraOffset.Round();
         }

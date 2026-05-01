@@ -41,27 +41,27 @@ namespace SonicCTK.World
         
         public static Player GetClosestPlayer(Vector2 position)
         {
-            Player Closest = null;
-            var ClosestDistance = float.MaxValue;
+            Player closest = null;
+            var closestDistance = float.MaxValue;
 
             if (ConnectedPlayers.Count == 1)
             {
-                Closest = ConnectedPlayers[0];
-                return Closest;
+                closest = ConnectedPlayers[0];
+                return closest;
             }
             
             for(int i = 0; i < ConnectedPlayers.Count; i++)
             {
-                var Dist = Vector2.Distance((Vector2)ConnectedPlayers[i].transform.position, position);
-                if (Dist < ClosestDistance)
+                var dist = Vector2.Distance((Vector2)ConnectedPlayers[i].transform.position, position);
+                if (dist < closestDistance)
                 {
-                    ClosestDistance = Dist;
-                    Closest = ConnectedPlayers[i];
+                    closestDistance = dist;
+                    closest = ConnectedPlayers[i];
 
                 }
             }
 
-            return Closest;
+            return closest;
         }
 
         private void Awake()

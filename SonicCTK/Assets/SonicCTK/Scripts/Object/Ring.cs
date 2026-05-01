@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using SonicCTK.Core;
 using SonicCTK.Physical;
@@ -20,6 +21,9 @@ namespace SonicCTK.Gameplay
         private SpriteRenderer ringSprite;
         
         private const float RING_GRAVITY = 0.09375f;
+
+        private bool isMagnetised;
+        private Player magnetizedPlayer;
 
         private void Reset()
         {
@@ -60,9 +64,27 @@ namespace SonicCTK.Gameplay
             }
         }
 
+        private readonly float[] magnetizedRingAcceleration = new []
+        {
+            0.75f, 0.1875f
+        };
+        
         public override void Update()
         {
             base.Update();
+
+            if (isMagnetised)
+            {
+                var s = new Vector2(Math.Sign(magnetizedPlayer.transform.position.x - transform.position.x),
+                    Math.Sign(magnetizedPlayer.transform.position.y - transform.position.y));
+                
+                var tx = Math.Sign(Xsp) == s.x;
+                var ty = Math.Sign(Ysp) == s.y;
+	
+                Xsp += magnetizedRingAcceleration[tx ? 1 : 0] * s.x;
+                Ysp -= magnetizedRingAcceleration[ty ? 1 : 0] * s.y;
+            }
+            
             if (IsBouncingRing)
             {
                 ringLifeSpan--;
@@ -79,9 +101,24 @@ namespace SonicCTK.Gameplay
 
                 Ysp += RING_GRAVITY;
 
-                transform.position += new Vector3(Xsp, Ysp).PToW();
-
                 if (ringLifeSpan <= 0) Destroy(gameObject);
+            }
+            transform.position += new Vector3(Xsp, Ysp).PToW();
+
+            CheckForMagnetization();
+        }
+
+        private void CheckForMagnetization()
+        {
+            if (isMagnetised || IsBouncingRing) return;
+            var player = Stage.GetClosestPlayer(transform.position);
+
+            if (player.Interactions.CurrentShieldScript is not PlayerElectricShield) return;
+            
+            if (Vector3.Distance(player.transform.position, transform.position) < 1.28f)
+            {
+                isMagnetised = true;
+                magnetizedPlayer = player;
             }
         }
 

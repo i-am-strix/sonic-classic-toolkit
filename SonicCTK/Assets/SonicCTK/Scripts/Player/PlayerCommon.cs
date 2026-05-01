@@ -13,10 +13,20 @@ namespace SonicCTK.Physical
     {
         public Player Player;
         
+        /// <summary>
+        /// When grounded, <b>Gsp</b> (Ground Speed) controls both Xsp and Ysp based on the terrain angle
+        /// </summary>
         [Header("Physics")] 
         public float Gsp;
 
+        /// <summary>
+        /// Horizontal Player Speed
+        /// </summary>
         public float Xsp;
+        
+        /// <summary>
+        /// Vertical Player Speed (negative = upwards)
+        /// </summary>
         public float Ysp;
 
         public float SurfaceAngle;
@@ -45,6 +55,12 @@ namespace SonicCTK.Physical
 
         private int cameraVerticalOffsetTicks;
         private float cameraVerticalOffsetSpeed = 2;
+
+        /// <summary>
+        /// Use this flag to block character specific abilities from being
+        /// usable in certain scenarios
+        /// </summary>
+        public bool CanCharacterPerformSpecialAbilities = true;
         
         public void GrabInput() => InputDirection = Player.PlayerInput.GetAxis2D("Move").Round();
 
@@ -108,7 +124,12 @@ namespace SonicCTK.Physical
                 Stage.Current.RingsCollected = 0;
                 CAudio.Play("Lose Rings");
             }
-            else Player.Interactions.SetShield(PlayerShieldType.None);
+            else
+            {
+                Player.Interactions.CurrentShieldScript?.OnShieldLost(Player);
+                Player.Interactions.CurrentShieldScript = null;
+                Player.Interactions.SetShield(PlayerShieldType.None);
+            }
             
             Player.Get<PStateHurt>().Hazard = objectDealingDamage;
             Player.Set<PStateHurt>();

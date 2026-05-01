@@ -25,6 +25,7 @@ namespace SonicCTK.Physical
         [Header("Shields")]
         public PlayerShieldType ShieldType;
         public GameObject CurrentShieldInstance;
+        public PlayerShield CurrentShieldScript;
         
         [Header("Solid Boxes")]
         public bool IsStandingOnSolidBox;
@@ -63,13 +64,16 @@ namespace SonicCTK.Physical
 
             if (CurrentShieldInstance)
                 CurrentShieldInstance.transform.position = ((Vector2)Player.transform.position).WToP().Round().PToW();
+            
+            CurrentShieldScript?.OnShieldUpdate(Player);
         }
 
         public void SetShield(PlayerShieldType NewShieldType)
         {
             if (NewShieldType != ShieldType)
             {
-                if (CurrentShieldInstance) GameObject.Destroy(CurrentShieldInstance);
+                GameObject previousShieldInstance = null;
+                if (CurrentShieldInstance) previousShieldInstance = CurrentShieldInstance;
                 switch (NewShieldType)
                 {
                     case PlayerShieldType.None:
@@ -81,6 +85,18 @@ namespace SonicCTK.Physical
                             Addressables.InstantiateAsync("Normal Shield.prefab", Player.transform.position, Quaternion.identity).WaitForCompletion();
                         ShieldType = NewShieldType;
                         break;
+                    case PlayerShieldType.Electric:
+                        CurrentShieldInstance =
+                            Addressables.InstantiateAsync("Electric Shield.prefab", Player.transform.position, Quaternion.identity).WaitForCompletion();
+                        ShieldType = NewShieldType;
+                        break;
+                }
+
+                if (previousShieldInstance) GameObject.Destroy(previousShieldInstance);
+                if (ShieldType != PlayerShieldType.None)
+                {
+                    CurrentShieldScript = CurrentShieldInstance.GetComponent<PlayerShield>();
+                    CurrentShieldScript?.OnShieldGather(Player);
                 }
             }
         }

@@ -29,19 +29,48 @@ namespace SonicCTK.Core
     }
 
     /// <summary>
-    /// Pixel transformation functions
+    /// Pixel transformation functions.
+    ///
+    /// This is essential for keeping <b><i>this</i></b> framework similar in function to other frameworks
+    /// like those on Clickteam Fusion or Gamemaker, as it essentially makes the game use pixels for positions and stuff as opposed
+    /// to Unity units (which are in meters), and in turn makes your life with handling stuff like sprites and positioning them
+    /// much, much easier
     /// </summary>
     public static class CPixelConversion
     {
+        /// <summary>
+        /// The pixel transformation factor. By default, it uses the default Unity value of 100 PPU (pixels-per-unit),
+        /// which is basically 100 pixels per 1 Unity unit (so a transform position of (1, 1, 1) is essentially (100, -100, 100) in pixels
+        /// </summary>
         public const float CPixelConversionFactor = 1f / 100;
 
+        /// <summary>
+        /// Convert a Vector3 from world-space (0.01, 0.1, 1) to pixel-space (1, 10, 100)
+        /// </summary>
         public static Vector3 WToP(this Vector3 v) => Vector3.Scale(v / CPixelConversionFactor, new Vector3(1, -1, 1));
+        
+        /// <summary>
+        /// Convert a Vector3 from pixel-space units (1, 10, 100) to world-space units (0.01, 0.1, 1)
+        /// </summary>
         public static Vector3 PToW(this Vector3 v) => Vector3.Scale(v * CPixelConversionFactor, new Vector3(1, -1, 1));
 
+        /// <summary>
+        /// Convert a Vector2 from world-space (0.01, 0.1, 1) to pixel-space (1, 10, 100)
+        /// </summary>
         public static Vector2 WToP(this Vector2 v) => Vector2.Scale(v / CPixelConversionFactor, new Vector2(1, -1));
+        
+        /// <summary>
+        /// Convert a Vector2 from pixel-space units (1, 10, 100) to world-space units (0.01, 0.1, 1)
+        /// </summary>
         public static Vector2 PToW(this Vector2 v) => Vector2.Scale(v * CPixelConversionFactor, new Vector2(1, -1));
 
+        /// <summary>
+        /// Convert a float from world-space (0.01, 0.1, 1) to pixel-space (1, 10, 100)
+        /// </summary>
         public static float WToP(this float f) => f / CPixelConversionFactor;
+        /// <summary>
+        /// Convert a float from pixel-space (1, 10, 100) to world-space (0.01, 0.1, 1)
+        /// </summary>
         public static float PToW(this float f) => f * CPixelConversionFactor;
     }
 

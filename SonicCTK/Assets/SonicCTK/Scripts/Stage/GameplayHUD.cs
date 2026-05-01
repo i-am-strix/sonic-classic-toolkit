@@ -6,6 +6,7 @@ using TMPro;
 using SonicCTK.World;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SonicCTK.Gameplay
 {
@@ -16,7 +17,13 @@ namespace SonicCTK.Gameplay
         public TMP_Text TimeCounter_Minutes, TimeCounter_Seconds;
         public TMP_Text RingsCounter;
 
-        void Start()
+        private void Awake()
+        {
+            var canvasScaler = GetComponentInParent<CanvasScaler>();
+            canvasScaler.referenceResolution = GameConfiguration.Instance.GameReferenceResolution;
+        }
+        
+        private void Start()
         {
 
         }

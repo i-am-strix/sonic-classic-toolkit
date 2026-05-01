@@ -114,6 +114,9 @@ namespace SonicCTK.Gameplay
                 case ItemBoxType.Shield:
                     interactedPlayer.Interactions.SetShield(PlayerShieldType.Normal);
                     break;
+                case ItemBoxType.ElectricShield:
+                    interactedPlayer.Interactions.SetShield(PlayerShieldType.Electric);
+                    break;
             }
             
             yield return new WaitForSeconds(0.5f);

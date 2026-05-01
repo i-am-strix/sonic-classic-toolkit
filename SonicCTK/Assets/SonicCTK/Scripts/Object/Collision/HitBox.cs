@@ -52,7 +52,7 @@ namespace SonicCTK.Core
             }
         }
 
-        public void OnDrawGizmos()
+        public virtual void OnDrawGizmos()
         {
             Gizmos.color = Constants.ColorConstants.HitBoxColor;
             Gizmos.DrawCube(transform.position + (Vector3)BoxOffset.PToW(), ObjectRadius.PToW() * 2);

@@ -324,8 +324,11 @@ namespace SonicCTK.Physical
             
             if (leftHit.collider != null && rightHit.collider != null)
             {
-                CDebug.DrawLine(originLeft, targetLeft, Color.green);
-                CDebug.DrawLine(originRight, targetRight, Color.green);
+                CDebug.DrawLine(originLeft, targetLeft, new Color(0f, 0.51f, 0f));
+                CDebug.DrawLine(originRight, targetRight, new Color(0f, 0.51f, 0f));
+                
+                CDebug.DrawLine(originLeft, leftHit.point, Color.green);
+                CDebug.DrawLine(originRight, rightHit.point, Color.green);
                 
                 if (leftHit.distance < rightHit.distance) winner = leftHit;
                 else winner = rightHit;
@@ -335,7 +338,8 @@ namespace SonicCTK.Physical
 
             if (rightHit.collider == null && leftHit.collider != null)
             {
-                CDebug.DrawLine(originLeft, targetLeft, Color.green);
+                CDebug.DrawLine(originLeft, targetLeft, new Color(0f, 0.51f, 0f));
+                CDebug.DrawLine(originLeft, leftHit.point, Color.green);
 
                 winner = leftHit;
                 return true;
@@ -343,7 +347,8 @@ namespace SonicCTK.Physical
 
             if (rightHit.collider != null && leftHit.collider == null)
             {
-                CDebug.DrawLine(originRight, targetRight, Color.green);
+                CDebug.DrawLine(originRight, targetRight, new Color(0f, 0.51f, 0f));
+                CDebug.DrawLine(originRight, rightHit.point, Color.green);
 
                 winner = rightHit;
                 return true;

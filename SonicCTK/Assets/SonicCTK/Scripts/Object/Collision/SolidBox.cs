@@ -58,6 +58,11 @@ namespace SonicCTK.Core
         /// </summary>
         public event SolidBoxCollisionEvent OnCollision;
 
+        public float UpperLimit => ((Vector2)transform.position + boxOffset.PToW()).y + Radius.y.PToW();
+        public float LowerLimit => ((Vector2)transform.position + boxOffset.PToW()).y - Radius.y.PToW();
+        public float LeftLimit => ((Vector2)transform.position + boxOffset.PToW()).x - Radius.x.PToW();
+        public float RightLimit => ((Vector2)transform.position + boxOffset.PToW()).x + Radius.x.PToW();
+
         public virtual void Update()
         {
             foreach (Player p in Stage.ConnectedPlayers) Collide(p);
