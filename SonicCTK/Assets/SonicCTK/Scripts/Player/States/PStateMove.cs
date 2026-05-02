@@ -57,7 +57,7 @@ namespace SonicCTK.Physical
 		        Cmn.IsPushing = false;
 	        }
 
-            if (Cmn.InputDirection.x != 0)
+            if (Cmn.InputDirection.x != 0 && Cmn.ControlLock == 0)
             {
                 if (Cmn.InputDirection.x != Mathf.Sign(Cmn.Gsp))
                 {

@@ -2,9 +2,19 @@
 using SonicCTK.Core;
 using SonicCTK.World;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Physical
 {
+    public enum ScoreGrantAmount
+    {
+        Score100 = 100,
+        Score200 = 200,
+        Score500 = 500,
+        Score1000 = 1000,
+        Score10000 = 10000
+    }
+    
     /// <summary>
     /// Contains common functions and variables used by all <b>PlayerStates</b>
     /// </summary>
@@ -79,6 +89,9 @@ namespace SonicCTK.Physical
         public void CommonUpdate()
         {
             InvulnerabilityTimer = Mathf.Max(0, InvulnerabilityTimer - 1);
+            if (IsGrounded)
+                Player.Storage.PlayerBounceScoreGainIndex = 0;
+            
             CheckPlayerBounds();
             HandleCameraOffset();
         }
@@ -108,7 +121,7 @@ namespace SonicCTK.Physical
             if (Player.Is<PStateHurt>() || Player.Is<PStateDead>()) return;
             if (InvulnerabilityTimer != 0) return;
 
-            if (Stage.Current.RingsCollected == 0)
+            if (Player.Storage.Rings == 0)
             {
                 Player.Set<PStateDead>();
                 CAudio.Play("Die");
@@ -120,8 +133,8 @@ namespace SonicCTK.Physical
 
             if (Player.Interactions.ShieldType == PlayerShieldType.None)
             {
-                CUtility.SpawnRings(Player.transform.position, Stage.Current.RingsCollected);
-                Stage.Current.RingsCollected = 0;
+                CUtility.SpawnRings(Player.transform.position, Player.Storage.Rings);
+                Player.Storage.Rings = 0;
                 CAudio.Play("Lose Rings");
             }
             else
@@ -157,6 +170,18 @@ namespace SonicCTK.Physical
 
             Player.Set<PStateDead>();
             CAudio.Play("Die");
+        }
+
+        public void GrantScore(ScoreGrantAmount amount, Transform caller)
+        {
+            Player.Storage.Score += (int)amount;
+            Stage.LatestGrantedScore = amount;
+            Addressables.InstantiateAsync("/Common/Score Card", caller.position, Quaternion.identity).WaitForCompletion();
+        }
+        
+        public void GrantScore(int amount)
+        {
+            Player.Storage.Score += amount;
         }
     }
 }

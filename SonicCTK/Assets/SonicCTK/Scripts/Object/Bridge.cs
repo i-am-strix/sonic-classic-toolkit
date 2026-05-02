@@ -9,7 +9,11 @@ namespace SonicCTK
 {
     public class Bridge : SolidBox
     {
+        [Header("Rendering")]
         public Sprite BridgeLogSprite;
+        public Sprite BridgeLimitSprite;
+
+        public SortingLayer BridgeRenderLayer;
         
         [Min(1)] 
         public int BridgeLength;
@@ -19,6 +23,8 @@ namespace SonicCTK
 
         private float logSpriteWidth => BridgeLogSprite.rect.width;
         private bool isAnyPlayerStandingOnBridge = false;
+
+        private Vector2 bridgeLogSpriteSize;
 
         private void Reset()
         {
@@ -31,68 +37,83 @@ namespace SonicCTK
             generatedBridgeLogs = new();
             generatedBridgeLogDepressionMax = new float[BridgeLength];
             Vector3 origin = (Vector3)BridgeLogSprite.rect.size.PToW() / 2;
+
+            bridgeLogSpriteSize = BridgeLogSprite.rect.size;
             
             for (int i = 0; i < BridgeLength; i++)
             {
                 var newLog = new GameObject($"Bridge Log {i}");
                 newLog.transform.SetParent(transform);
-                newLog.transform.localPosition = origin + Vector3.right * (BridgeLogSprite.rect.width.PToW() * i);
+                newLog.transform.localPosition = origin + Vector3.right * (bridgeLogSpriteSize.x.PToW() * i);
 
                 var sprite = newLog.AddComponent<SpriteRenderer>();
                 sprite.sprite = BridgeLogSprite;
                 
                 generatedBridgeLogs.Add(newLog.transform);
-                generatedBridgeLogDepressionMax[i] = (i < BridgeLength / 2 ? i : BridgeLength - i - 1) * 2 + 2;
+                generatedBridgeLogDepressionMax[i] = i < BridgeLength / 2 ? (i + 1) * 2 : (BridgeLength - i) * 2;
             }
 
-            radius.x = BridgeLogSprite.rect.width * BridgeLength / 2;
+            radius.x = bridgeLogSpriteSize.x * BridgeLength / 2;
             
-            radius.y = boxOffset.y = BridgeLogSprite.rect.height / 2;
-            boxOffset.x = BridgeLength / 2 * BridgeLogSprite.rect.width;
+            radius.y = boxOffset.y = bridgeLogSpriteSize.y / 2;
+            boxOffset.x = BridgeLength / 2 * bridgeLogSpriteSize.x;
             
             OnCollision += WatchForCollision;
+
+            var bridgeLimitLeft = new GameObject("Bridge Limit Left");
+            bridgeLimitLeft.transform.position = transform.position;
+            var limitLeftSprite = bridgeLimitLeft.AddComponent<SpriteRenderer>();
+            limitLeftSprite.sprite = BridgeLimitSprite;
+            
+            var bridgeLimitRight = new GameObject("Bridge Limit Right");
+            var limitRightSprite = bridgeLimitRight.AddComponent<SpriteRenderer>();
+            limitRightSprite.sprite = BridgeLimitSprite;
+            limitRightSprite.flipX = true;
+            
+            bridgeLimitRight.transform.position = transform.position + Vector3.right * bridgeLogSpriteSize.x.PToW() * BridgeLength;
         }
 
         private float depressionAmp;
-        private float curSeg;
+        private int curSeg;
+
+        private Player attachedPlayer;
 
         private void WatchForCollision(Player player, SolidBoxCollisionDirection direction)
         {
-            depressionAmp = Mathf.Clamp(depressionAmp + (player.Interactions.CurrentlyStandingSolidBox == this ? 5.625f : -5.625f), 0,90);
-            if (player.Interactions.CurrentlyStandingSolidBox == this)
-            {
-                isAnyPlayerStandingOnBridge = true;
-                var origin = (Vector3)BridgeLogSprite.rect.size.PToW() / 2;
-                curSeg = Mathf.Clamp((int)Mathf.Floor((player.transform.position.x.WToP() - transform.position.x.WToP()) / 16) + 1, 1, BridgeLength);
-
-                for (int i = 0; i < BridgeLength; i++)
-                {
-                    float logDistance = 0;
-                    float difference = Mathf.Abs((i + 1) - curSeg);
-                    if (i < curSeg) 
-                        logDistance = 1 - (difference / curSeg);
-                    else 
-                        logDistance = 1 - (difference / ((BridgeLength - curSeg) + 1));
-                    
-                    generatedBridgeLogs[i].localPosition = 
-                        new Vector3(generatedBridgeLogs[i].localPosition.x, origin.y - Mathf.Floor(generatedBridgeLogDepressionMax[(int)curSeg - 1] * Mathf.Sin((depressionAmp * logDistance) * Mathf.Deg2Rad)).PToW());
-
-                    player.transform.position = new Vector3(player.transform.position.x,
-                        UpperLimit + player.Collision.HeightRadius.PToW());
-                }
-            }
-            else
-            {
-                
-            }
+            attachedPlayer = player;
         }
 
         public override void Update()
         {
-            boxOffset.y = -generatedBridgeLogs[BridgeLength / 2].localPosition.y.WToP();
-            
             base.Update();
-        }
+
+            var playerStanding = IsAnyPlayerStandingOnThis();
+            depressionAmp = Mathf.Clamp(depressionAmp + (playerStanding ? 5.625f : -5.625f), 0,90);
+
+            if (depressionAmp == 0) return;
+            
+            isAnyPlayerStandingOnBridge = true;
+            var origin = (Vector3)BridgeLogSprite.rect.size.PToW() / 2;
+            if (playerStanding)
+                curSeg = Mathf.Clamp((int)Mathf.Floor((attachedPlayer.transform.position.x.WToP() - transform.position.x.WToP()) / 16) + 1, 1, BridgeLength);
+
+            for (int i = 0; i < BridgeLength; i++)
+            {
+                float logDistance = 0;
+                float difference = Mathf.Abs(i + 1 - curSeg);
+                if (i < curSeg) 
+                    logDistance = 1 - difference / curSeg;
+                else 
+                    logDistance = 1 - difference / (BridgeLength - curSeg + 1);
+                
+                generatedBridgeLogs[i].localPosition = 
+                    new Vector3(generatedBridgeLogs[i].localPosition.x, origin.y - Mathf.Floor(generatedBridgeLogDepressionMax[curSeg - 1] * Mathf.Sin((depressionAmp * logDistance) * Mathf.Deg2Rad)).PToW());
+
+            }
+            
+            if (attachedPlayer && attachedPlayer.Common.IsGrounded)
+                attachedPlayer.transform.position -= new Vector3(0, (generatedBridgeLogDepressionMax[curSeg - 1]).PToW() * Mathf.Sin(depressionAmp * Mathf.Deg2Rad));
+    }
 
         public override void OnDrawGizmos()
         {

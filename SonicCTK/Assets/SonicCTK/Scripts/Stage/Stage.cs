@@ -22,9 +22,7 @@ namespace SonicCTK.World
         [Header("Gameplay")]
         public float StageTime = 0;
         public bool CanUpdateStageTime = true;
-
-        public int RingsCollected;
-
+        
         [Header("Room Data")] 
         public Vector2 StageSize = new Vector2Int(1000, 800);
         public static EventInstance StageBGM;
@@ -38,6 +36,7 @@ namespace SonicCTK.World
 
         public static event PlayerSignalEvent OnPlayerConnected;
         public static event PlayerSignalEvent OnPlayerDisconnected;
+        public static ScoreGrantAmount LatestGrantedScore;
         
         public static Player GetClosestPlayer(Vector2 position)
         {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using SonicCTK.Core;
+using SonicCTK.Gameplay;
 using SonicCTK.World;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace SonicCTK.Physical
     /// Contains the main parts of a Player's behaviour. You can extend this class and add your own custom 
     /// states for different characters, or disable pre-existing states from executing
     /// </summary>
+    [DefaultExecutionOrder(2)]
     [AddComponentMenu(Constants.ContextName + "/Players/Player Core", 0)]
     public class Player : StateMachine<PlayerState>
     {
@@ -39,6 +41,9 @@ namespace SonicCTK.Physical
         public PlayerCollision Collision;
         public PlayerVisual Visual;
         public PlayerWorldInteraction Interactions;
+        public PlayerStorage Storage;
+
+        private GameObject managedHUD;
         
         public delegate void StateChangeEvent(PlayerState PreviousState, PlayerState NewState);
         public delegate void PlayerUpdateEvent(Player This);
@@ -62,6 +67,9 @@ namespace SonicCTK.Physical
                 CDebug.Log("There is no Stage instance in this scene. This can lead to undefined behaviour, so be careful. Playback paused", CDebug.LogType.Important);
                 Debug.Break();
             }
+
+            managedHUD = GameConfiguration.Instance.DefaultPlayerHUD.InstantiateAsync().WaitForCompletion();
+            managedHUD.GetComponentInChildren<GameplayHUD>().AttachedPlayer = this;
             
             Stage.ConnectedPlayers.Add(this);
             Common.CommonStart();

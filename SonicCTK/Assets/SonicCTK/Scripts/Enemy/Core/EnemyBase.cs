@@ -1,6 +1,5 @@
 ﻿using System;
 using SonicCTK.Physical;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Stage = SonicCTK.World.Stage;
@@ -49,6 +48,9 @@ namespace SonicCTK.Core
             
             if (player)
                 player.Common.Ysp = -Mathf.Abs(player.Common.Ysp);
+            
+            player.Common.GrantScore(ScoreGrantAmount.Score200, transform);
+            player.Storage.PlayerBounceScoreGainIndex++;
             
             Addressables.InstantiateAsync("S_FX_Explosion.prefab", transform.position, Quaternion.identity);
             Destroy(gameObject); // You could also just disable them and add some distance check to re-enable later, but whatever

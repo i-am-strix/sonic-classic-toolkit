@@ -37,6 +37,8 @@ namespace SonicCTK.Gameplay
                     Player.Common.Ysp = -Strength;
                     Player.Visual.Play("Spring");
                     Player.Visual.SetSpeedMultip(0);
+                    Player.Common.IsCurledIntoBall = false;
+                    
                     break;
                 
                 case SpringDirection.Left:
@@ -44,7 +46,8 @@ namespace SonicCTK.Gameplay
                     CAudio.Play("Spring");
                     _animator.Play("Hit", 0, 0);
 
-                    Player.Common.Gsp = -Strength;
+                    Player.Common.ControlLock = 16;
+                    Player.Common.Gsp = Player.Common.Xsp = -Strength;
                     Player.Common.IsPushing = false;
                     break;
                 
@@ -52,8 +55,9 @@ namespace SonicCTK.Gameplay
                     if (Direction != SolidBoxCollisionDirection.Right) return;
                     CAudio.Play("Spring");
                     _animator.Play("Hit", 0, 0);
-
-                    Player.Common.Gsp = Strength;
+                    
+                    Player.Common.ControlLock = 16;
+                    Player.Common.Gsp = Player.Common.Xsp = Strength;
                     Player.Common.IsPushing = false;
                     break;
             }

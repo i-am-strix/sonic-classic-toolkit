@@ -30,7 +30,8 @@ namespace SonicCTK.Physical
         [Header("Solid Boxes")]
         public bool IsStandingOnSolidBox;
         public SolidBox CurrentlyStandingSolidBox;
-
+        public GameObject CurrentlyStandingSolidGameObject;
+        
         [Header("Collision")] 
         public CLayerMode CurrentPlayerLayer;
 
@@ -44,9 +45,9 @@ namespace SonicCTK.Physical
             {
                 var pixelObjectPos = CurrentlyStandingSolidBox.transform.position.WToP();
 
-                Player.transform.position = new Vector3(Player.transform.position.x,
-                    -(pixelObjectPos.y - CurrentlyStandingSolidBox.Radius.y - Player.Collision.HeightRadius - 1).PToW(),
-                    Player.transform.position.z);
+                //Player.transform.position = new Vector3(Player.transform.position.x,
+                //    -(pixelObjectPos.y - CurrentlyStandingSolidBox.Radius.y - Player.Collision.HeightRadius - 1).PToW(),
+                 //   Player.transform.position.z);
             }
             
             if (IsSTunnelMode)

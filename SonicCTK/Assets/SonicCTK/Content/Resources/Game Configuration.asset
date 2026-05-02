@@ -17,3 +17,8 @@ MonoBehaviour:
   StartingLifeCountPerSaveFile: 3
   ApplySonic1SpeedCap: 0
   ApplyRollLock: 0
+  DefaultPlayerHUD:
+    m_AssetGUID: 69be3f60ce155d7409f62d60ac23f532
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

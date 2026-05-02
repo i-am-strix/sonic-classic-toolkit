@@ -33,7 +33,6 @@ namespace SonicCTK.Physical
             Cmn.IsPushing = false;
 
             Cmn.GrabInput();
-            if (Cmn.InputDirection.x != 0) Visual.SpriteDirection = (int)Mathf.Sign(Cmn.InputDirection.x);
             ApplyGravity();
             AirControl();
             Cmn.ApplyTransformations();
@@ -54,13 +53,18 @@ namespace SonicCTK.Physical
 
         public void AirControl()
         {
-            Cmn.Xsp += Cmn.InputDirection.x * Phys.AirControl;
-            
+            bool applyRollLock = GameConfiguration.Instance.ApplyRollLock && Player.PreviousState is PStateRoll;
             if (Mathf.Abs(Cmn.Xsp) < Phys.TopSpeed)
+            {
+                if (!applyRollLock) Cmn.Xsp += Cmn.InputDirection.x * Phys.AirControl;
                 Cmn.Xsp = Mathf.Clamp(Cmn.Xsp, -Phys.TopSpeed, Phys.TopSpeed);
+            }
+            
+            if (!applyRollLock)
+                if (Cmn.InputDirection.x != 0) Visual.SpriteDirection = (int)Mathf.Sign(Cmn.InputDirection.x);
 
             if (Cmn.Ysp < 0 && Cmn.Ysp > -4) // Air Drag
-                Cmn.Xsp -= (Mathf.Floor(Cmn.Xsp / 0.125f) / 256);
+                Cmn.Xsp -= Mathf.Floor(Cmn.Xsp / 0.125f) / 256;
         }
 
         public void HandleCollision()

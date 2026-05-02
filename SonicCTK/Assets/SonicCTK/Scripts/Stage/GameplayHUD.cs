@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
-
+using SonicCTK.Physical;
 using TMPro;
 using SonicCTK.World;
 
@@ -12,6 +12,7 @@ namespace SonicCTK.Gameplay
 {
     public sealed class GameplayHUD : MonoBehaviour
     {
+        public Player AttachedPlayer;
         [Header("HUD Elements")]
         public TMP_Text ScoreCounter;
         public TMP_Text TimeCounter_Minutes, TimeCounter_Seconds;
@@ -37,8 +38,10 @@ namespace SonicCTK.Gameplay
                 TimeCounter_Minutes.text = StageTime.Minutes.ToString("0");
                 TimeCounter_Seconds.text = StageTime.Seconds.ToString("00");
 
-                RingsCounter.text = Stage.Current.RingsCollected.ToString();
             }
+
+            ScoreCounter.text = AttachedPlayer.Storage.Score.ToString();
+            RingsCounter.text = AttachedPlayer.Storage.Rings.ToString();
         }
     }
 

@@ -108,7 +108,7 @@ namespace SonicCTK.Gameplay
             switch(BoxType)
             {
                 case ItemBoxType.Ring:
-                    Stage.Current.RingsCollected += 10;
+                    interactedPlayer.Storage.Rings += 10;
                     CAudio.Play("Ring");
                     break;
                 case ItemBoxType.Shield:

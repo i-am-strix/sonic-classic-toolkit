@@ -78,25 +78,25 @@ namespace SonicCTK.Core
             
             CDebug.DrawSquare(PixelObjectPos.PToW(), radius.PToW(), Color.red);
             Vector2 CombinedRadius = Radius +
-                new Vector2(Player.Collision.WallRadius + 1, Player.Collision.HeightRadius);
+                new Vector2(Player.Collision.WidthRadius + 1, Player.Collision.HeightRadius);
             CDebug.DrawSquare(PixelObjectPos.PToW(), CombinedRadius.PToW(), Color.red);
             
-
             if (Player.Interactions.IsStandingOnSolidBox && Player.Interactions.CurrentlyStandingSolidBox == this)
             {
-                OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Up);
-
                 if (Player.Common.Ysp < 0) return;
+
+                Player.transform.position = new Vector3(Player.transform.position.x,
+                    -(PixelObjectPos.y - CombinedRadius.y - 1).PToW());
 
                 var xLeftDist = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
                 if (xLeftDist < 0 || xLeftDist >= CombinedRadius.x * 2)
                 {
                     Player.Interactions.IsStandingOnSolidBox = false;
-                    Player.Set<PStateAir>();
-                    return;
                 }
-
+                
                 OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Up);
+                
+                return;
             }
 
             var leftDifference = (PixelPlayerPos.x - PixelObjectPos.x) + CombinedRadius.x;
@@ -106,7 +106,7 @@ namespace SonicCTK.Core
             if (topDifference < 0 || topDifference > CombinedRadius.y * 2) return;
 
             var xDistance = PixelPlayerPos.x < PixelObjectPos.x ? leftDifference : leftDifference - CombinedRadius.x * 2;
-            var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2;
+            var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2 - 4;
             
             if (Mathf.Abs(xDistance) > Mathf.Abs(yDistance))
             {
@@ -125,6 +125,7 @@ namespace SonicCTK.Core
                 }
                 else
                 {
+                    Debug.Log("Entering top collision");
                     if (!AllowSolidityFrom.Top) return;
 
                     if (yDistance < 0 || yDistance >= 16) return;
@@ -136,19 +137,25 @@ namespace SonicCTK.Core
 
                     OnCollision?.Invoke(Player, SolidBoxCollisionDirection.Up);
 
-                    if (Player.Common.Ysp <= 0) return;
-
-                    Player.transform.position -= new Vector3(0, -yDistance.PToW());
-                    Player.Cam.PixelPosition.y += yDistance;
-                    Player.Common.IsGrounded = true;
-                    Player.Set<PStateMove>();
-
-                    Player.Interactions.IsStandingOnSolidBox = true;
-                    Player.Interactions.CurrentlyStandingSolidBox = this;
-
+                    // 0.01 to counter-correct floating point imprecisions
+                    if (Player.Common.Ysp < -0.01f) return;
+                    
                     Player.Common.Ysp = 0;
                     Player.Common.SurfaceAngle = 0;
                     Player.Common.Gsp = Player.Common.Xsp;
+
+                    if (!Player.Common.IsGrounded)
+                    {
+                        Player.Common.IsGrounded = true;
+                        Player.Set<PStateMove>();
+                    }
+
+                    Player.transform.position += new Vector3(0, (yDistance + 1).PToW());
+                    Player.Cam.PixelPosition.y += yDistance - 1;
+
+                    Player.Interactions.IsStandingOnSolidBox = true;
+                    Player.Interactions.CurrentlyStandingSolidBox = this;
+                    Player.Interactions.CurrentlyStandingSolidGameObject = gameObject;
                     return;
                 }
             }
@@ -187,6 +194,15 @@ namespace SonicCTK.Core
                     }
                 }
             }
+        }
+
+        public bool IsAnyPlayerStandingOnThis()
+        {
+            foreach(Player player in Stage.ConnectedPlayers)
+                if (player.Interactions.IsStandingOnSolidBox && player.Interactions.CurrentlyStandingSolidGameObject == gameObject)
+                    return true;
+            
+            return false;
         }
 
         public virtual void OnDrawGizmos()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SonicCTK.Core;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK
 {
@@ -19,6 +20,13 @@ namespace SonicCTK
 
         [Header("Player Physics")] 
         public bool ApplySonic1SpeedCap = false;
+        
+        /// <summary>
+        /// Why would you do this to yourself
+        /// </summary>
         public bool ApplyRollLock = false;
+
+        [Header("Defaults")] 
+        public AssetReferenceGameObject DefaultPlayerHUD;
     }
 }

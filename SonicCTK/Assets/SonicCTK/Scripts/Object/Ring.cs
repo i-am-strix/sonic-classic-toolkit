@@ -128,7 +128,7 @@ namespace SonicCTK.Gameplay
 
             Destroy(gameObject);
             CAudio.PlayOneShot("Ring");
-            Stage.Current.RingsCollected++;
+            Player.Storage.Rings++;
             Addressables.InstantiateAsync("S_FX_RingSparkle.prefab", transform.position, Quaternion.identity);
         }
     }
