@@ -77,8 +77,8 @@ namespace SonicCTK.Core
             Vector2 PixelObjectPos = ((Vector2)(transform.position)).WToP() + boxOffset;
             
             CDebug.DrawSquare(PixelObjectPos.PToW(), radius.PToW(), Color.red);
-            Vector2 CombinedRadius = Radius +
-                new Vector2(Player.Collision.WidthRadius + 1, Player.Collision.HeightRadius);
+            Vector2 CombinedRadius = radius +
+                new Vector2(Player.Collision.WidthRadius + 1, Player.Collision.HeightRadius - 1);
             CDebug.DrawSquare(PixelObjectPos.PToW(), CombinedRadius.PToW(), Color.red);
             
             if (Player.Interactions.IsStandingOnSolidBox && Player.Interactions.CurrentlyStandingSolidBox == this)
@@ -106,7 +106,7 @@ namespace SonicCTK.Core
             if (topDifference < 0 || topDifference > CombinedRadius.y * 2) return;
 
             var xDistance = PixelPlayerPos.x < PixelObjectPos.x ? leftDifference : leftDifference - CombinedRadius.x * 2;
-            var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2 - 4;
+            var yDistance = PixelPlayerPos.y < PixelObjectPos.y ? topDifference : topDifference - CombinedRadius.y * 2;
             
             if (Mathf.Abs(xDistance) > Mathf.Abs(yDistance))
             {
@@ -125,7 +125,6 @@ namespace SonicCTK.Core
                 }
                 else
                 {
-                    Debug.Log("Entering top collision");
                     if (!AllowSolidityFrom.Top) return;
 
                     if (yDistance < 0 || yDistance >= 16) return;
