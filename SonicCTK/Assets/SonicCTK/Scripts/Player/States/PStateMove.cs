@@ -174,13 +174,17 @@ namespace SonicCTK.Physical
                         Cmn.Gsp -= Phys.Deceleration;
                         if (Cmn.Gsp <= 0) Cmn.Gsp = -0.5f;
                     }
-                    else if (Cmn.Gsp > -Phys.TopSpeed)
+                    else 
                     {
-	                    if (Visual.SpriteDirection != -1) {
-	                    	Visual.SpriteDirection = -1;
-	                    	Cmn.IsPushing = false;
-	                    }
-                        Cmn.Gsp = Mathf.Max(Cmn.Gsp - Phys.Acceleration, -Phys.TopSpeed);
+                        if (Visual.SpriteDirection != -1) 
+                        {
+                            Visual.SpriteDirection = -1;
+                            Cmn.IsPushing = false;
+                        }
+                        if (Cmn.Gsp > -Phys.TopSpeed)
+                        {
+                            Cmn.Gsp = Mathf.Max(Cmn.Gsp - Phys.Acceleration, -Phys.TopSpeed);
+                        }
                     }
 
                     if (GameConfiguration.Instance.ApplySonic1SpeedCap && Cmn.Gsp < -Phys.TopSpeed &&
@@ -197,13 +201,17 @@ namespace SonicCTK.Physical
                         Cmn.Gsp += Phys.Deceleration;
                         if (Cmn.Gsp >= 0) Cmn.Gsp = 0.5f;
                     }
-                    else if (Cmn.Gsp < Phys.TopSpeed)
+                    else 
                     {
-	                    if (Visual.SpriteDirection != 1) {
-	                    	Visual.SpriteDirection = 1;
-	                    	Cmn.IsPushing = false;
-	                    }                        
-	                    Cmn.Gsp = Mathf.Min(Cmn.Gsp + Phys.Acceleration, Phys.TopSpeed);
+                        if (Visual.SpriteDirection != 1) 
+                        {
+                            Visual.SpriteDirection = 1;
+                            Cmn.IsPushing = false;
+                        }    
+                        if (Cmn.Gsp < Phys.TopSpeed)
+                        {
+	                        Cmn.Gsp = Mathf.Min(Cmn.Gsp + Phys.Acceleration, Phys.TopSpeed);
+                        }
                     }
                     
                     if (GameConfiguration.Instance.ApplySonic1SpeedCap && Cmn.Gsp > Phys.TopSpeed &&

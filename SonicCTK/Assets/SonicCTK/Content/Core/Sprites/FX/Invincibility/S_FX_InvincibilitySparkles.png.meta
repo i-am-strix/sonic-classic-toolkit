@@ -1,0 +1,298 @@
+fileFormatVersion: 2
+guid: 56fd33b9633d60a45a78191fab3af894
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2158540102629385212
+    second: S_FX_InvincibilitySparkles_0
+  - first:
+      213: -3827102586661621625
+    second: S_FX_InvincibilitySparkles_1
+  - first:
+      213: 8422087301115473442
+    second: S_FX_InvincibilitySparkles_2
+  - first:
+      213: -2538854133276088809
+    second: S_FX_InvincibilitySparkles_3
+  - first:
+      213: -3058705324427664423
+    second: S_FX_InvincibilitySparkles_4
+  - first:
+      213: -6806185310255522883
+    second: S_FX_InvincibilitySparkles_5
+  - first:
+      213: 2338203027956154321
+    second: S_FX_InvincibilitySparkles_6
+  - first:
+      213: 734937148679013902
+    second: S_FX_InvincibilitySparkles_7
+  - first:
+      213: -8702247786961686942
+    second: S_FX_InvincibilitySparkles_8
+  - first:
+      213: 545595694917250566
+    second: S_FX_InvincibilitySparkles_9
+  - first:
+      213: -452960928482203021
+    second: S_FX_InvincibilitySparkles_10
+  - first:
+      213: -7905004761595828963
+    second: S_FX_InvincibilitySparkles_11
+  - first:
+      213: -7499489437454034238
+    second: S_FX_InvincibilitySparkles_12
+  - first:
+      213: 4217808823925902426
+    second: S_FX_InvincibilitySparkles_13
+  - first:
+      213: 7080219522844068903
+    second: S_FX_InvincibilitySparkles_14
+  - first:
+      213: -8257221651702326333
+    second: S_FX_InvincibilitySparkles_15
+  - first:
+      213: 1407056351805372740
+    second: S_FX_InvincibilitySparkles_16
+  - first:
+      213: -9126763083418335641
+    second: S_FX_InvincibilitySparkles_17
+  - first:
+      213: 5605960639067700606
+    second: S_FX_InvincibilitySparkles_18
+  - first:
+      213: -8975039816153890288
+    second: S_FX_InvincibilitySparkles_19
+  - first:
+      213: 809355348339248931
+    second: S_FX_InvincibilitySparkles_20
+  - first:
+      213: 1619189375749228873
+    second: S_FX_InvincibilitySparkles_21
+  - first:
+      213: 1091802157391433137
+    second: S_FX_InvincibilitySparkles_22
+  - first:
+      213: 84381190346385081
+    second: S_FX_InvincibilitySparkles_23
+  - first:
+      213: 5918181988843486374
+    second: S_FX_InvincibilitySparkles_24
+  - first:
+      213: 2236903087213633701
+    second: S_FX_InvincibilitySparkles_25
+  - first:
+      213: -2895513655480555500
+    second: S_FX_InvincibilitySparkles_26
+  - first:
+      213: -1466215133702047585
+    second: S_FX_InvincibilitySparkles_27
+  - first:
+      213: 304104585275185109
+    second: S_FX_InvincibilitySparkles_28
+  - first:
+      213: 2286034705442532784
+    second: S_FX_InvincibilitySparkles_29
+  - first:
+      213: 8513920041201785831
+    second: S_FX_InvincibilitySparkles_30
+  - first:
+      213: -952031585337306290
+    second: S_FX_InvincibilitySparkles_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: S_FX_InvincibilitySparkles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c175d86335b02e0800000000000000
+      internalID: -2158540102629385212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_FX_InvincibilitySparkles_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7803e0b697663eac0800000000000000
+      internalID: -3827102586661621625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_FX_InvincibilitySparkles_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22ee05a37c341e470800000000000000
+      internalID: 8422087301115473442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: S_FX_InvincibilitySparkles_3
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 716eb810e9d24ccd0800000000000000
+      internalID: -2538854133276088809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: a2def58e26cd2504f9dca169cd2ebfb3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      S_FX_InvincibilitySparkles_0: -2158540102629385212
+      S_FX_InvincibilitySparkles_1: -3827102586661621625
+      S_FX_InvincibilitySparkles_2: 8422087301115473442
+      S_FX_InvincibilitySparkles_3: -2538854133276088809
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -82,7 +82,7 @@ namespace SonicCTK.Gameplay
                 var ty = Math.Sign(Ysp) == s.y;
 	
                 Xsp += magnetizedRingAcceleration[tx ? 1 : 0] * s.x;
-                Ysp -= magnetizedRingAcceleration[ty ? 1 : 0] * s.y;
+                Ysp -= magnetizedRingAcceleration[ty ? 0 : 1] * s.y;
             }
             
             if (IsBouncingRing)

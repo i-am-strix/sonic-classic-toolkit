@@ -958,7 +958,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spring
+      name: SpringDiag
       rect:
         serializedVersion: 2
         x: 1
@@ -1375,7 +1375,7 @@ TextureImporter:
       Spin5: 2312337393431253452
       Spin6: 7615334064386180098
       Spindash4: 4204346479326554023
-      Spring: 3971864761289494046
+      SpringDiag: 3971864761289494046
       Sprite Sheet 2_0: -6051987087921615269
       Sprite Sheet 2_1: 5984088327521821442
       Sprite Sheet 2_2: -7549112732989689583

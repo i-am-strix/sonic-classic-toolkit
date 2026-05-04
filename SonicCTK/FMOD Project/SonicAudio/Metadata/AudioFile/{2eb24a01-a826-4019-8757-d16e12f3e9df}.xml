@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{2eb24a01-a826-4019-8757-d16e12f3e9df}">
 		<property name="assetPath">
 			<value>Sound Effects/S3K_BC.wav</value>

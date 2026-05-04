@@ -49,10 +49,12 @@ namespace SonicCTK.Core
             if (player)
                 player.Common.Ysp = -Mathf.Abs(player.Common.Ysp);
             
-            player.Common.GrantScore(ScoreGrantAmount.Score200, transform);
+            player.Common.GrantScore(ScoreGrantAmount.Score100, transform);
             player.Storage.PlayerBounceScoreGainIndex++;
             
-            Addressables.InstantiateAsync("S_FX_Explosion.prefab", transform.position, Quaternion.identity);
+            CAudio.PlayOneShot("Break");
+            
+            Addressables.InstantiateAsync("S_FX_Explosion.prefab", transform.position, Quaternion.identity).WaitForCompletion();
             Destroy(gameObject); // You could also just disable them and add some distance check to re-enable later, but whatever
         }
     }

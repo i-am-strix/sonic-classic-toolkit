@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SonicCTK.Core;
@@ -6,6 +7,13 @@ using UnityEngine.AddressableAssets;
 
 namespace SonicCTK
 {
+    [Serializable]
+    public struct CharacterIDAssetBinder
+    {
+        public CharacterID CorrespondingCharacter;
+        public AssetReferenceGameObject CorrespondingPrefab;
+    }
+    
     [CreateAssetMenu(fileName = "Game Configuration", menuName = Constants.ContextName + "/Game Configuration")]
     public sealed class GameConfiguration : ScriptableSingleton<GameConfiguration>
     {
@@ -18,6 +26,10 @@ namespace SonicCTK
         public bool UseLives = true;
         public int StartingLifeCountPerSaveFile = 3;
 
+        [Header("Characters")]
+        [Tooltip("This is where you define which character ID corresponds to which Unity prefab. The game will use this to figure out the rest")]
+        public CharacterIDAssetBinder[] CharacterDefinitions;
+            
         [Header("Player Physics")] 
         public bool ApplySonic1SpeedCap = false;
         
@@ -28,5 +40,6 @@ namespace SonicCTK
 
         [Header("Defaults")] 
         public AssetReferenceGameObject DefaultPlayerHUD;
+        
     }
 }

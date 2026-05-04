@@ -51,8 +51,13 @@ namespace SonicCTK.Physical
         public event StateChangeEvent OnStateChanged;
         public event PlayerUpdateEvent OnBeforeUpdate;
         
+        // Utility
+        public List<Vector3> previousFramePosition;
+        private const int k_previousPositionQueueLength = 32;
+        
         public virtual void Start()
         {
+            previousFramePosition = new(k_previousPositionQueueLength);
             Application.targetFrameRate = 60;
 
             AddStates();
@@ -124,6 +129,10 @@ namespace SonicCTK.Physical
         
         public virtual void LateUpdate()
         {
+            previousFramePosition.Add(transform.position);
+            if (previousFramePosition.Count > k_previousPositionQueueLength)
+                previousFramePosition.RemoveAt(0);
+            
             CurrentState.OnLateUpdate(Time.deltaTime);
             Visual.VisualLateUpdate();
         }

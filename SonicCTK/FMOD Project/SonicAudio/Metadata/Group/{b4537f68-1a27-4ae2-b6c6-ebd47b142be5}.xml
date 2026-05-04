@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="MixerGroup" id="{b4537f68-1a27-4ae2-b6c6-ebd47b142be5}">
 		<property name="name">
 			<value>SFX</value>
@@ -36,25 +36,25 @@
 			<destination>{1be54ae8-e642-4e74-ac3e-26a5ec5b35bc}</destination>
 		</relationship>
 		<relationship name="automationPoints">
-			<destination>{a2f680eb-db82-43f4-8863-8c6dd0a4db69}</destination>
 			<destination>{d4ebb1c9-b66e-4d93-999c-42df1ff579d6}</destination>
+			<destination>{a2f680eb-db82-43f4-8863-8c6dd0a4db69}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{8638495b-bdb1-4411-a70e-ee0939847675}" />
-	<object class="AutomationPoint" id="{a2f680eb-db82-43f4-8863-8c6dd0a4db69}">
-		<property name="position">
-			<value>99.858757062146893</value>
-		</property>
-		<property name="value">
-			<value>3.81469727e-06</value>
-		</property>
-	</object>
 	<object class="AutomationPoint" id="{d4ebb1c9-b66e-4d93-999c-42df1ff579d6}">
 		<property name="position">
 			<value>0</value>
 		</property>
 		<property name="value">
 			<value>-80</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{a2f680eb-db82-43f4-8863-8c6dd0a4db69}">
+		<property name="position">
+			<value>99.858757062146893</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
 		</property>
 	</object>
 </objects>

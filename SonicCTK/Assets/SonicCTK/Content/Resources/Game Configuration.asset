@@ -15,6 +15,13 @@ MonoBehaviour:
   GameReferenceResolution: {x: 428, y: 240}
   UseLives: 1
   StartingLifeCountPerSaveFile: 3
+  CharacterDefinitions:
+  - CorrespondingCharacter: 0
+    CorrespondingPrefab:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   ApplySonic1SpeedCap: 0
   ApplyRollLock: 0
   DefaultPlayerHUD:

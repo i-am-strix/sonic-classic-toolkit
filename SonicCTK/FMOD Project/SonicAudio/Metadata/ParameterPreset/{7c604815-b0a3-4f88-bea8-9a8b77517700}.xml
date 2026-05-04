@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="ParameterPreset" id="{7c604815-b0a3-4f88-bea8-9a8b77517700}">
 		<property name="name">
 			<value>SpindashRev</value>

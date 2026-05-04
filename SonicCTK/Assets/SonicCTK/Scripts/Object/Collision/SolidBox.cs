@@ -52,6 +52,9 @@ namespace SonicCTK.Core
             Left = true,
             Right = true
         };
+
+        [Tooltip("Toggle this to make the player move along with this solid box, effectively turning it into a moving platform of sorts")]
+        public bool StickPlayerToSolidBox;
         
         /// <summary>
         /// This event gets fired whenever any player comes in the radius of this SolidBox
@@ -63,14 +66,26 @@ namespace SonicCTK.Core
         public float LeftLimit => ((Vector2)transform.position + boxOffset.PToW()).x - Radius.x.PToW();
         public float RightLimit => ((Vector2)transform.position + boxOffset.PToW()).x + Radius.x.PToW();
 
+        private Vector3 previousPosition;
+        
         public virtual void Update()
         {
-            foreach (Player p in Stage.ConnectedPlayers) Collide(p);
+            foreach (Player p in Stage.ConnectedPlayers)
+            {
+                Collide(p);
+                if (p.Interactions.IsStandingOnSolidBox && p.Interactions.CurrentlyStandingSolidBox == this)
+                {
+                    if (StickPlayerToSolidBox)
+                    {
+                        p.transform.position += transform.position - previousPosition;
+                    }
+                }
+            }
+            previousPosition = transform.position;
         }
-
         // This function gets called every frame for each player
         public virtual void Collide(Player Player)
-        {
+        { 
             if (Player.CurrentState is PStateDead) return;
 
             Vector2 PixelPlayerPos = ((Vector2)(Player.transform.position)).WToP();
@@ -155,6 +170,8 @@ namespace SonicCTK.Core
                     Player.Interactions.IsStandingOnSolidBox = true;
                     Player.Interactions.CurrentlyStandingSolidBox = this;
                     Player.Interactions.CurrentlyStandingSolidGameObject = gameObject;
+                    
+                    previousPosition = transform.position;
                     return;
                 }
             }

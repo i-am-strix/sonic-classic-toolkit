@@ -72,6 +72,10 @@ namespace SonicCTK.Physical
         /// </summary>
         public bool CanCharacterPerformSpecialAbilities = true;
         
+        // CECIL!!! I NEED YOU CECIL!!!
+        public bool IsInvincible;
+        public int InvincibilityTickCount;
+
         public void GrabInput() => InputDirection = Player.PlayerInput.GetAxis2D("Move").Round();
 
         public void CommonStart()
@@ -92,8 +96,22 @@ namespace SonicCTK.Physical
             if (IsGrounded)
                 Player.Storage.PlayerBounceScoreGainIndex = 0;
             
+            if (IsInvincible)
+            {
+                InvincibilityTickCount--;
+                if (InvincibilityTickCount < 0)
+                    IsInvincible = false;
+            }
+            
             CheckPlayerBounds();
             HandleCameraOffset();
+        }
+        
+        public void GainInvincibility()
+        {
+            InvincibilityTickCount = 1200;
+            IsInvincible = true;
+            Player.StartCoroutine(Player.Visual.HandleInvincibilityEffect());
         }
 
         public void ApplyTransformations()
@@ -118,6 +136,8 @@ namespace SonicCTK.Physical
 
         public void TakeDamage(GameObject objectDealingDamage = null)
         {
+            if (IsInvincible) return;
+
             if (Player.Is<PStateHurt>() || Player.Is<PStateDead>()) return;
             if (InvulnerabilityTimer != 0) return;
 

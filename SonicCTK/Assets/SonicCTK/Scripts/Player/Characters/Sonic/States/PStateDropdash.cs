@@ -23,9 +23,6 @@ namespace SonicCTK.Physical
             if (Cmn.IsGrounded)
             {
                 Cam.FreezeCamera(16);
-                
-                Debug.Log("I mean you dropdashed???");
-
                 bool isFacingVelocity = Visual.SpriteDirection * Mathf.Sign(Cmn.Xsp) == 1;
 
                 if (isFacingVelocity)

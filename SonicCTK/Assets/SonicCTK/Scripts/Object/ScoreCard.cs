@@ -36,8 +36,6 @@ namespace SonicCTK
                 yield return null;
             }
             
-            yield return new WaitForSeconds(0.5f);
-
             Destroy(gameObject);
             yield return null;
         }

@@ -26,6 +26,10 @@ namespace SonicCTK.Core
         public static Vector2 Round(this Vector2 v) => new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
         public static Vector2 Floor(this Vector2 v) => new Vector2(Mathf.Floor(v.x), Mathf.Floor(v.y));
         public static Vector2 Ceil(this Vector2 v) => new Vector2(Mathf.Ceil(v.x), Mathf.Ceil(v.y));
+        
+        public static Vector3 Round(this Vector3 v) => new Vector3(Mathf.Round(v.x), Mathf.Round(v.y));
+        public static Vector3 Floor(this Vector3 v) => new Vector3(Mathf.Floor(v.x), Mathf.Floor(v.y));
+        public static Vector3 Ceil(this Vector3 v) => new Vector3(Mathf.Ceil(v.x), Mathf.Ceil(v.y));
     }
 
     /// <summary>
@@ -72,6 +76,9 @@ namespace SonicCTK.Core
         /// Convert a float from pixel-space (1, 10, 100) to world-space (0.01, 0.1, 1)
         /// </summary>
         public static float PToW(this float f) => f * CPixelConversionFactor;
+
+        public static Vector3 RoundToPixel(this Vector3 v) => v.WToP().Round().PToW();
+        public static Vector3 FloorToPixel(this Vector3 v) => v.WToP().Floor().PToW();
     }
 
     public static class CUtility

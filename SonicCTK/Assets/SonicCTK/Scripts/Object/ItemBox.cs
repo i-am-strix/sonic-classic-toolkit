@@ -51,7 +51,7 @@ namespace SonicCTK.Gameplay
 
         private void Update()
         {
-            if (!IsMonitorInactive)
+            if (!IsMonitorInactive && MonitorIconStatic)
             {
                 MonitorIconStatic.enabled = (int)(Time.time * 8) % 2 == 0;
             }
@@ -116,6 +116,10 @@ namespace SonicCTK.Gameplay
                     break;
                 case ItemBoxType.ElectricShield:
                     interactedPlayer.Interactions.SetShield(PlayerShieldType.Electric);
+                    CAudio.Play("Electric Shield Gather");
+                    break;
+                case ItemBoxType.Invincibility:
+                    interactedPlayer.Common.GainInvincibility();
                     break;
             }
             
@@ -129,7 +133,7 @@ namespace SonicCTK.Gameplay
         public void DestroyItemBox()
         {
             if (solidBox.enabled) return;
-            Addressables.InstantiateAsync("S_FX_Explosion.prefab", transform.position, Quaternion.identity);
+            Addressables.InstantiateAsync("S_FX_Explosion.prefab", transform.position, Quaternion.identity).WaitForCompletion();
             MonitorIcon.transform.SetParent(null);
             IsMonitorInactive = true;
 

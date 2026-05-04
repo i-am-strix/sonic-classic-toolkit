@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{d6491d95-5e6a-474e-b454-c61fbc9c25d8}">
 		<property name="assetPath">
 			<value>BGM/DefaultStage/BGM_DefaultStage_Loop.ogg</value>
