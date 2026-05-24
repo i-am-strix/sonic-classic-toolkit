@@ -72,7 +72,6 @@ namespace SonicCTK.Core
         {
             foreach (Player p in Stage.ConnectedPlayers)
             {
-                Collide(p);
                 if (p.Interactions.IsStandingOnSolidBox && p.Interactions.CurrentlyStandingSolidBox == this)
                 {
                     if (StickPlayerToSolidBox)
@@ -80,6 +79,7 @@ namespace SonicCTK.Core
                         p.transform.position += transform.position - previousPosition;
                     }
                 }
+                Collide(p);
             }
             previousPosition = transform.position;
         }
