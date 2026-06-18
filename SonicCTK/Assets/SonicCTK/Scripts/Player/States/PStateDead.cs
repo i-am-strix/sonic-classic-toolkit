@@ -1,6 +1,7 @@
 ﻿using SonicCTK.Core;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using SceneUtility = SonicCTK.Core.SceneUtility;
 
 namespace SonicCTK.Physical
 {
@@ -29,11 +30,9 @@ namespace SonicCTK.Physical
             Cmn.Ysp += Phys.Gravity;
             Cmn.ApplyTransformations();
 
-            if (Cmn.Ysp > 20)
+            if (Cmn.Ysp > 15)
             {
-                ProcFadeHandler.RequestFade(0.5f, 0, 0.5f, () =>
-                {
-                });
+                ProcFadeHandler.RequestFade(2f, 0, 2f, SceneUtility.ReloadScene);
             }
         }
 

@@ -205,8 +205,6 @@ namespace SonicCTK.Physical
 
                 var surfaceAngle = Mathf.Round(CalculateAngle(CeilingHit.normal));
                 
-                CDebug.Log(surfaceAngle.ToString());
-
                 if (surfaceAngle >= 135 && surfaceAngle <= 225)
                 {
                     Cmn.Ysp = 0;

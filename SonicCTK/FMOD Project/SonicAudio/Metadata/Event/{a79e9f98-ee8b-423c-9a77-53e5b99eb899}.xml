@@ -5,7 +5,7 @@
 			<value>Dropdash</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{085edd70-0bce-411f-9a69-ee605de56d48}</destination>
@@ -39,7 +39,7 @@
 	</object>
 	<object class="MasterTrack" id="{32976e4a-6341-4b8f-807a-eee4b22c5eca}">
 		<relationship name="modules">
-			<destination>{a18f7d5c-dbe9-49f5-8b49-ab8b8a36aff8}</destination>
+			<destination>{8925d093-00cd-4aae-b38c-e002c341a9b4}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{f8d5e946-cefb-4444-8ac1-52b5034923dd}</destination>
@@ -60,7 +60,7 @@
 	<object class="MarkerTrack" id="{d9a333bd-8084-452c-9c23-ec705c4b0634}" />
 	<object class="Timeline" id="{7e58129b-56d8-4fa2-a56e-c4336effe1e0}">
 		<relationship name="modules">
-			<destination>{a18f7d5c-dbe9-49f5-8b49-ab8b8a36aff8}</destination>
+			<destination>{8925d093-00cd-4aae-b38c-e002c341a9b4}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f8d5e946-cefb-4444-8ac1-52b5034923dd}">
@@ -74,12 +74,12 @@
 			<destination>{17a4e9fe-e4b6-4ba2-86de-51cb0570de8a}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{a18f7d5c-dbe9-49f5-8b49-ab8b8a36aff8}">
+	<object class="SingleSound" id="{8925d093-00cd-4aae-b38c-e002c341a9b4}">
 		<property name="length">
-			<value>0.53396825396825398</value>
+			<value>1.1249886621315193</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{8b2b548b-f4bc-475c-97c3-bae55fd90419}</destination>
+			<destination>{7ad23b0f-da2f-439d-9d8b-9f5926f016b0}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{0a034ba4-057f-431c-8f2e-5a2ee7d6260b}">

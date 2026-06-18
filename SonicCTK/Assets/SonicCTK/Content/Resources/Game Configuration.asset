@@ -18,7 +18,7 @@ MonoBehaviour:
   CharacterDefinitions:
   - CorrespondingCharacter: 0
     CorrespondingPrefab:
-      m_AssetGUID: 
+      m_AssetGUID: a6be14b7c4e659f4bb9090f500589a7d
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0

@@ -31,6 +31,9 @@ namespace SonicCTK.World
         [Header("Debug")]
         public bool ShowStageBorders = true;
 
+        [Header("Respawn")] public static bool HasCheckpointSpawn = false;
+        public static Vector2 CheckpointSpawnPosition;
+
         // Events
         public delegate void PlayerSignalEvent(Player Player);
 
@@ -71,21 +74,9 @@ namespace SonicCTK.World
             // Flush any previously connected player, in the case of a stage reset or start
             ConnectedPlayers = new();
             ConnectedPlayers.CollectionChanged += ConnectedPlayersOnCollectionChanged;
-        }
-
-        private void ConnectedPlayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    CDebug.Log("New Player Connected");
-                    OnPlayerConnected?.Invoke(e.NewItems[0] as Player);
-                    break;
-            }
-        }
-
-        private void Start()
-        {
+            
+            GamePersistence.PlayStateActive = false;
+            
             StageData = StageConfiguration.Instance.FindFromScene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             );
@@ -97,6 +88,24 @@ namespace SonicCTK.World
             
             StageBGM = RuntimeManager.CreateInstance(StageData.StageBGM);
             StageBGM.start();
+            
+            // Create players
+            Array.Find(GameConfiguration.Instance.CharacterDefinitions,
+                    s => s.CorrespondingCharacter == GamePersistence.CurrentCharacterID).CorrespondingPrefab
+                .InstantiateAsync().WaitForCompletion();
+
+            GamePersistence.PlayStateActive = true;
+        }
+
+        private void ConnectedPlayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    CDebug.Log("New Player Connected");
+                    OnPlayerConnected?.Invoke(e.NewItems[0] as Player);
+                    break;
+            }
         }
 
         private void Update()

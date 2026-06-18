@@ -24,16 +24,22 @@ namespace SonicCTK.Physical
         {
             thisCollider = GetComponent<Collider2D>();
             Stage.OnPlayerConnected += OnPlayerConnected;
+            Stage.OnPlayerDisconnected += OnPlayerDisconnected;
+        }
+
+        private void OnPlayerDisconnected(Player player)
+        {
+            player.OnBeforeUpdate -= UpdateCollider;
         }
 
         private void OnPlayerConnected(Player player)
         {
-            CDebug.Log("test");
             player.OnBeforeUpdate += UpdateCollider;
         }
 
         private void UpdateCollider(Player player)
         {
+            if (!thisCollider) return;
             thisCollider.enabled = player.Interactions.CurrentPlayerLayer == LayerMode;
         }
     }

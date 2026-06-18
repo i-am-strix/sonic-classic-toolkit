@@ -11,10 +11,12 @@ namespace SonicCTK.Physical
 
         public UnityEngine.Rendering.Universal.PixelPerfectCamera PPCam => GetComponent<UnityEngine.Rendering.Universal.PixelPerfectCamera>();
         
-        public Vector4 CameraBorders = new Vector4(
+        public Vector4 PlayerCameraArea = new Vector4(
             144, 160, // Horizontal
             64, 128 // Vertical
         );
+
+        public Vector4 CameraBorders;
 
         public Vector2 CameraSpeedLimit = new Vector2(12, 12);
         public Vector2 PixelPosition;
@@ -34,6 +36,8 @@ namespace SonicCTK.Physical
             PixelPosition = Player.transform.position.WToP();
             PPCam.refResolutionX = GameConfiguration.Instance.GameReferenceResolution.x;
             PPCam.refResolutionY = GameConfiguration.Instance.GameReferenceResolution.y;
+
+            CameraBorders = new Vector4(0, Stage.Current.StageSize.x, 0, Stage.Current.StageSize.y);
         }
 
         public void Follow()
@@ -82,8 +86,8 @@ namespace SonicCTK.Physical
 
             var targetCameraPoint = PixelPosition + CameraOffset.Round(); 
             
-            targetCameraPoint.x = Mathf.Clamp(targetCameraPoint.x, 0, Stage.Current.StageSize.x - PPCam.refResolutionX);
-            targetCameraPoint.y = Mathf.Clamp(targetCameraPoint.y, 0, Stage.Current.StageSize.y - PPCam.refResolutionY);
+            targetCameraPoint.x = Mathf.Clamp(targetCameraPoint.x, CameraBorders.x, CameraBorders.y - PPCam.refResolutionX / 2);
+            targetCameraPoint.y = Mathf.Clamp(targetCameraPoint.y, CameraBorders.z, CameraBorders.w - PPCam.refResolutionY);
             
             transform.position = (Vector3)(targetCameraPoint + new Vector2(PPCam.refResolutionX / 2, PPCam.refResolutionY / 2)).PToW() + new Vector3(0, 0, transform.position.z);
 

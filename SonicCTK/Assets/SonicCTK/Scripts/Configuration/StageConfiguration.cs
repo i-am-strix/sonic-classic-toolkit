@@ -6,6 +6,7 @@ using System;
 using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Core
 {

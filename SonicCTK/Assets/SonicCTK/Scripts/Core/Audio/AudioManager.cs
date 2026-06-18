@@ -5,6 +5,7 @@ using FMODUnity;
 using FMOD.Studio;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SonicCTK.Core
 {
@@ -13,38 +14,38 @@ namespace SonicCTK.Core
 	/// </summary>
 	public static class CAudio
 	{
-		public static void PlayOneShot(string ID) => AudioManager.Manager.PlayOneShot(ID);
-		public static void Play(string ID) => AudioManager.Manager.Play(ID);
-		public static void Stop(string ID) => AudioManager.Manager.Stop(ID);
-		public static void Stop(string ID, FMOD.Studio.STOP_MODE mode) => AudioManager.Manager.Stop(ID, mode);
-		public static void StopAllFromBanks(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE, params string[] banks) => AudioManager.Manager.StopAllFromBanks(mode, banks);
+		public static void PlayOneShot(string ID) => AudioManager.Instance.PlayOneShot(ID);
+		public static void Play(string ID) => AudioManager.Instance.Play(ID);
+		public static void Stop(string ID) => AudioManager.Instance.Stop(ID);
+		public static void Stop(string ID, FMOD.Studio.STOP_MODE mode) => AudioManager.Instance.Stop(ID, mode);
+		public static void StopAllFromBanks(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE, params string[] banks) => AudioManager.Instance.StopAllFromBanks(mode, banks);
         
-		public static bool IsPlaying(string ID) => AudioManager.Manager.IsPlaying(ID);
+		public static bool IsPlaying(string ID) => AudioManager.Instance.IsPlaying(ID);
 
 		//Param settings for local parameters
 
 		public static void SetLabeledParam(string ID, string Parameter, string value)
 		{
-			AudioManager.Manager.SetLabeledParam(ID, Parameter, value);
+			AudioManager.Instance.SetLabeledParam(ID, Parameter, value);
 		}
 		public static void SetValueParam(string ID, string Parameter, float value)
 		{
-			AudioManager.Manager.SetValueParam(ID, Parameter, value);
+			AudioManager.Instance.SetValueParam(ID, Parameter, value);
 		}
 
 		//Param settings for global parameters
         
 		public static void GSetLabeledParam(string Parameter, string value)
 		{
-			AudioManager.Manager.GSetLabeledParam(Parameter, value);
+			AudioManager.Instance.GSetLabeledParam(Parameter, value);
 		}
 		public static void GSetValueParam(string Parameter, float value)
 		{
-			AudioManager.Manager.GSetValueParam(Parameter, value);
+			AudioManager.Instance.GSetValueParam(Parameter, value);
 		}
 		public static float GGetValueParam(string Parameter)
 		{
-			return AudioManager.Manager.GGetParam(Parameter);
+			return AudioManager.Instance.GGetParam(Parameter);
 		}
 	}
     
@@ -76,17 +77,15 @@ namespace SonicCTK.Core
     
 	public class AudioManager : MonoBehaviour
 	{
-		private static AudioManager Instance { get; set; }
-		public static AudioManager Manager
+		private static AudioManager instance { get; set; }
+		public static AudioManager Instance
 		{
 			get
 			{
-				if (AudioManager.Instance != null) return AudioManager.Instance;
-				else
-				{
-					CDebug.Log("Audio Manager is not set up. Cannot play FMOD audio");
-					return null;
-				}
+				if (instance) return instance;
+				
+				ValidateAudioManagerObject();
+				return instance;
 			}
 		}
 
@@ -96,6 +95,13 @@ namespace SonicCTK.Core
 		private List<CAudioBinding> m_bindings;
 		private List<CEventInstanceBinding> m_eventBindings;
 
+		private static void ValidateAudioManagerObject()
+		{
+			if (instance) return;
+			var obj = Addressables.InstantiateAsync("/Core/Audio Manager").WaitForCompletion();
+			instance = obj.GetComponent<AudioManager>();
+		}
+		
         private void Regenerate()
         {
             m_bindings = new List<CAudioBinding>();
@@ -127,14 +133,7 @@ namespace SonicCTK.Core
 
         private void Awake()
 		{
-			if (AudioManager.Instance == null){
-				transform.SetParent(null);
-				AudioManager.Instance = this;
-				DontDestroyOnLoad(this);
-			}
-			else{
-				if (AudioManager.Instance != this) Destroy(gameObject);
-			}
+
 		}
 
 		private void Start()

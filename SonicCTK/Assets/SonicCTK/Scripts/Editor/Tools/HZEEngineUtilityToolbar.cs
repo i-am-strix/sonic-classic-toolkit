@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using System.Linq;
+using SonicCTK.Core;
 using UnityToolbarExtender;
 
 
@@ -30,10 +31,22 @@ namespace SonicCTK.Editor
 	{
 		static SceneSwitchLeftButton()
 		{
-			ToolbarExtender.RightToolbarGUI.Add(OnToolbarGUI);
+			EngineEditorConfig.AttemptRefresh();
+			ToolbarExtender.RightToolbarGUI.Add(OnToolbarGUIRight);
+			ToolbarExtender.LeftToolbarGUI.Add(OnToolbarGUILeft);
 		}
 
-		static void OnToolbarGUI()
+		static void OnToolbarGUILeft()
+		{
+			GUIStyle selectorStyle = new GUIStyle("dropdown");
+			GUI.backgroundColor = Color.white;
+			selectorStyle.fixedWidth = 150;
+			EngineEditorConfig.currentConfig.CurrentCharacter = (CharacterID)EditorGUILayout.EnumPopup("Entering Play Mode as", 
+				EngineEditorConfig.currentConfig.CurrentCharacter, 
+				selectorStyle);
+		}
+
+		static void OnToolbarGUIRight()
 		{
 			GUIStyle style = new GUIStyle(ToolbarStyles.commandButtonStyle);
 			style.fixedWidth = 72;

@@ -57,6 +57,8 @@ namespace SonicCTK.Physical
         
         public virtual void Start()
         {
+            OnBeforeUpdate = null;
+            
             previousFramePosition = new(k_previousPositionQueueLength);
             Application.targetFrameRate = 60;
 
@@ -64,6 +66,16 @@ namespace SonicCTK.Physical
             
             Initialize<PStateMove>();
 
+            if (Stage.HasCheckpointSpawn)
+            {
+                transform.position = Stage.CheckpointSpawnPosition + Vector2.up * Collision.HeightRadius.PToW();
+            }
+            else
+            {
+                transform.position = Array.Find(FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None),
+                    s => s.CorrespondingCharacter == GamePersistence.CurrentCharacterID).transform.position;
+            }
+            
             Common.Player = Collision.Player = Visual.Player = Interactions.Player = this;
             Cam.PixelPosition = transform.position.WToP();
 
@@ -96,7 +108,6 @@ namespace SonicCTK.Physical
 
         public virtual void PlayerStart()
         {
-
         }
 
         public virtual void OnDestroy()
