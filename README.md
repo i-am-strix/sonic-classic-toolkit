@@ -1,8 +1,8 @@
-# Yet Another 2D Sonic Framework
+# Sonic Classic Toolkit
 
-The title says it all. There's nothing fancy to add it's literally just a 2D Sonic framework for Unity that's built on the Genesis Sonic principles (quirks and all)
+This name's pretty pretentious honestly, there's nothing fancy to add it's literally just a 2D Sonic framework for Unity that's built on the Genesis Sonic principles (quirks and all)
 
-I don't expect a lot of people to bother with this as, firstly, it's more of a research project that I might use for future games, but also secondly, it does some things in a rather unorthodox manner compared to other Sonic frameworks (notably using Addressables and FMOD Studio for audio), but who cares lol
+I don't expect a lot of people to bother with this as, firstly, it's more of a research project that I might use for future games, but also secondly, it does some things in a rather unorthodox manner compared to other Sonic frameworks (notably using Addressables), but who cares lol
 
 ## Pre-requisites
 
